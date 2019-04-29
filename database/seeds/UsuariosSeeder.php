@@ -20,18 +20,23 @@ class UsuariosSeeder extends Seeder
             'password' => Hash::make('184259')
         ]);
 
-        $gerenteMaster = \App\User::firstOrCreate(['email' => 'gerentemaster@gmail.com'], [
-            'name' => 'Usuário Gerente Master',
+        $gerenteMaster = \App\User::firstOrCreate(['email' => 'carol@gmail.com'], [
+            'name' => 'Carol Gerente Master',
             'password' => Hash::make('123456')
         ]);
 
-        $gerente = \App\User::firstOrCreate(['email'=>'carol@gmail.com'],[
-            'name' => 'Carol Mota',
+        $gerente = \App\User::firstOrCreate(['email'=>'gerente@gmail.com'],[
+            'name' => 'Usuário Gerente',
             'password' => Hash::make('123456')
         ]);
 
-        $usuario = \App\User::firstOrCreate(['email'=>'usuario@gmail.com'],[
-            'name' => 'Usuario Teste',
+        $funcionario = \App\User::firstOrCreate(['email'=>'funcionario@gmail.com'],[
+            'name' => 'Usuário Funcionário',
+            'password' => Hash::make('123456')
+        ]);
+
+        $cliente = \App\User::firstOrCreate(['email'=>'cliente@gmail.com'],[
+            'name' => 'Usuario Cliente',
             'password' => Hash::make('123456')
         ]);
 

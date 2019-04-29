@@ -30,7 +30,7 @@ return [
         'array'   => 'O campo :attribute deve ter entre :min e :max itens.',
     ],
     'boolean'              => 'O campo :attribute deve ser verdadeiro ou falso.',
-    'confirmed'            => 'O campo :attribute de confirmação não confere.',
+    'confirmed'            => 'A confirmação de senha não confere.',
     'date'                 => 'O campo :attribute não é uma data válida.',
     'date_format'          => 'O campo :attribute não corresponde ao formato :format.',
     'different'            => 'Os campos :attribute e :other devem ser diferentes.',

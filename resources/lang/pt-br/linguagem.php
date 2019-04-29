@@ -4,7 +4,7 @@ return [
     'lang'=>'en',
     'translate'=>'Traduzir',
     'login' => 'Entrar',
-    'register' => 'Cadastrar',
+    'register' => 'Cadastre-se',
     'name'=>'Nome',
     'password'=>'Senha',
     'email'=>'E-mail',
@@ -54,5 +54,6 @@ return [
     'privacy_policy'=>'Politica de Privacidade',
     'terms_of_use'=>'Termos de Uso',
     'copyright'=>'Direito autoral',
-    'access_denied'=>'Acesso negado!'
+    'access_denied'=>'Acesso negado!',
+    'close'=>'Fechar',
 ];

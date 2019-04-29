@@ -54,5 +54,6 @@ return [
     'privacy_policy'=>'Privacy Policy',
     'terms_of_use'=>'Terms of Use',
     'copyright'=>'Copyright',
-    'access_denied'=>'Access denied!'
+    'access_denied'=>'Access denied!',
+    'close'=>'Close',
 ];

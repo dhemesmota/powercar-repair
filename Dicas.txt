@@ -1,0 +1,9 @@
+Sempre que for criar um novo crud, primeiro 
+criar o modelo depois a migração no banco de dados.
+
+comando para criar a model e a migração:
+php artisan make:model NomeDaModel -m
+
+Obs: o nome da model deve ser em inglês
+
+

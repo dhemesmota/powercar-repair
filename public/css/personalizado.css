@@ -1,0 +1,70 @@
+/*GERAL*/
+body {
+    background: #eff1f4;
+}
+
+/*Body login Pagina Site*/
+#loginSite .form-group {
+    position: relative;
+    margin: 0;
+}
+
+#loginSite .form-group label {
+    position: absolute;
+    top: 8px;
+    left: 18px;
+    margin: 0;
+    color: #cccccc;
+}
+
+#loginSite input.form-control {
+    padding-left: 40px;
+    border-color: #cccccc;
+}
+
+/*Header login*/
+.login-cabecalho {
+    background: url('../images/fundo-site.png');
+    background-position: top left;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 40vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-login-cadastro {
+    max-height: 200px;
+}
+
+#loginAuth .form-group {
+    position: relative;
+}
+
+#loginAuth .form-group label {
+    position: absolute;
+    top: 13px;
+    left: 18px;
+    margin: 0;
+    color: #cccccc;
+}
+
+#loginAuth input.form-control {
+    padding-left: 40px;
+    border-color: #cccccc;
+}
+
+/*Todos os label*/
+label {
+    cursor: pointer;
+}
+
+/*Card Sobre*/
+.card-sobre img {
+    object-fit: cover;
+    object-position: center;
+    height: 200px;
+    min-width: 100%;
+}
