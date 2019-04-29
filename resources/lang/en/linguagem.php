@@ -27,6 +27,7 @@ return [
     'user_list'=>'User',
     'logout'=>'Logout',
     'user'=>'user',
+    'users'=>'Users',
     'create_crud'=>'Add :page',
     'record_added_successfully'=>'Record added successfully!',
     'error_adding_record'=>'Error adding record!',
