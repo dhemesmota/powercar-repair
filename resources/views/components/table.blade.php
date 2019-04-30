@@ -5,7 +5,7 @@
                 @foreach ($columnList as $key => $value)
                     <th scope="col">{{ $value }}</th>      
                 @endforeach
-                <th scope="col">{{ __('linguagem.action') }}</th>
+                <th scope="col" class="text-right">{{ __('linguagem.action') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -18,7 +18,7 @@
                         <td>@php echo $value->{$key2} @endphp</td>
                     @endif
                 @endforeach
-                <td>
+                <td class="text-right">
                     <a href="{{ route($routeName.'.show',$value->id) }}" class="btn btn-info btn-sm">
                         <i class="fas fa-eye"></i>
                     </a>
