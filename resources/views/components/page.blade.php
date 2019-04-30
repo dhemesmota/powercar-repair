@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-{{ $col }}">
             <div class="card">
-                <div class="card-header">{{ $page }}</div>
+                <div class="bg-powercar rounded-top p-4 text-light">{{ $page }}</div>
 
-                <div class="card-body">
+                <div class="card-body p-4">
 
                     {{ $slot }}
                    

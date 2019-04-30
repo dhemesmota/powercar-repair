@@ -41,37 +41,8 @@
                 </a>
             </div>
             <div class="nav-menu ml-auto">
-                <div class="notificacao-menu dropdown ml-0 mr-2">
-                    <div id="notificacaoMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-flag text-gray icone-nav"></i>
-                        <span class="numero-notificacao">6</span>
-                    </div>
-                    <div id="ntNotificacao" class="dropdown-menu dropdown-menu-right" aria-labelledby="notificacaoMenu">
-                        <div class="dropdown-header bg-gray" >
-                            <span class="nt-mensagem">Notificações</span>
-                        </div>
-                        <a class="dropdown-item" href="#">
-                            <div class="body-notificacao">
-                                    <span class="nt-mensagem">
-                                    <span class="btn btn-danger btn-sm" data-toggle="tooltip"
-                                        data-placement="top" title="Serviço parado">
-                                        <i class="fas fa-flag"></i>
-                                    </span>
-                                    EJS-9958
-                                    </span>
-                                <span class="nt-data">Você possui um nova ordem de serviço</span>
-                            </div>
-                        </a>
-                        
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item d-flex justify-content-between" href="#">
-                            <span>Ver todas as notificações</span> <i class="far fa-arrow-alt-circle-right"></i>
-                        </a>
-                    </div>
-                </div>
-
                 <div class="ml-4 mr-2 text-white">
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();" class="text-gray">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();" class="text-dark">
                         <i class="fas fa-power-off"></i>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
@@ -79,8 +50,8 @@
                     </a>
                 </div>
 
-                <div class="ml-0 mr-4 text-white text-uppercase">
-                    <a href="{{ route('lang') }}" class="text-gray nav-link">
+                <div class="ml-0 mr-4 text-dark text-uppercase">
+                    <a href="{{ route('lang') }}" class="text-dark nav-link">
                         @lang('linguagem.lang')
                     </a>
                 </div>
