@@ -57,4 +57,5 @@ return [
     'copyright'=>'Direito autoral',
     'access_denied'=>'Acesso negado!',
     'close'=>'Fechar',
+    'image'=>'Imagem',
 ];

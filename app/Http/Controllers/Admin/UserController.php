@@ -43,7 +43,7 @@ class UserController extends Controller
         }
 
         // Definiando as colunas e traduzação das colunas
-        $columnList = ['id'=>'#','name'=>trans('linguagem.name'),'email'=>trans('linguagem.email')];
+        $columnList = ['id'=>'#','image'=>trans('linguagem.image'),'name'=>trans('linguagem.name'),'email'=>trans('linguagem.email')];
 
         $search = "";
         if(isset($request->search) and !empty($request->search)){

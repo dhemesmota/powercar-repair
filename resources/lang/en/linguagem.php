@@ -57,4 +57,5 @@ return [
     'copyright'=>'Copyright',
     'access_denied'=>'Access denied!',
     'close'=>'Close',
+    'image'=>'Image',
 ];

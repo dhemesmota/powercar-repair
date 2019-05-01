@@ -12,6 +12,12 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     public function create(array $data)
     {
+        // Verificar se selecionou imagem, se não colocar a imagem padrão
+        if(!isset($data['image'])){
+            $imagem = "/perfils/padrao.png";
+            $data['image'] = $imagem;
+        }
+
         $data['password'] = Hash::make($data['password']);
         $register = $this->model->create($data);
 
@@ -56,5 +62,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
             return false;
         }
     }
+
+    
+
     
 }

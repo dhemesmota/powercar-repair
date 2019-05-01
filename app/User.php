@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'image'
     ];
 
     /**
@@ -69,4 +69,13 @@ class User extends Authenticatable
 
         return (boolean) $this->roles()->find($role->id);
     }
+
+    /**
+     * pegar caminho da imagem
+     */
+    public function getImageAttribute($value)
+    {
+        return asset($value);
+    }
+
 }

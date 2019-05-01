@@ -14,6 +14,10 @@
                 @foreach ($columnList as $key2 => $value2)
                     @if ($key2 == 'id')
                         <th scope="row">@php echo $value->{$key2} @endphp</th>
+                    @elseif($key2 == 'image')
+                        <td>
+                            <img style="max-width: 40px;" class="img-fluid rounded" src="{{$value->$key2}}" alt="perfil">
+                        </td>
                     @else
                         <td>@php echo $value->{$key2} @endphp</td>
                     @endif
