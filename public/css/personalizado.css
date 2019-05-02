@@ -1,6 +1,13 @@
 a.link {
     text-decoration: none;
 }
+/* Input file*/
+.custom-file-label:lang(pt-br)::after {
+    content: "Selecionar";
+}
+.custom-file-label:lang(en)::after {
+    content: "Select" !important;
+}
 /*GERAL*/
 body {
     background: #eff1f4;

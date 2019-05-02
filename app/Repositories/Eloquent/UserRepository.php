@@ -12,6 +12,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     public function create(array $data)
     {
+
+        dd($data);
         // Verificar se selecionou imagem, se não colocar a imagem padrão
         if(!isset($data['image'])){
             $imagem = "/perfils/padrao.png";
