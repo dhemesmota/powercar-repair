@@ -25,7 +25,11 @@
     }
 @endphp
 
-<form action="{{ $action }}" method="{{ $method }}">
+<form action="{{ $action }}" method="{{ $method }}" 
+@if (isset($enctype))
+    enctype="{{ $enctype }}"
+@endif
+>
     @csrf
     {{ $method_input }}
     {{ $slot }}

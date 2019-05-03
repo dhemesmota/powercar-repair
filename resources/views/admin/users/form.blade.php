@@ -39,7 +39,7 @@
                     <i class="fas fa-lock"></i>
                 </span>
             </div>
-            <input type="password" name="password" id="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" aria-describedby="basic-password" required>
+            <input type="password" name="password" id="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" aria-describedby="basic-password">
             @if ($errors->has('password'))
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $errors->first('password') }}</strong>
@@ -55,21 +55,23 @@
                     <i class="fas fa-lock"></i>
                 </span>
             </div>
-            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" aria-describedby="basic-password_confirmation" required>
+            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" aria-describedby="basic-password_confirmation">
         </div>
     </div>
 
-    <div class="col-md-12">
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="image">@lang('linguagem.image')</span>
+    @if (isset($register))
+        <div class="col-md-12">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="image">@lang('linguagem.image')</span>
+                </div>
+                <div class="custom-file">
+                    <input name="image" type="file" class="custom-file-input" id="inputImage" aria-describedby="image">
+                    <label class="custom-file-control custom-file-label" id="labelImage" for="inputImage">Selecione uma imagem...</label>
+                </div>
             </div>
-            <div class="custom-file">
-                <input name="image" type="file" class="custom-file-input" id="inputImage" aria-describedby="image">
-                <label class="custom-file-control custom-file-label" id="labelImage" for="inputImage">Selecione uma imagem...</label>
-            </div>
-        </div>
-    </div>
+        </div>        
+    @endif
 
     <div class="form-group col-6">
         <label for="roles">{{ __('linguagem.role_list') }}</label>

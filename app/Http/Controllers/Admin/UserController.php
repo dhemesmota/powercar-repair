@@ -9,6 +9,7 @@ use App\Repositories\Contracts\RoleRepositoryInterface;
 use Validator;
 use Illuminate\Validation\Rule;
 
+
 use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller

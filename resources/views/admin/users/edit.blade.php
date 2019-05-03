@@ -12,7 +12,7 @@
         @endbreadcrumb_component
 
         <!-- Componente form -->
-        @form_component(['action'=>route($routeName.'.update',$register->id),'method'=>'PUT'])
+        @form_component(['action'=>route($routeName.'.update',$register->id),'method'=>'PUT','enctype'=>'multipart/form-data'])
             @include('admin.'.$routeName.'.form')
             <button class="btn btn-primary btn-lg float-right">{{ __('linguagem.edit') }}</button>
         @endform_component

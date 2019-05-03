@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\UploadedFile;
 
 class UserRepository extends AbstractRepository implements UserRepositoryInterface
 {
@@ -13,12 +14,10 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     public function create(array $data)
     {
 
-        dd($data);
-        // Verificar se selecionou imagem, se não colocar a imagem padrão
-        if(!isset($data['image'])){
-            $imagem = "/perfils/padrao.png";
-            $data['image'] = $imagem;
-        }
+        //dd($data);
+        
+        $imagem = "/perfils/padrao.png";
+        $data['image'] = $imagem;
 
         $data['password'] = Hash::make($data['password']);
         $register = $this->model->create($data);
@@ -37,6 +36,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     public function update(array $data, int $id)
     {
         $register = $this->find($id);
+
+        //dd($register);
         if($register){
             if($data['password'] ?? false){
                 $data['password'] = Hash::make($data['password']);
@@ -57,6 +58,13 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
                     // o $value vai contar o id da permissão
                     $register->roles()->attach($value);
                 }
+            }
+
+            // imagem padrão
+            if ($data['image'] && $data['image']->isValid()) {
+
+                $imagem = "/perfils/padrao.png";
+                $data['image'] = $imagem;
             }
 
             return (bool) $register->update($data);
