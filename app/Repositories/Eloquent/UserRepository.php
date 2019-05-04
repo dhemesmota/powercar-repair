@@ -99,7 +99,15 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         }
     }
 
-    
+    /*
+    * Listar usuários com Paginação 
+    */
+    public function paginate(int $paginate = 10, string $column = 'id', string $order = 'ASC')
+    {
+        # $user_id = auth()->user()->id; // pegando o id do usuario logado
+        // Listando uruários que não seja administrador
+        return $this->model->where('id', '<>', 1)->orderBy($column, $order)->paginate($paginate);
+    }
 
     
 }

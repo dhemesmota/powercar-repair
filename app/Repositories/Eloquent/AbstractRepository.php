@@ -23,6 +23,7 @@ abstract class AbstractRepository
     */
     public function paginate(int $paginate = 10, string $column = 'id', string $order = 'ASC')
     {
+        // Listando uruários que não seja administrador
         return $this->model->orderBy($column, $order)->paginate($paginate);
     }
 
