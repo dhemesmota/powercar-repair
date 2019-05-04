@@ -63,13 +63,43 @@ class AddACLSeeder extends Seeder
         );
         $acessoACL = \App\Permission::firstOrCreate(
             ['name'=>'acl'],
-            ['description' => 'Acesso total ao sistema']
+            ['description' => 'Criar, editar, ou deletar funções e permissões']
+        );
+        // agendamento
+        $agendamento = \App\Permission::firstOrCreate(
+            ['name' => 'list-scheduling'],
+            ['description' => 'Listar agendamentos']
+        );
+        // ordem de serviço
+        $orderService = \App\Permission::firstOrCreate(
+            ['name' => 'list-order-service'],
+            ['description' => 'Listar ordem de serviço']
+        );
+        // funcionários
+        $listFuncionarios = \App\Permission::firstOrCreate(
+            ['name' => 'list-employees'],
+            ['description' => 'Listar funcionários']
+        );
+        // cliente
+        $listClientes = \App\Permission::firstOrCreate(
+            ['name' => 'list-client'],
+            ['description' => 'Listar cliente']
+        );
+        // cliente
+        $produtosEndServicos = \App\Permission::firstOrCreate(
+            ['name' => 'list-products-and-services'],
+            ['description' => 'Listar produtos e serviços']
         );
 
         // Relacionar Role com Permissio
         $gerenteMasterACL->permissions()->attach($acessoACL);
-        $gerenteACL->permissions()->attach($listUser);
+        $gerenteACL->permissions()->attach($listUser); 
         $gerenteACL->permissions()->attach($createUser);
+        $clienteACL->permissions()->attach($agendamento);
+        $funcionarioACL->permissions()->attach($orderService);
+        $gerenteACL->permissions()->attach($listFuncionarios);
+        $funcionarioACL->permissions()->attach($listClientes);
+        $funcionarioACL->permissions()->attach($produtosEndServicos);
 
         echo "Registros de ACL criado! \n";
     }

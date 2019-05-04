@@ -66,11 +66,14 @@
                     <span class="input-group-text" id="image">@lang('linguagem.image')</span>
                 </div>
                 <div class="custom-file">
-                    <input name="image" type="file" class="custom-file-input" id="inputImage" aria-describedby="image">
+                    <input name="image" type="file" onchange="previewFile()" class="custom-file-input" id="inputImage" aria-describedby="image">
                     <label class="custom-file-control custom-file-label" id="labelImage" for="inputImage">Selecione uma imagem...</label>
                 </div>
             </div>
-        </div>        
+            <div class="col-md-4">
+                <img src="" class="img-fluid rounded preview" alt="">
+            </div>       
+        </div> 
     @endif
 
     <div class="form-group col-6">

@@ -66,9 +66,8 @@
                 <!-- Perfil -->
                 <a  href="#" class="perfil-menu my-4">
                     <div>
-                        <figure class="mr-2 text-center">
-                            <img class="img-fluid img-menu" src="{{asset('images/perfil.jpg')}}" alt="Chaplin">
-                            <figcaption class="small">Gerente</figcaption>
+                        <figure class="text-center">
+                            <img class="img-fluid img-menu" src="{{Auth::user()->image}}" alt="Chaplin">
                         </figure>
                     </div>
                     <div class="d-flex flex-column text-center">
@@ -86,43 +85,55 @@
                             @lang('linguagem.dashboard')
                         </span>
                     </a>
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-calendar-alt navIcone"></i>
-                        <span class="nav-titulo">Agendamento</span>
-                    </a>
+
+                    @can('list-scheduling')
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-calendar-alt navIcone"></i>
+                            <span class="nav-titulo">Agendamento</span>
+                        </a>
+                    @endcan
                     
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-tools navIcone"></i>
-                        <span class="nav-titulo">Ordem de Serviço</span>
-                    </a>
+                    @can('list-order-service')
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-tools navIcone"></i>
+                            <span class="nav-titulo">Ordem de Serviço</span>
+                        </a>
+                    @endcan
 
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-user-cog navIcone"></i>
-                        <span class="nav-titulo">Funcionários</span>
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-user-tie navIcone"></i>
-                        <span class="nav-titulo">Clientes</span>
-                    </a>
+                    @can('list-employees')
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-user-cog navIcone"></i>
+                            <span class="nav-titulo">Funcionários</span>
+                        </a>
+                    @endcan
 
-                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseProSer" aria-expanded="false" aria-controls="collapseOneProSer">
-                        <i class="fas fa-cubes navIcone"></i>
-                        <span class="nav-titulo">Produtos e Serviços</span>
+                    @can('list-client')
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-user-tie navIcone"></i>
+                            <span class="nav-titulo">Clientes</span>
+                        </a>
+                    @endcan
 
-                        <i class="fas fa-angle-down seta"></i>
-                    </a>
-                    <div id="collapseProSer" class="collapse" aria-labelledby="collapseOneProSer" data-parent="#navBarLateral">
-                        <div class="card-body ml-4">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-box"></i>
-                                <span class="nav-titulo">Produtos</span>
-                            </a>
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-wrench"></i>
-                                <span class="nav-titulo">Serviços</span>
-                            </a>
+                    @can('list-products-and-services')
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseProSer" aria-expanded="false" aria-controls="collapseOneProSer">
+                            <i class="fas fa-cubes navIcone"></i>
+                            <span class="nav-titulo">Produtos e Serviços</span>
+
+                            <i class="fas fa-angle-down seta"></i>
+                        </a>
+                        <div id="collapseProSer" class="collapse" aria-labelledby="collapseOneProSer" data-parent="#navBarLateral">
+                            <div class="card-body ml-4">
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-box"></i>
+                                    <span class="nav-titulo">Produtos</span>
+                                </a>
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-wrench"></i>
+                                    <span class="nav-titulo">Serviços</span>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    @endcan
                     @if ((Auth::user()->can('list-user')) or (Auth::user()->can('acl')))
                         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePermissoes" aria-expanded="false" aria-controls="collapseOnePermissoes">
                             <i class="fas fa-cogs navIcone"></i>
@@ -220,6 +231,24 @@
             //console.log(fileName);
             document.getElementById('labelImage').innerText = fileName;
         })
+
+        function previewFile(e) {
+            var preview = document.querySelector('.preview');
+            var file    = document.querySelector('input[type=file]').files[0];
+            var reader  = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+                document.getElementById('inputImage').setAttribute('value', reader);
+                console.log(reader);
+            } else {
+                preview.src = "";
+            }
+        }
     </script>
 </body>
 </html>

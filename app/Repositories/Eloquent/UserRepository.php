@@ -61,8 +61,34 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
             }
 
             // imagem padrão
-            if ($data['image'] && $data['image']->isValid()) {
+            if (isset($data['image']) && $data['image']->isValid()) {
 
+                //$imagem = "/perfils/padrao.png";
+                //$data['image'] = $imagem;
+
+                $time = time();
+                $diretorioPai = 'perfils';
+                $diretorioImagem = $diretorioPai.DIRECTORY_SEPARATOR.'perfil_id'.$id;
+                $extensao = $data['image']->extension();
+
+                
+
+                $urlImagem = $diretorioImagem.DIRECTORY_SEPARATOR.$data['image'];
+                
+                $file = str_replace('data:image/'.$extensao.';base64,','',$data[ 'image']);
+                $file = base64_decode($file);
+
+                if (!file_exists($diretorioPai)) {
+                    mkdir($diretorioPai, 0700);
+                }
+
+                if (!file_exists($diretorioImagem)) {
+                    mkdir($diretorioImagem, 0700);
+                }
+
+                //file_put_contents($urlImagem, $file);
+
+                // ainda não conseguir salvar imagens
                 $imagem = "/perfils/padrao.png";
                 $data['image'] = $imagem;
             }

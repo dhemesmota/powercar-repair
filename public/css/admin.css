@@ -72,14 +72,6 @@
 }
 
 /*-- Imagem de perfil no menu --*/
-.perfil-menu {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-.perfil-menu>div {
-    width: 100%;
-}
 #perfilMenu {
     width: 100%;
     display: flex;
