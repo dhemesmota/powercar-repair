@@ -64,7 +64,7 @@
         <section id="menuLateral">
             <div class="container-fluid">
                 <!-- Perfil -->
-                <a  href="#" class="perfil-menu my-4">
+                <a  href="{{ route('profile.index') }}" class="perfil-menu my-4">
                     <div>
                         <figure class="text-center">
                             <img class="img-fluid img-menu" src="{{Auth::user()->image}}" alt="Chaplin">
@@ -90,6 +90,13 @@
                         <a href="#" class="nav-link">
                             <i class="fas fa-calendar-alt navIcone"></i>
                             <span class="nav-titulo">Agendamento</span>
+                        </a>
+                    @endcan
+
+                    @can('list-car')
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-car-alt"></i>
+                            <span class="nav-titulo">Automóveis</span>
                         </a>
                     @endcan
                     
@@ -220,10 +227,28 @@
     <!-- Custom scripts for this template -->
     <script src="{{ asset('js/all.js') }}"></script>
 
+    <script src="{{ asset('js/jquery.mask.js') }}"></script>
+
     <script>
         $(function () {
           $('[data-toggle="tooltip"]').tooltip()
         })
+
+        // Mascaras de input
+        $(document).ready(function(){
+            $('.date').mask('11/11/1111');
+            $('.time').mask('00:00:00');
+            $('.date_time').mask('00/00/0000 00:00:00');
+            $('.cep').mask('00000-000');
+            $('.zip_code').mask('00000-000');
+            $('.phone').mask('0000-0000');
+            $('.phone_with_ddd').mask('(00) 0000-0000');
+            $('.telephone').mask('(00) 00000-0000');
+            $('.phone_us').mask('(000) 000-0000');
+            $('.mixed').mask('AAA 000-S0S');
+            $('.cpf').mask('000.000.000-00', {reverse: true});
+            $('.money').mask('000.000.000.000.000,00', {reverse: true});
+        });
 
         // Exibir o nome da imagem no campo email
         $('.custom-file-input').on('change',function(){

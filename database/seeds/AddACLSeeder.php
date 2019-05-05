@@ -85,10 +85,15 @@ class AddACLSeeder extends Seeder
             ['name' => 'list-client'],
             ['description' => 'Listar cliente']
         );
-        // cliente
+        // produtos e serviços
         $produtosEndServicos = \App\Permission::firstOrCreate(
             ['name' => 'list-products-and-services'],
             ['description' => 'Listar produtos e serviços']
+        );
+        // automóvies
+        $listCar = \App\Permission::firstOrCreate(
+            ['name' => 'list-car'],
+            ['description' => 'Listar automóvies']
         );
 
         // Relacionar Role com Permissio
@@ -96,6 +101,7 @@ class AddACLSeeder extends Seeder
         $gerenteACL->permissions()->attach($listUser); 
         $gerenteACL->permissions()->attach($createUser);
         $clienteACL->permissions()->attach($agendamento);
+        $clienteACL->permissions()->attach($listCar);
         $funcionarioACL->permissions()->attach($orderService);
         $gerenteACL->permissions()->attach($listFuncionarios);
         $funcionarioACL->permissions()->attach($listClientes);

@@ -58,4 +58,10 @@ return [
     'access_denied'=>'Acesso negado!',
     'close'=>'Fechar',
     'image'=>'Imagem',
+    'profile'=>'Perfil',
+    'personal_data'=>'Dados Pessoais',
+    'telephone'=>'Telefone',
+    'address'=>'Endereço',
+    'neighborhood'=>'Bairro',
+    'zip_code'=>'CEP',
 ];

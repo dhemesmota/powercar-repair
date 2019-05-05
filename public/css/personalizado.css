@@ -8,6 +8,11 @@ a.link {
 .custom-file-label:lang(en)::after {
     content: "Select" !important;
 }
+/* Input disabled */
+#perfilDados .form-control:disabled,
+#perfilDados .form-control[readonly] {
+    background-color: #FFF;
+}
 /*GERAL*/
 body {
     background: #eff1f4;
@@ -139,7 +144,9 @@ label {
     object-position: center;
     max-height: 54px;
     max-width: 54px;
-    border-radius: 50px;
+    min-height: 54px;
+    min-width: 54px;
+    border-radius: 50%;
     border: 4px solid #FFF;
 }
 

@@ -58,4 +58,10 @@ return [
     'access_denied'=>'Access denied!',
     'close'=>'Close',
     'image'=>'Image',
+    'profile'=>'Profile',
+    'personal_data'=>'Personal Data',
+    'telephone'=>'Telephone',
+    'address'=>'Address',
+    'neighborhood'=>'Neighborhood',
+    'zip_code'=>'Zip Code',
 ];

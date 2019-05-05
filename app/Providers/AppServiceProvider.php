@@ -15,12 +15,22 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         // Primeiro parametro qual interface vai definir e em segundo qual class a interface vai receber uma instancia
-        $this->app->bind('App\Repositories\Contracts\UserRepositoryInterface',
-        'App\Repositories\Eloquent\UserRepository');
-        $this->app->bind('App\Repositories\Contracts\PermissionRepositoryInterface',
-        'App\Repositories\Eloquent\PermissionRepository');
-        $this->app->bind('App\Repositories\Contracts\RoleRepositoryInterface',
-        'App\Repositories\Eloquent\RoleRepository');
+        $this->app->bind(
+            'App\Repositories\Contracts\UserRepositoryInterface',
+            'App\Repositories\Eloquent\UserRepository'
+        );
+        $this->app->bind(
+            'App\Repositories\Contracts\PermissionRepositoryInterface',
+            'App\Repositories\Eloquent\PermissionRepository'
+        );
+        $this->app->bind(
+            'App\Repositories\Contracts\RoleRepositoryInterface',
+            'App\Repositories\Eloquent\RoleRepository'
+        );
+        $this->app->bind(
+            'App\Repositories\Contracts\ProfileRepositoryInterface',
+            'App\Repositories\Eloquent\ProfileRepository'
+        );
     }
 
     /**

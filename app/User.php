@@ -78,4 +78,13 @@ class User extends Authenticatable
         return asset($value);
     }
 
+    /*
+    * Criando um relacionamento do usuário com funções
+    * Relacionamento muitos para muitos
+    */
+    public function profile()
+    {
+        return $this->hasOne('App\Profile');
+    }
+
 }
