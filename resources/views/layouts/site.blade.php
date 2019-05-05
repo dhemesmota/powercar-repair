@@ -79,7 +79,7 @@
                         @else
                             <ul class="nav justify-content-end">
                                 <li class="nav-item">
-                                    <a class="nav-link  text-secondary" href="#">
+                                    <a class="nav-link  text-secondary" href="{{ route('profile.index') }}">
                                         {{ Auth::user()->name }}
                                     </a>
                                 </li>
