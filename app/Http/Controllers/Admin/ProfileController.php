@@ -103,9 +103,9 @@ class ProfileController extends Controller
         Validator::make($data, [
             'cpf' => ['required', 'string', 'max:11', 'unique:profiles'],
             'telephone' => ['required', 'string', 'min:9', 'max:11'],
-            'address' => ['string', 'min:6', 'max:255'],
-            'neighborhood' => ['string', 'min:6', 'max:255'],
-            'zip_code' => ['string', 'min:8', 'max:8'],
+            'address' => ['required', 'string', 'min:6', 'max:255'],
+            'neighborhood' => ['required', 'string', 'min:6', 'max:255'],
+            'zip_code' => ['required', 'string', 'min:8', 'max:8'],
         ])->validate();
 
         //dd($data);
@@ -213,9 +213,9 @@ class ProfileController extends Controller
         Validator::make($data, [
             'cpf' => ['required', 'string', 'max:11', Rule::unique('profiles')->ignore($id)],
             'telephone' => ['required', 'string', 'min:9', 'max:11'],
-            'address' => ['string', 'min:6', 'max:255'],
-            'neighborhood' => ['string', 'min:6', 'max:255'],
-            'zip_code' => ['string', 'min:8', 'max:8'],
+            'address' => ['required', 'string', 'min:6', 'max:255'],
+            'neighborhood' => ['required', 'string', 'min:6', 'max:255'],
+            'zip_code' => ['required', 'string', 'min:8', 'max:8'],
         ])->validate();
 
         if($this->model->update($data,$id)){
