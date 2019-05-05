@@ -4,9 +4,10 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="mb-3 text-secondary border-bottom pb-3">
+            <div class="mb-3 text-secondary font-slim">
                 <i class="fas fa-tachometer-alt"></i> @lang('linguagem.dashboard')
             </div>
+            <hr class="linha">
 
             @alert_component(['msg'=>session('msg'), 'status'=>session('status')])
             @endalert_component

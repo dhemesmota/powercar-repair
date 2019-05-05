@@ -14,13 +14,13 @@
         <div class="row">
             <div class="col-md-3 text-center">
                 <div class="card bg-light mb-3 shadow">
-                    <img class="img-fluid" src="{{ $registerUser->image }}" alt="{{ $registerUser->name }}">
+                    <img class="img-fluid" src="{{ Auth::user()->image }}" alt="{{ Auth::user()->name }}">
                 </div>
-                <p>{{ $registerUser->name }}</p>
-                <p>{{ $registerUser->email }}</p>
+                <p>{{ Auth::user()->name }}</p>
+                <p>{{ Auth::user()->email }}</p>
             </div>
             <div class="col-md-9">
-                <h5>@lang('linguagem.personal_data')</h5>
+                <h5 class="font-slim">@lang('linguagem.personal_data')</h5>
                 @if (!empty($register[0]))
                     @foreach ($register as $key => $item)
                         <div id="perfilDados" class="row">

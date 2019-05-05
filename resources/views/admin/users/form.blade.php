@@ -102,7 +102,7 @@
                 @endphp
 
                 <div class="form-check">
-                    <input {{ $checked }} type="checkbox" class="form-check-input" name="roles[]" id="{{ $value->id }}" value="{{ $value->id }}">
+                    <input {{ $checked }} type="radio" class="form-check-input" name="roles[]" id="{{ $value->id }}" value="{{ $value->id }}">
                     <label class="form-control-label" for="{{ $value->id }}">{{ $value->name }}</label>
                 </div>
             @endforeach

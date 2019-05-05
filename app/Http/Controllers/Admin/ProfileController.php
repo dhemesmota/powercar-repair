@@ -48,9 +48,7 @@ class ProfileController extends Controller
                 (object)['url'=>'','title'=>trans('linguagem.profile')]
             ];
 
-            $registerUser = auth()->user();
-
-            return view('admin.'.$routeName.'.index',compact('register','registerUser','page','routeName','breadcrumb'));
+            return view('admin.'.$routeName.'.index',compact('register','page','routeName','breadcrumb'));
         }
 
         // Caso não encontre o usuário retornar para lista de usuários

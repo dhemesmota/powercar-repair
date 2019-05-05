@@ -14,8 +14,15 @@ a.link {
     background-color: #FFF;
 }
 /*GERAL*/
+
 body {
     background: #FFF;
+}
+
+.linha {
+    opacity: .2;
+    color: #0053ff;
+    border-color: #0053ff;
 }
 
 /*Body login Pagina Site*/
@@ -165,9 +172,18 @@ label {
 }
 
 .titulo-conteudo {
-    font-size: 24px;
+    font-size: 22px;
     color: #858c96 !important;
-    font-weight: 400;
+    font-weight: 300;
+}
+
+.breadcrumb {
+    background-color: transparent;
+}
+
+/*Font fina*/
+.font-slim {
+    font-weight: 300;
 }
 
 .card-body {
