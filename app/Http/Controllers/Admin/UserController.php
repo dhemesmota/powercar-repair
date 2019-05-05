@@ -8,6 +8,7 @@ use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Contracts\RoleRepositoryInterface;
 use Validator;
 use Illuminate\Validation\Rule;
+use DB;
 
 
 use Illuminate\Support\Facades\Gate;
@@ -275,12 +276,25 @@ class UserController extends Controller
             return redirect()->back();
         }
 
-        if($this->model->delete($id)){
-            session()->flash('msg',trans('linguagem.registration_deleted_successfully'));
-            session()->flash('status','success'); // tipos: success error notification
+        $perfil = \App\Profile::where('user_id',$id)->get(); // Buscando dados do perfil do usuário
+        if(!empty($perfil[0])){
+            // Se o usuário tiver perfil cadastrado, será então deletado
+            $profile = DB::table('profiles')->where('user_id', '=', $id)->delete();
         } else {
-            session()->flash('msg',trans('linguagem.error_editing_record'));
-            session()->flash('status','error'); // tipos: success error notification
+            // se não tiver, então apenas deletar o acesso do usuário
+            $profile = 1;
+        }
+        if($profile){
+            if($this->model->delete($id)){
+                session()->flash('msg',trans('linguagem.registration_deleted_successfully'));
+                session()->flash('status','success'); // tipos: success error notification
+            } else {
+                session()->flash('msg',trans('linguagem.error_deleting_record'));
+                session()->flash('status','error'); // tipos: success error notification
+            }
+        } else {
+            session()->flash('msg', trans('linguagem.error_deleting_record'));
+            session()->flash('status', 'error'); // tipos: success error notification
         }
         $routeName = $this->route; // passando a rota - caminho
         // Redirecionar para listagem de usuários 

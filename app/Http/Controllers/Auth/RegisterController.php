@@ -66,11 +66,23 @@ class RegisterController extends Controller
     {
         $imagem = "/perfils/padrao.png";
         
-        return User::create([
+        $register = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'image' => $imagem,
         ]);
+
+        $register->roles()->attach(5); // Definindo todos os usuários como cliente que se cadastrar pelo site.
+
+        return $register;
+        /*
+            return User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'image' => $imagem,
+            ]);
+        */
     }
 }

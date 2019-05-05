@@ -128,6 +128,7 @@ class ProfileController extends Controller
      */
     public function show($id, Request $request)
     {
+        dd('show');
         // Caso não encontre o usuário retornar para lista de usuários
         return redirect()->route($routeName.'.index');
     }
@@ -146,12 +147,12 @@ class ProfileController extends Controller
         $register = $this->model->find($id);
         if($register){
             
-            $page = trans('linguagem.user_list'); // traduzindo o titulo da lista
-            $page2 = trans('linguagem.user');
+            $page = trans( 'linguagem.profile'); // traduzindo o titulo da lista
+            $page2 = trans( 'linguagem.profile');
 
             $breadcrumb = [
                 (object)['url'=>route('home'),'title'=>trans('linguagem.home')],
-                (object)['url'=>route($routeName.'.index'),'title'=>trans('linguagem.list',['page'=>$page])],
+                (object)['url'=>route($routeName.'.index'),'title'=>trans('linguagem.profile')],
                 (object)['url'=>'','title'=>trans('linguagem.edit_crud',['page'=>$page2])]
             ];
 
