@@ -75,4 +75,5 @@ return [
     'services'=>'Services',
     'settings'=>'Settings',
     'situations'=>'Situations',
+    'attendance'=>'Attendance',
 ];

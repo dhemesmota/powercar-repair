@@ -48,5 +48,12 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('components.table','table_component');
         Blade::component('components.paginate','paginate_component');
         Blade::component('components.form','form_component');
+
+        // Componentes funções de usuario
+        Blade::component('components.home.cliente','cliente_component');
+        Blade::component('components.home.administrador','admin_component');
+        Blade::component('components.home.gerenteMaster','gerente_master_component');
+        Blade::component('components.home.gerente','gerente_component');
+        Blade::component('components.home.funcionario','funcionario_component');
     }
 }

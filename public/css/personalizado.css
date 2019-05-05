@@ -15,7 +15,7 @@ a.link {
 }
 /*GERAL*/
 body {
-    background: #eff1f4;
+    background: #FFF;
 }
 
 /*Body login Pagina Site*/
@@ -168,10 +168,6 @@ label {
     font-size: 24px;
     color: #858c96 !important;
     font-weight: 400;
-}
-
-.card {
-    border: none;
 }
 
 .card-body {

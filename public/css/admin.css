@@ -153,7 +153,6 @@
     font-size: 24px;
 }
 .card {
-    border: none;
     box-shadow: 0 0 5px rgba(0,0,0,0.125);
 }
 .card-body {

@@ -75,4 +75,5 @@ return [
     'services'=>'Serviços',
     'settings'=>'Configurações',
     'situations'=>'Situações',
+    'attendance'=>'Atendimento',
 ];

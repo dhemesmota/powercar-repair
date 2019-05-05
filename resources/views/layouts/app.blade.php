@@ -93,6 +93,13 @@
                         </a>
                     @endcan
 
+                    @can('list-scheduling')
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-wrench navIcone"></i>
+                            <span class="nav-titulo">@lang('linguagem.attendance')</span>
+                        </a>
+                    @endcan
+
                     @can('list-car')
                         <a href="#" class="nav-link">
                             <i class="fas fa-car-alt"></i>

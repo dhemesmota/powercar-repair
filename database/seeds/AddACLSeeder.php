@@ -95,6 +95,11 @@ class AddACLSeeder extends Seeder
             ['name' => 'list-car'],
             ['description' => 'Listar automóvies']
         );
+        // list-scheduling
+        $listScheduling = \App\Permission::firstOrCreate(
+            ['name' => 'list-scheduling'],
+            ['description' => 'Listar atendimentos']
+        );
 
         // Relacionar Role com Permissio
         $gerenteMasterACL->permissions()->attach($acessoACL);
@@ -102,6 +107,7 @@ class AddACLSeeder extends Seeder
         $gerenteACL->permissions()->attach($createUser);
         $clienteACL->permissions()->attach($agendamento);
         $clienteACL->permissions()->attach($listCar);
+        $clienteACL->permissions()->attach($listScheduling);
         $funcionarioACL->permissions()->attach($orderService);
         $gerenteACL->permissions()->attach($listFuncionarios);
         $funcionarioACL->permissions()->attach($listClientes);
