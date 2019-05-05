@@ -71,7 +71,7 @@
                         </figure>
                     </div>
                     <div class="d-flex flex-column text-center">
-                        <span class="small">Bem vindo!</span>
+                        <span class="small">@lang('linguagem.welcome')</span>
                         <small class="">
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </small>
@@ -89,42 +89,42 @@
                     @can('list-scheduling')
                         <a href="#" class="nav-link">
                             <i class="fas fa-calendar-alt navIcone"></i>
-                            <span class="nav-titulo">Agendamento</span>
+                            <span class="nav-titulo">@lang('linguagem.scheduling')</span>
                         </a>
                     @endcan
 
                     @can('list-car')
                         <a href="#" class="nav-link">
                             <i class="fas fa-car-alt"></i>
-                            <span class="nav-titulo">Automóveis</span>
+                            <span class="nav-titulo">@lang('linguagem.automobiles')</span>
                         </a>
                     @endcan
                     
                     @can('list-order-service')
                         <a href="#" class="nav-link">
                             <i class="fas fa-tools navIcone"></i>
-                            <span class="nav-titulo">Ordem de Serviço</span>
+                            <span class="nav-titulo">@lang('linguagem.order_of_service')</span>
                         </a>
                     @endcan
 
                     @can('list-employees')
                         <a href="#" class="nav-link">
                             <i class="fas fa-user-cog navIcone"></i>
-                            <span class="nav-titulo">Funcionários</span>
+                            <span class="nav-titulo">@lang('linguagem.employees')</span>
                         </a>
                     @endcan
 
                     @can('list-client')
                         <a href="#" class="nav-link">
                             <i class="fas fa-user-tie navIcone"></i>
-                            <span class="nav-titulo">Clientes</span>
+                            <span class="nav-titulo">@lang('linguagem.customers')</span>
                         </a>
                     @endcan
 
                     @can('list-products-and-services')
                         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseProSer" aria-expanded="false" aria-controls="collapseOneProSer">
                             <i class="fas fa-cubes navIcone"></i>
-                            <span class="nav-titulo">Produtos e Serviços</span>
+                            <span class="nav-titulo">@lang('linguagem.products_and_services')</span>
 
                             <i class="fas fa-angle-down seta"></i>
                         </a>
@@ -132,11 +132,11 @@
                             <div class="card-body ml-4">
                                 <a href="#" class="nav-link">
                                     <i class="fas fa-box"></i>
-                                    <span class="nav-titulo">Produtos</span>
+                                    <span class="nav-titulo">@lang('linguagem.products')</span>
                                 </a>
                                 <a href="#" class="nav-link">
                                     <i class="fas fa-wrench"></i>
-                                    <span class="nav-titulo">Serviços</span>
+                                    <span class="nav-titulo">@lang('linguagem.services')</span>
                                 </a>
                             </div>
                         </div>
@@ -144,7 +144,7 @@
                     @if ((Auth::user()->can('list-user')) or (Auth::user()->can('acl')))
                         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePermissoes" aria-expanded="false" aria-controls="collapseOnePermissoes">
                             <i class="fas fa-cogs navIcone"></i>
-                            <span class="nav-titulo">Configurações</span>
+                            <span class="nav-titulo">@lang('linguagem.settings')</span>
 
                             <i class="fas fa-angle-down seta"></i>
                         </a>
@@ -176,7 +176,7 @@
                                 @endcan
                                 <a href="#" class="nav-link">
                                     <i class="fab fa-font-awesome-flag"></i>
-                                    <span class="nav-titulo">Situações</span>
+                                    <span class="nav-titulo">@lang('linguagem.situations')</span>
                                 </a>
                             </div>
                         </div>

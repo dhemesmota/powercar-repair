@@ -128,34 +128,6 @@ class ProfileController extends Controller
      */
     public function show($id, Request $request)
     {
-
-
-        $routeName = $this->route; // passando a rota - caminho
-
-        dd($request);
-        $register = $this->model->find($id);
-        if($register){
-            
-            $page = trans('linguagem.user_list'); // traduzindo o titulo da lista
-            $page2 = trans('linguagem.user');
-
-            $breadcrumb = [
-                (object)['url'=>route('home'),'title'=>trans('linguagem.home')],
-                (object)['url'=>route($routeName.'.index'),'title'=>trans('linguagem.list',['page'=>$page])],
-                (object)['url'=>'','title'=>trans('linguagem.show_crud',['page'=>$page2])]
-            ];
-            
-            // Verificar se o usuário deseja deletar o registro, vendo se o delete foi recebido por parametro
-            $delete = false;
-            if ($request->delete ?? false) {
-                session()->flash('msg',trans('linguagem.delete_this_record'));
-                session()->flash('status','notification'); // tipos: success error notification
-                $delete = true;
-            }
-
-            return view('admin.'.$routeName.'.show',compact('register','page','page2','routeName','breadcrumb','delete'));
-        }
-
         // Caso não encontre o usuário retornar para lista de usuários
         return redirect()->route($routeName.'.index');
     }
