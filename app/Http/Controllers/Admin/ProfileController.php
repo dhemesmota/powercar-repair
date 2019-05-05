@@ -177,16 +177,13 @@ class ProfileController extends Controller
             $page = trans('linguagem.user_list'); // traduzindo o titulo da lista
             $page2 = trans('linguagem.user');
 
-            // Pegar funções do usuário
-            $roles = $this->modelRole->all('name','ASC');
-
             $breadcrumb = [
                 (object)['url'=>route('home'),'title'=>trans('linguagem.home')],
                 (object)['url'=>route($routeName.'.index'),'title'=>trans('linguagem.list',['page'=>$page])],
                 (object)['url'=>'','title'=>trans('linguagem.edit_crud',['page'=>$page2])]
             ];
 
-            return view('admin.'.$routeName.'.edit',compact('register','page','page2','routeName','breadcrumb','roles'));
+            return view('admin.'.$routeName.'.edit',compact('register','page','page2','routeName','breadcrumb'));
         }
 
         // Caso não encontre o usuário retornar para lista de usuários
@@ -205,20 +202,26 @@ class ProfileController extends Controller
 
         $data = $request->all();
 
-        if(!$data['password']){
-            unset($data['password']);
-        }
+        $cpf = str_replace('-', '', str_replace('.','', $data['cpf']));
+        $telephone = str_replace('-', '', str_replace(') ', '', str_replace('(','', $data['telephone'])));
+        $zip_code = str_replace('-', '', str_replace(' ','', $data['zip_code']));
+
+        $data['cpf'] = $cpf;
+        $data['telephone'] = $telephone;
+        $data['zip_code'] = $zip_code;
 
         Validator::make($data, [
-            'name' => ['required', 'string', 'min:4', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
-            'password' => ['sometimes', 'required', 'string', 'min:6', 'confirmed'],
+            'cpf' => ['required', 'string', 'max:11', Rule::unique('profiles')->ignore($id)],
+            'telephone' => ['required', 'string', 'min:9', 'max:11'],
+            'address' => ['string', 'min:6', 'max:255'],
+            'neighborhood' => ['string', 'min:6', 'max:255'],
+            'zip_code' => ['string', 'min:8', 'max:8'],
         ])->validate();
 
         if($this->model->update($data,$id)){
             session()->flash('msg',trans('linguagem.successfully_edited_record'));
             session()->flash('status','success'); // tipos: success error notification
-            return redirect()->back();
+            return redirect()->route('profile.index');
         } else {
             session()->flash('msg',trans('linguagem.error_editing_record'));
             session()->flash('status','error'); // tipos: success error notification
