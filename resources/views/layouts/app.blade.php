@@ -141,7 +141,7 @@
                                     <i class="fas fa-box"></i>
                                     <span class="nav-titulo">@lang('linguagem.products')</span>
                                 </a>
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('services.index') }}" class="nav-link">
                                     <i class="fas fa-wrench"></i>
                                     <span class="nav-titulo">@lang('linguagem.services')</span>
                                 </a>
@@ -245,6 +245,7 @@
         $(document).ready(function(){
             $('.date').mask('11/11/1111');
             $('.time').mask('00:00:00');
+            $('.value').mask('0.000,00', {reverse: true});
             $('.date_time').mask('00/00/0000 00:00:00');
             $('.cep').mask('00000-000');
             $('.zip_code').mask('00000-000');

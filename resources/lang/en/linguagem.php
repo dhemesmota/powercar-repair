@@ -76,4 +76,7 @@ return [
     'settings'=>'Settings',
     'situations'=>'Situations',
     'attendance'=>'Attendance',
+    'service_list'=>'Services',
+    'service'=>'Service',
+    'value'=>'Value',
 ];

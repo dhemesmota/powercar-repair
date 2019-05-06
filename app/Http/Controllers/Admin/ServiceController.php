@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\Contracts\PermissionRepositoryInterface;
+use App\Repositories\Contracts\ServiceRepositoryInterface;
 use Validator;
 
-class PermissionController extends Controller
+class ServiceController extends Controller
 {
 
-    private $route = 'permissions';
+    private $route = 'services';
     private $paginate = 10;
-    private $search = ['name','description'];
+    private $search = ['name','description','value'];
     private $model;
 
-    public function __construct(PermissionRepositoryInterface $model)
+    public function __construct(ServiceRepositoryInterface $model)
     {
         $this->model = $model;
     }
@@ -30,18 +30,18 @@ class PermissionController extends Controller
     {
 
         // Definiando as colunas e traduzação das colunas
-        $columnList = ['id'=>'#','name'=>trans('linguagem.name'),'description'=>trans('linguagem.description')];
+        $columnList = ['id'=>'#','name'=>trans('linguagem.name'),'description'=>trans('linguagem.description'),'value'=>trans('linguagem.value')];
 
         $search = "";
         if(isset($request->search) and !empty($request->search)){
             $search = $request->search;
-            $list = $this->model->findWhereLike($this->search,$search,'id','DESC');
+            $list = $this->model->findWhereLike($this->search,$search,'name','ASC');
         } else {
-            $list = $this->model->paginate($this->paginate, 'id', 'DESC'); // para criar paginaçao com 5 itens por pagina
+            $list = $this->model->paginate($this->paginate, 'name', 'ASC'); // para criar paginaçao com 5 itens por pagina
             //$list = $this->model->all(); // trás todos os usuários
         }
 
-        $page = trans('linguagem.permission_list'); // traduzindo o titulo da lista
+        $page = trans('linguagem.service_list'); // traduzindo o titulo da lista
 
         $routeName = $this->route; // passando a rota - caminho
 
@@ -64,8 +64,8 @@ class PermissionController extends Controller
     public function create()
     {
 
-        $page = trans('linguagem.permission_list'); // traduzindo o titulo da lista
-        $page_create = trans('linguagem.permission');
+        $page = trans('linguagem.service_list'); // traduzindo o titulo da lista
+        $page_create = trans('linguagem.service');
         $routeName = $this->route; // passando a rota - caminho
 
         $breadcrumb = [
@@ -90,6 +90,7 @@ class PermissionController extends Controller
         Validator::make($data, [
             'name' => ['required', 'string', 'min:4', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
+            'value' => ['required'],
         ])->validate();
 
         if($this->model->create($data)){
@@ -116,8 +117,8 @@ class PermissionController extends Controller
         $register = $this->model->find($id);
         if($register){
             
-            $page = trans('linguagem.permission_list'); // traduzindo o titulo da lista
-            $page2 = trans('linguagem.permission');
+            $page = trans('linguagem.service_list'); // traduzindo o titulo da lista
+            $page2 = trans('linguagem.service');
 
             $breadcrumb = [
                 (object)['url'=>route('home'),'title'=>trans('linguagem.home')],
@@ -152,8 +153,8 @@ class PermissionController extends Controller
         $register = $this->model->find($id);
         if($register){
             
-            $page = trans('linguagem.permission_list'); // traduzindo o titulo da lista
-            $page2 = trans('linguagem.permission');
+            $page = trans('linguagem.service_list'); // traduzindo o titulo da lista
+            $page2 = trans('linguagem.service');
 
             $breadcrumb = [
                 (object)['url'=>route('home'),'title'=>trans('linguagem.home')],
@@ -182,6 +183,7 @@ class PermissionController extends Controller
         Validator::make($data, [
             'name' => ['required', 'string', 'min:4', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
+            'value' => ['required'],
         ])->validate();
 
         if($this->model->update($data,$id)){
