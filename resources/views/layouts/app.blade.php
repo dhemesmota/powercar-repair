@@ -122,7 +122,7 @@
                     @endcan
 
                     @can('list-client')
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('clients.index') }}" class="nav-link">
                             <i class="fas fa-user-tie navIcone"></i>
                             <span class="nav-titulo">@lang('linguagem.customers')</span>
                         </a>
