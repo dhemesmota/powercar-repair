@@ -100,10 +100,10 @@
                         </a>
                     @endcan
 
-                    @can('list-car')
-                        <a href="#" class="nav-link">
+                    @can('list-vehicle')
+                        <a href="{{ route('vehicles.index') }}" class="nav-link">
                             <i class="fas fa-car-alt"></i>
-                            <span class="nav-titulo">@lang('linguagem.automobiles')</span>
+                            <span class="nav-titulo">@lang('linguagem.vehicle')</span>
                         </a>
                     @endcan
                     
@@ -244,6 +244,7 @@
         // Mascaras de input
         $(document).ready(function(){
             $('.date').mask('11/11/1111');
+            $('.year').mask('0000/0000');
             $('.time').mask('00:00:00');
             $('.value').mask('0.000,00', {reverse: true});
             $('.date_time').mask('00/00/0000 00:00:00');
@@ -254,6 +255,7 @@
             $('.telephone').mask('(00) 00000-0000');
             $('.phone_us').mask('(000) 000-0000');
             $('.mixed').mask('AAA 000-S0S');
+            $('.board').mask('AAAAAAA');
             $('.cpf').mask('000.000.000-00', {reverse: true});
             $('.money').mask('000.000.000.000.000,00', {reverse: true});
         });

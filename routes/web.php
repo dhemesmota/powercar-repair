@@ -56,6 +56,7 @@ Route::prefix('admin')->middleware('auth')->namespace('Admin')->group(function (
     Route::resource('/profile', 'ProfileController');
     Route::resource('/services', 'ServiceController');
     Route::resource('/products', 'ProductController');
+    Route::resource('/vehicles', 'VehicleController');
 });
 
 Route::prefix('admin')->middleware(['auth','can:acl'])->namespace('Admin')->group(function () {

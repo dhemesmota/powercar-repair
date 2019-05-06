@@ -79,12 +79,18 @@ class User extends Authenticatable
     }
 
     /*
-    * Criando um relacionamento do usuário com funções
-    * Relacionamento muitos para muitos
+    * Criando um relacionamento do usuário com perfil
     */
     public function profile()
     {
         return $this->hasOne('App\Profile');
+    }
+    /*
+    * Criando um relacionamento do usuário com veículo
+    */
+    public function vehicles()
+    {
+        return $this->hasMany('App\Vehicle');
     }
 
 }
