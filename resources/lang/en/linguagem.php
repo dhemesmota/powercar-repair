@@ -79,4 +79,7 @@ return [
     'service_list'=>'Services',
     'service'=>'Service',
     'value'=>'Value',
+    'stock'=>'Stock',
+    'product_list'=>'Products',
+    'product'=>'Product',
 ];

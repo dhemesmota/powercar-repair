@@ -137,7 +137,7 @@
                         </a>
                         <div id="collapseProSer" class="collapse" aria-labelledby="collapseOneProSer" data-parent="#navBarLateral">
                             <div class="card-body ml-4">
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('products.index') }}" class="nav-link">
                                     <i class="fas fa-box"></i>
                                     <span class="nav-titulo">@lang('linguagem.products')</span>
                                 </a>
