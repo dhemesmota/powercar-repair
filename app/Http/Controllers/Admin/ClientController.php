@@ -36,7 +36,6 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
-        //$this->authorize( 'list-user' ); // Verifica se tem autorização de acesso
         if (Gate::denies( 'list-client' )) {
             // Caso não tenha acesso a pagina, será redirecionado a pagina home
             session()->flash('msg',trans('linguagem.access_denied'));
@@ -56,7 +55,7 @@ class ClientController extends Controller
             //$list = $this->model->all(); // trás todos os usuários
         }
 
-        $page = trans('linguagem.user_list'); // traduzindo o titulo da lista
+        $page = trans('linguagem.client_list'); // traduzindo o titulo da lista
 
         $routeName = $this->route; // passando a rota - caminho
 
@@ -78,16 +77,16 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //$this->authorize('create-user'); // Verifica se tem autorização de acesso
-        if (Gate::denies('create-user')) {
+        //$this->authorize('create-client'); // Verifica se tem autorização de acesso
+        if (Gate::denies('create-client')) {
             // Caso não tenha acesso a pagina, será redirecionado a pagina home
             session()->flash('msg', trans('linguagem.access_denied'));
             session()->flash('status', 'error');
             return redirect()->back();
         }
 
-        $page = trans('linguagem.user_list'); // traduzindo o titulo da lista
-        $page_create = trans('linguagem.user');
+        $page = trans('linguagem.client_list'); // traduzindo o titulo da lista
+        $page_create = trans('linguagem.client');
         $routeName = $this->route; // passando a rota - caminho
 
         // Pegar funções do usuário
@@ -110,8 +109,8 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //$this->authorize('create-user'); // Verifica se tem autorização de acesso
-        if (Gate::denies('create-user')) {
+        //$this->authorize('create-client'); // Verifica se tem autorização de acesso
+        if (Gate::denies('create-client')) {
             // Caso não tenha acesso a pagina, será redirecionado a pagina home
             session()->flash('msg', trans('linguagem.access_denied'));
             session()->flash('status', 'error');
@@ -147,7 +146,7 @@ class ClientController extends Controller
     public function show($id, Request $request)
     {
 
-        if (Gate::denies('show-user')) {
+        if (Gate::denies('show-client')) {
             // Caso não tenha acesso a pagina, será redirecionado a pagina home
             session()->flash('msg', trans('linguagem.access_denied'));
             session()->flash('status', 'error');
@@ -159,8 +158,8 @@ class ClientController extends Controller
         $register = $this->model->find($id);
         if($register){
             
-            $page = trans('linguagem.user_list'); // traduzindo o titulo da lista
-            $page2 = trans('linguagem.user');
+            $page = trans('linguagem.client_list'); // traduzindo o titulo da lista
+            $page2 = trans('linguagem.client');
 
             $breadcrumb = [
                 (object)['url'=>route('home'),'title'=>trans('linguagem.home')],
@@ -191,7 +190,7 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        if (Gate::denies('edit-user')) {
+        if (Gate::denies('edit-client')) {
             // Caso não tenha acesso a pagina, será redirecionado a pagina home
             session()->flash('msg', trans('linguagem.access_denied'));
             session()->flash('status', 'error');
@@ -203,8 +202,8 @@ class ClientController extends Controller
         $register = $this->model->find($id);
         if($register){
             
-            $page = trans('linguagem.user_list'); // traduzindo o titulo da lista
-            $page2 = trans('linguagem.user');
+            $page = trans('linguagem.client_list'); // traduzindo o titulo da lista
+            $page2 = trans('linguagem.client');
 
             // Pegar funções do usuário
             $roles = $this->modelRole->all('name','ASC');
@@ -231,7 +230,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Gate::denies('edit-user')) {
+        if (Gate::denies('edit-client')) {
             // Caso não tenha acesso a pagina, será redirecionado a pagina home
             session()->flash('msg', trans('linguagem.access_denied'));
             session()->flash('status', 'error');
@@ -269,7 +268,7 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        if (Gate::denies('delete-user')) {
+        if (Gate::denies('delete-client')) {
             // Caso não tenha acesso a pagina, será redirecionado a pagina home
             session()->flash('msg', trans('linguagem.access_denied'));
             session()->flash('status', 'error');

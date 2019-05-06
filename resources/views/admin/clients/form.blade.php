@@ -76,37 +76,4 @@
         </div> 
     @endif
 
-    <div class="form-group col-6">
-        <label for="roles">{{ __('linguagem.role_list') }}</label>
-        <div class="form-group">
-            @foreach ($roles as $key => $value)
-
-                @php
-                    $checked = '';
-                    // No caso da validação, permitir que fique selecionado as permissões selecionadas
-                    if(old('roles') ?? false){
-                        foreach (old('roles') as $key => $id) {
-                            if($id == $value->id){
-                                $checked = 'checked';
-                            }
-                        }
-                    } else {
-                        if($register ?? false){
-                            foreach ($register->roles as $key => $role) {
-                                if($role->id == $value->id){
-                                    $checked = 'checked';
-                                }
-                            }
-                        }
-                    }
-                @endphp
-
-                <div class="form-check">
-                    <input {{ $checked }} type="radio" class="form-check-input" name="roles[]" id="{{ $value->id }}" value="{{ $value->id }}">
-                    <label class="form-control-label" for="{{ $value->id }}">{{ $value->name }}</label>
-                </div>
-            @endforeach
-        </div>
-    </div>
-
 </div>

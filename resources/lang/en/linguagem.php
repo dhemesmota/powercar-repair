@@ -69,7 +69,7 @@ return [
     'automobiles'=>'Automobiles',
     'order_of_service'=>'Order of Service',
     'employees'=>'Employees',
-    'customers'=>'Customers',
+    'customers'=>'Clients',
     'products_and_services'=>'Products and Services',
     'products'=>'Products',
     'services'=>'Services',
@@ -88,4 +88,6 @@ return [
     'board'=>'Board',
     'vehicle'=>'Vehicle',
     'vehicle_list'=>'Vehicles',
+    'client'=>'Client',
+    'client_list'=>'Clients',
 ];

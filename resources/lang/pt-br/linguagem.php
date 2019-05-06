@@ -88,4 +88,6 @@ return [
     'board'=>'Placa',
     'vehicle'=>'Veículo',
     'vehicle_list'=>'Veículos',
+    'client'=>'Cliente',
+    'client_list'=>'Clientes',
 ];

@@ -6,10 +6,29 @@ use App\Repositories\Contracts\ClientRepositoryInterface;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\UploadedFile;
+use DB;
 
 class ClientRepository extends AbstractRepository implements ClientRepositoryInterface
 {
     protected $model = User::class;
+
+    /*
+    * Paginação
+    */
+    public function paginate(int $paginate = 10, string $column = 'id', string $order = 'ASC')
+    {
+        /**
+         * Retornando todos os usuários clientes
+         */
+        return DB::table('users')
+        ->join('role_user', function ($join) {
+            $join->on('users.id', '=', 'role_user.user_id')
+                 ->where('role_user.role_id', '=', 5);
+        })
+        ->orderBy('users.'.$column, $order)
+        ->paginate($paginate);
+
+    }
 
     public function create(array $data)
     {
@@ -22,13 +41,7 @@ class ClientRepository extends AbstractRepository implements ClientRepositoryInt
         $data['password'] = Hash::make($data['password']);
         $register = $this->model->create($data);
 
-        if(isset($data['roles']) && count($data['roles'])){
-            foreach ($data['roles'] as $key => $value){
-                // Relacionamento com permissões
-                // o $value vai contar o id da permissão
-                $register->roles()->attach($value);
-            }
-        }
+        $register->roles()->attach(5);
         
         return (bool) $register;
     }
@@ -52,13 +65,7 @@ class ClientRepository extends AbstractRepository implements ClientRepositoryInt
                 }
             }
             
-            if(isset($data['roles']) && count($data['roles'])){
-                foreach ($data['roles'] as $key => $value){
-                    // Relacionamento com permissões
-                    // o $value vai contar o id da permissão
-                    $register->roles()->attach($value);
-                }
-            }
+            $register->roles()->attach(5);
 
             // imagem padrão
             if (isset($data['image']) && $data['image']->isValid()) {
@@ -98,16 +105,5 @@ class ClientRepository extends AbstractRepository implements ClientRepositoryInt
             return false;
         }
     }
-
-    /*
-    * Listar usuários com Paginação 
-    */
-    public function paginate(int $paginate = 10, string $column = 'id', string $order = 'ASC')
-    {
-        # $user_id = auth()->user()->id; // pegando o id do usuario logado
-        // Listando uruários que não seja administrador
-        return $this->model->where('id', '<>', 1)->orderBy($column, $order)->paginate($paginate);
-    }
-
     
 }
