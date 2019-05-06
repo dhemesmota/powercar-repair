@@ -19,9 +19,9 @@
             </span>
         @endif
     </div>
-    <div class="form-group col-6">
+    <div class="form-group col-12">
         <label for="description">{{ __('linguagem.description') }}</label>
-        <input type="text" name="description" id="description" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"  value="{{ old('description') ?? ($register->description ?? '') }}" required>
+        <textarea name="description" id="description" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" required>{{ old('description') ?? ($register->description ?? '') }}</textarea>
 
         @if ($errors->has('description'))
             <span class="invalid-feedback" role="alert">
