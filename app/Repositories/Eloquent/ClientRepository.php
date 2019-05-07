@@ -21,12 +21,14 @@ class ClientRepository extends AbstractRepository implements ClientRepositoryInt
          * Retornando todos os usuários clientes
          */
         return DB::table('users')
-        ->join('role_user', function ($join) {
-            $join->on('users.id', '=', 'role_user.user_id')
-                 ->where('role_user.role_id', '=', 5);
-        })
-        ->orderBy('users.'.$column, $order)
-        ->paginate($paginate);
+            ->join('role_user', function ($join) {
+                $join->on('users.id', '=', 'role_user.user_id')
+                    ->where('role_user.role_id', '=', 5);
+            })
+            ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
+            ->select('users.*', 'profiles.telephone')
+            ->orderBy('users.'.$column, $order)
+            ->paginate($paginate);
 
     }
 

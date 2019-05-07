@@ -44,7 +44,13 @@ class ClientController extends Controller
         }
 
         // Definiando as colunas e traduzação das colunas
-        $columnList = ['id'=>'#','image'=>trans('linguagem.image'),'name'=>trans('linguagem.name'),'email'=>trans('linguagem.email')];
+        $columnList = [
+            'id'=>'#',
+            'image'=>trans('linguagem.image'),
+            'name'=>trans('linguagem.name'),
+            'email'=>trans('linguagem.email'),
+            'telephone'=>trans('linguagem.telephone')    
+        ];
 
         $search = "";
         if(isset($request->search) and !empty($request->search)){
