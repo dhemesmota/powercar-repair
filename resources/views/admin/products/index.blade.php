@@ -12,11 +12,18 @@
         @endbreadcrumb_component
 
         <!-- Componente search -->
-        @search_component(['routeName'=>$routeName,'search'=>$search])
+        @search_component(['routeName'=>$routeName,'search'=>$search,'permissionCreate'=>'create-product'])
         @endsearch_component
 
         <!-- Componente tabela -->
-        @table_component(['columnList'=>$columnList,'list'=>$list,'routeName'=>$routeName])
+        @table_component([
+            'columnList'=>$columnList,
+            'list'=>$list,
+            'routeName'=>$routeName,
+            'permissionShow'=>'show-product',
+            'permissionEdit'=>'edit-product',
+            'permissionDelete'=>'delete-product'
+            ])
         @endtable_component
 
         <!-- Componente paginate -->

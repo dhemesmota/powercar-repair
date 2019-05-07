@@ -25,15 +25,21 @@
                     @endif
                 @endforeach
                 <td class="text-right">
-                    <a href="{{ route($routeName.'.show',$value->id) }}" class="btn btn-info btn-sm">
-                        <i class="fas fa-eye"></i>
-                    </a>
-                    <a href="{{ route($routeName.'.edit',$value->id) }}" class="btn btn-warning btn-sm">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <a href="{{ route($routeName.'.show',[$value->id,'delete=1']) }}" class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash"></i>
-                    </a>
+                    @can($permissionShow)
+                        <a href="{{ route($routeName.'.show',$value->id) }}" class="btn btn-info btn-sm">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    @endcan
+                    @can($permissionEdit)
+                        <a href="{{ route($routeName.'.edit',$value->id) }}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    @endcan
+                    @can($permissionDelete)
+                        <a href="{{ route($routeName.'.show',[$value->id,'delete=1']) }}" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    @endcan
                 </td>
             </tr>
             @endforeach

@@ -11,7 +11,7 @@ class PermissionController extends Controller
 {
 
     private $route = 'permissions';
-    private $paginate = 10;
+    private $paginate = 20;
     private $search = ['name','description'];
     private $model;
 

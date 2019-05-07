@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\VehicleRepositoryInterface;
 use Validator;
 
+use Illuminate\Support\Facades\Gate;
 class VehicleController extends Controller
 {
 
@@ -28,6 +29,12 @@ class VehicleController extends Controller
      */
     public function index(Request $request)
     {
+        if (Gate::denies('list-vehicle')) {
+            // Caso não tenha acesso a pagina, será redirecionado a pagina home
+            session()->flash('msg', trans('linguagem.access_denied'));
+            session()->flash('status', 'error');
+            return redirect()->route('home');
+        }
 
         // Definiando as colunas e traduzação das colunas
         $columnList = ['id'=>'#','model'=>trans('linguagem.model'),'color'=>trans('linguagem.color'),'year'=>trans('linguagem.year'), 'board'=>trans('linguagem.board')];
@@ -64,6 +71,13 @@ class VehicleController extends Controller
     public function create()
     {
 
+        if (Gate::denies('create-vehicle')) {
+            // Caso não tenha acesso a pagina, será redirecionado a pagina home
+            session()->flash('msg', trans('linguagem.access_denied'));
+            session()->flash('status', 'error');
+            return redirect()->route('home');
+        }
+
 
         $page = trans('linguagem.vehicle_list'); // traduzindo o titulo da lista
         $page_create = trans('linguagem.vehicle');
@@ -86,6 +100,13 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('create-vehicle')) {
+            // Caso não tenha acesso a pagina, será redirecionado a pagina home
+            session()->flash('msg', trans('linguagem.access_denied'));
+            session()->flash('status', 'error');
+            return redirect()->route('home');
+        }
+
         $data = $request->all();//'model','color','year','board'
 
         Validator::make($data, [
@@ -115,6 +136,13 @@ class VehicleController extends Controller
      */
     public function show($id, Request $request)
     {
+        if (Gate::denies('show-vehicle')) {
+            // Caso não tenha acesso a pagina, será redirecionado a pagina home
+            session()->flash('msg', trans('linguagem.access_denied'));
+            session()->flash('status', 'error');
+            return redirect()->route('home');
+        }
+
         $routeName = $this->route; // passando a rota - caminho
 
         $register = $this->model->find($id);
@@ -151,6 +179,13 @@ class VehicleController extends Controller
      */
     public function edit($id)
     {
+        if (Gate::denies('edit-vehicle')) {
+            // Caso não tenha acesso a pagina, será redirecionado a pagina home
+            session()->flash('msg', trans('linguagem.access_denied'));
+            session()->flash('status', 'error');
+            return redirect()->route('home');
+        }
+
         $routeName = $this->route; // passando a rota - caminho
 
         $register = $this->model->find($id);
@@ -181,6 +216,13 @@ class VehicleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('edit-vehicle')) {
+            // Caso não tenha acesso a pagina, será redirecionado a pagina home
+            session()->flash('msg', trans('linguagem.access_denied'));
+            session()->flash('status', 'error');
+            return redirect()->route('home');
+        }
+
         $data = $request->all();
 
         Validator::make($data, [
@@ -209,6 +251,13 @@ class VehicleController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('delete-vehicle')) {
+            // Caso não tenha acesso a pagina, será redirecionado a pagina home
+            session()->flash('msg', trans('linguagem.access_denied'));
+            session()->flash('status', 'error');
+            return redirect()->route('home');
+        }
+
         if($this->model->delete($id)){
             session()->flash('msg',trans('linguagem.registration_deleted_successfully'));
             session()->flash('status','success'); // tipos: success error notification
