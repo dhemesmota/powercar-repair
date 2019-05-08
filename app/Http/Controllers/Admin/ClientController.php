@@ -21,11 +21,13 @@ class ClientController extends Controller
     private $search = ['name','email'];
     private $model;
     private $modelRole;
+    private $modelProfile;
 
-    public function __construct(ClientRepositoryInterface $model, RoleRepositoryInterface $modelRole)
+    public function __construct(ClientRepositoryInterface $model, RoleRepositoryInterface $modelRole, ProfileRepositoryInterface $modelProfile)
     {
         $this->model = $model;
         $this->modelRole = $modelRole;
+        $this->modelProfile = $modelProfile;  // parei aqui, continuar
     }
 
 
