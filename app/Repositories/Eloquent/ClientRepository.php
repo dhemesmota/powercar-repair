@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Repositories\Contracts\ClientRepositoryInterface;
 use App\User;
+use App\Profile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\UploadedFile;
 use DB;
@@ -11,6 +12,7 @@ use DB;
 class ClientRepository extends AbstractRepository implements ClientRepositoryInterface
 {
     protected $model = User::class;
+    protected $modelProfile = Profile::class;
 
     /*
     * Paginação
@@ -30,6 +32,14 @@ class ClientRepository extends AbstractRepository implements ClientRepositoryInt
             ->orderBy('users.'.$column, $order)
             ->paginate($paginate);
 
+    }
+
+    /*
+    * Buscar dados pelo id
+    */
+    public function find(int $id)
+    {
+        return $this->model->find($id);
     }
 
     public function create(array $data)

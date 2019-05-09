@@ -165,6 +165,8 @@ class ClientController extends Controller
         $routeName = $this->route; // passando a rota - caminho
 
         $register = $this->model->find($id);
+        $profile = \App\Profile::where('user_id',$id)->get();
+
         if($register){
             
             $page = trans('linguagem.client_list'); // traduzindo o titulo da lista
@@ -184,7 +186,7 @@ class ClientController extends Controller
                 $delete = true;
             }
 
-            return view('admin.'.$routeName.'.show',compact('register','page','page2','routeName','breadcrumb','delete'));
+            return view('admin.'.$routeName.'.show',compact('register','page','page2','routeName','breadcrumb','delete','profile'));
         }
 
         // Caso não encontre o usuário retornar para lista de usuários
