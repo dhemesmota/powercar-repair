@@ -90,4 +90,5 @@ return [
     'vehicle_list'=>'Vehicles',
     'client'=>'Client',
     'client_list'=>'Clients',
+    'complete_profile_data'=>'Complete your data',
 ];

@@ -32,6 +32,18 @@ class HomeController extends Controller
                                 ->where('role_user.user_id','=',$userId)
                                 ->get();
         //dd($roleUsuario);
+
+        // Verificar se é cliente, se sim, verificar perfil
+        if($roleUsuario[0]->id > 4){
+            $profile = DB::table('profiles')->where('user_id',$userId)->first();
+            // Verificar se o perfil já contem dados, se não, redirecionar para página de perfil
+            if($profile == null) {
+                session()->flash('msg',trans( 'linguagem.complete_profile_data'));
+                session()->flash('status','notification'); // tipos: success error notification
+                return redirect()->route('profile.index');
+            }
+        }
+
         return view('home',compact('roleUsuario'));
     }
 }
