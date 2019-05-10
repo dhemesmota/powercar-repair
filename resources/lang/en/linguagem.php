@@ -91,4 +91,6 @@ return [
     'client'=>'Client',
     'client_list'=>'Clients',
     'complete_profile_data'=>'Complete your data',
+    'situation'=>'Situation',
+    'situation_list'=>'Situations',
 ];

@@ -169,7 +169,7 @@
                                     <a href="{{ route('roles.index') }}" class="nav-link">
                                         <i class="fas fa-user-circle"></i>
                                         <span class="nav-titulo">
-                                            @lang('linguagem.role')
+                                            @lang('linguagem.role_list')
                                         </span>
                                     </a>
                                 @endcan
@@ -177,11 +177,11 @@
                                     <a href="{{ route('permissions.index') }}" class="nav-link">
                                         <i class="fas fa-lock-open"></i>
                                         <span class="nav-titulo">
-                                            @lang('linguagem.permission')
+                                            @lang('linguagem.permission_list')
                                         </span>
                                     </a>
                                 @endcan
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('situations.index') }}" class="nav-link">
                                     <i class="fab fa-font-awesome-flag"></i>
                                     <span class="nav-titulo">@lang('linguagem.situations')</span>
                                 </a>

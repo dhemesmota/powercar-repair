@@ -17,7 +17,7 @@
                 <div class="card bg-light mb-3 shadow">
                     <img class="img-fluid" src="{{ $register->image }}" alt="{{ $register->name }}">
                 </div>
-                <p>{{ __('linguagem.name') }}: {{ $register->name }}</p>
+                <p>{{ __('linguagem.client') }}: {{ $register->name }}</p>
                 <p>{{ __('linguagem.email') }}: {{ $register->email }}</p>
             </div>
             <div class="col-md-9">
