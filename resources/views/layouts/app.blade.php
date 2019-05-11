@@ -67,7 +67,7 @@
                 <a  href="{{ route('profile.index') }}" class="perfil-menu my-4">
                     <div>
                         <figure class="text-center">
-                            <img class="img-fluid img-menu" src="{{Auth::user()->image}}" alt="Chaplin">
+                            <img class="img-fluid img-menu" src="{{Auth::user()->image}}">
                         </figure>
                     </div>
                     <div class="d-flex flex-column text-center">

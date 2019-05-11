@@ -30,7 +30,11 @@ class SituationController extends Controller
     {
 
         // Definiando as colunas e traduzação das colunas
-        $columnList = ['id'=>'#','name'=>trans('linguagem.name'),'description'=>trans('linguagem.description')];
+        $columnList = [
+            'id'=>'#',
+            'name'=>trans('linguagem.name'),
+            'description'=>trans('linguagem.description')
+        ];
 
         $search = "";
         if(isset($request->search) and !empty($request->search)){
@@ -89,7 +93,8 @@ class SituationController extends Controller
 
         Validator::make($data, [
             'name' => ['required', 'string', 'min:4', 'max:255'],
-            'description' => ['required', 'string', 'max:255']
+            'description' => ['required', 'string', 'max:255'],
+            'color' => ['required', 'string', 'max:40']
         ])->validate();
 
         if($this->model->create($data)){
@@ -181,7 +186,8 @@ class SituationController extends Controller
 
         Validator::make($data, [
             'name' => ['required', 'string', 'min:4', 'max:255'],
-            'description' => ['required', 'string', 'max:255']
+            'description' => ['required', 'string', 'max:255'],
+            'color' => ['required', 'string', 'max:40']
         ])->validate();
 
         if($this->model->update($data,$id)){
