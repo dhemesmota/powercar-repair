@@ -93,4 +93,6 @@ return [
     'complete_profile_data'=>'Complete seus dados',
     'situation'=>'Situação',
     'situation_list'=>'Situações',
+    'employee'=>'Funcionário',
+    'employee_list'=>'Funcionários',
 ];

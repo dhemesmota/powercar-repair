@@ -115,7 +115,7 @@
                     @endcan
 
                     @can('list-employees')
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('employees.index') }}" class="nav-link">
                             <i class="fas fa-user-cog navIcone"></i>
                             <span class="nav-titulo">@lang('linguagem.employees')</span>
                         </a>
