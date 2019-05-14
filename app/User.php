@@ -85,12 +85,21 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Profile');
     }
+
     /*
     * Criando um relacionamento do usuário com veículo
     */
     public function vehicles()
     {
         return $this->hasMany('App\Vehicle');
+    }
+
+    /*
+    * Criando um relacionamento do usuário com agendamentos
+    */
+    public function schedulings()
+    {
+        return $this->hasMany('App\Scheduling');
     }
 
 }

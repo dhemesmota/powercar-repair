@@ -19,7 +19,7 @@ class Profile extends Model
      * Relacionamento para pegar o usuário que tem os determinados 
      * registros
      */
-    public function user()
+    public function users()
     {
         return $this->belongsTo('App\User');
     }

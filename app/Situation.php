@@ -49,4 +49,12 @@ class Situation extends Model
         return $value;
     }
     */
+
+    /*
+    * Criando um relacionamento do usuário com agendamentos
+    */
+    public function schedulings()
+    {
+        return $this->hasMany('App\Scheduling');
+    }
 }

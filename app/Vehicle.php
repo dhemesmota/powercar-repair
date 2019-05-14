@@ -13,7 +13,7 @@ class Vehicle extends Model
     /**
      * Relacionando veículos com usuário
      */
-    public function user()
+    public function users()
     {
         return $this->belongsTo('App\User');
     }
