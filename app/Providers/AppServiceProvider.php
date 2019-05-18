@@ -55,6 +55,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Contracts\EmployeeRepositoryInterface',
             'App\Repositories\Eloquent\EmployeeRepository'
         );
+        $this->app->bind(
+            'App\Repositories\Contracts\SchedulingRepositoryInterface',
+            'App\Repositories\Eloquent\SchedulingRepository'
+        );
     }
 
     /**

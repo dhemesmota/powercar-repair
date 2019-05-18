@@ -33,17 +33,17 @@
 <body id="page-top">
 
     <!-- Navigation -->
-    <header class="nav-cabecalho container-fluid">
-        <span class="d-flex w-100">
+    <header class="nav-cabecalho container-fluid px-0">
+        <div class="row mx-0 px-0">
             <div class="logo-admin">
                 <a href="{{ route('home') }}">
                     <img class="img-fluid" src="{{asset('images/POWERCAR.png')}}" alt="PowerCar">
                 </a>
             </div>
-            <div class="nav-menu ml-auto">
-                <div class="ml-4 mr-2 text-white">
+            <div class="col px-0 mx-0 nav-menu border-bottom">
+                <div class="ml-auto mr-2 text-white">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();" class="text-dark">
-                        <i class="fas fa-power-off"></i>
+                        <i class="fas fa-sign-out-alt"></i>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
@@ -56,13 +56,13 @@
                     </a>
                 </div>
             </div>
-        </span>
+        </div>
     </header>
 
     <!-- Conteudo Principal -->
-    <div id="main">
-        <section id="menuLateral">
-            <div class="container-fluid">
+    <div id="main" class="row container-fluid">
+        <section id="menuLateral" class="">
+            <div class="container-fluid px-0">
                 <!-- Perfil -->
                 <a  href="{{ route('profile.index') }}" class="perfil-menu my-4">
                     <div>
@@ -79,69 +79,114 @@
                 </a><!-- Fim Perfil-->
 
                 <nav id="navBarLateral" class="nav flex-column">
-                    <a href="{{ route('home') }}" class="nav-link active">
-                        <i class="fas fa-tachometer-alt navIcone"></i>
+                    @if (Request::segment(1) == 'home')
+                        @php
+                            $home = "active";
+                        @endphp
+                    @endif
+                    <a href="{{ route('home') }}" class="nav-link {{ isset($home) ? $home : '' }}">
+                        <i class="fas fa-tachometer-alt navIcone fa-2x"></i>
                         <span class="nav-titulo">
                             @lang('linguagem.dashboard')
                         </span>
                     </a>
 
                     @can('list-scheduling')
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-calendar-alt navIcone"></i>
+                        @if (Request::segment(2) == 'schedulings')
+                            @php
+                                $schedulings = "active";
+                            @endphp
+                        @endif
+                        <a href="{{ route('schedulings.index') }}" class="nav-link {{ isset($schedulings) ? $schedulings : '' }}">
+                            <i class="fas fa-calendar-alt navIcone fa-2x"></i>
                             <span class="nav-titulo">@lang('linguagem.scheduling')</span>
                         </a>
                     @endcan
 
                     @can('list-scheduling')
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-wrench navIcone"></i>
+                        @if (Request::segment(2) == 'attendances')
+                            @php
+                                $attendances = "active";
+                            @endphp
+                        @endif
+                        <a href="#" class="nav-link {{ isset($attendances) ? $attendances : '' }}">
+                            <i class="fas fa-wrench navIcone fa-2x"></i>
                             <span class="nav-titulo">@lang('linguagem.attendance')</span>
                         </a>
                     @endcan
 
                     @can('list-vehicle')
-                        <a href="{{ route('vehicles.index') }}" class="nav-link">
-                            <i class="fas fa-car-alt"></i>
+                        @if (Request::segment(2) == 'vehicles')
+                            @php
+                                $vehicles = "active";
+                            @endphp
+                        @endif
+                        <a href="{{ route('vehicles.index') }}" class="nav-link {{ isset($vehicles) ? $vehicles : '' }}">
+                            <i class="fas fa-car-alt navIcone fa-2x"></i>
                             <span class="nav-titulo">@lang('linguagem.vehicle')</span>
                         </a>
                     @endcan
                     
                     @can('list-order-service')
                         <a href="#" class="nav-link">
-                            <i class="fas fa-tools navIcone"></i>
+                            <i class="fas fa-tools navIcone fa-2x"></i>
                             <span class="nav-titulo">@lang('linguagem.order_of_service')</span>
                         </a>
                     @endcan
 
                     @can('list-employees')
-                        <a href="{{ route('employees.index') }}" class="nav-link">
-                            <i class="fas fa-user-cog navIcone"></i>
+                        @if (Request::segment(2) == 'employees')
+                            @php
+                                $employees = "active";
+                            @endphp
+                        @endif
+                        <a href="{{ route('employees.index') }}" class="nav-link {{ isset($employees) ? $employees : '' }}">
+                            <i class="fas fa-user-cog navIcone fa-2x"></i>
                             <span class="nav-titulo">@lang('linguagem.employees')</span>
                         </a>
                     @endcan
 
                     @can('list-client')
-                        <a href="{{ route('clients.index') }}" class="nav-link">
-                            <i class="fas fa-user-tie navIcone"></i>
+                        @if (Request::segment(2) == 'clients')
+                            @php
+                                $clients = "active";
+                            @endphp
+                        @endif
+                        <a href="{{ route('clients.index') }}" class="nav-link {{ isset($clients) ? $clients : '' }}">
+                            <i class="fas fa-user-tie navIcone fa-2x"></i>
                             <span class="nav-titulo">@lang('linguagem.customers')</span>
                         </a>
                     @endcan
 
                     @can('list-products-and-services')
+                        @if (Request::segment(2) == 'products' or Request::segment(2) == 'services')
+                            @php
+                                $p_and_s = "show";
+                            @endphp
+                        @endif
                         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseProSer" aria-expanded="false" aria-controls="collapseOneProSer">
-                            <i class="fas fa-cubes navIcone"></i>
+                            <i class="fas fa-cubes navIcone fa-2x"></i>
                             <span class="nav-titulo">@lang('linguagem.products_and_services')</span>
 
                             <i class="fas fa-angle-down seta"></i>
                         </a>
-                        <div id="collapseProSer" class="collapse" aria-labelledby="collapseOneProSer" data-parent="#navBarLateral">
+                        <div id="collapseProSer" class="collapse {{ isset($p_and_s) ? $p_and_s : '' }}" aria-labelledby="collapseOneProSer" data-parent="#navBarLateral">
                             <div class="card-body ml-4">
-                                <a href="{{ route('products.index') }}" class="nav-link">
+                                @if (Request::segment(2) == 'products')
+                                    @php
+                                        $products = "active2";
+                                    @endphp
+                                @endif
+                                <a href="{{ route('products.index') }}" class="nav-link {{ isset($products) ? $products : '' }}">
                                     <i class="fas fa-box"></i>
                                     <span class="nav-titulo">@lang('linguagem.products')</span>
                                 </a>
-                                <a href="{{ route('services.index') }}" class="nav-link">
+                                @if (Request::segment(2) == 'services')
+                                    @php
+                                        $services = "active2";
+                                    @endphp
+                                @endif
+                                <a href="{{ route('services.index') }}" class="nav-link {{ isset($services) ? $services : '' }}">
                                     <i class="fas fa-wrench"></i>
                                     <span class="nav-titulo">@lang('linguagem.services')</span>
                                 </a>
@@ -149,16 +194,26 @@
                         </div>
                     @endcan
                     @if ((Auth::user()->can('list-user')) or (Auth::user()->can('acl')))
+                        @if (Request::segment(2) == 'users' or Request::segment(2) == 'roles' or Request::segment(2) == 'permissions' or Request::segment(2) == 'situations')
+                            @php
+                                $settings = "show";
+                            @endphp
+                        @endif
                         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePermissoes" aria-expanded="false" aria-controls="collapseOnePermissoes">
-                            <i class="fas fa-cogs navIcone"></i>
+                            <i class="fas fa-cogs navIcone fa-2x"></i>
                             <span class="nav-titulo">@lang('linguagem.settings')</span>
 
                             <i class="fas fa-angle-down seta"></i>
                         </a>
-                        <div id="collapsePermissoes" class="collapse" aria-labelledby="collapseOnePermissoes" data-parent="#navBarLateral">
+                        <div id="collapsePermissoes" class="collapse {{ isset($settings) ? $settings : '' }}" aria-labelledby="collapseOnePermissoes" data-parent="#navBarLateral">
                             <div class="card-body ml-4">
                                 @can('list-user')
-                                    <a href="{{ route('users.index') }}" class="nav-link">
+                                    @if (Request::segment(2) == 'users')
+                                        @php
+                                            $users = "active2";
+                                        @endphp
+                                    @endif
+                                    <a href="{{ route('users.index') }}" class="nav-link {{ isset($users) ? $users : '' }}">
                                         <i class="fas fa-users"></i>
                                         <span class="nav-titulo">
                                             @lang('linguagem.users')
@@ -166,7 +221,12 @@
                                     </a>
                                 @endcan
                                 @can('acl')
-                                    <a href="{{ route('roles.index') }}" class="nav-link">
+                                    @if (Request::segment(2) == 'roles')
+                                        @php
+                                            $roles = "active2";
+                                        @endphp
+                                    @endif
+                                    <a href="{{ route('roles.index') }}" class="nav-link {{ isset($roles) ? $roles : '' }}">
                                         <i class="fas fa-user-circle"></i>
                                         <span class="nav-titulo">
                                             @lang('linguagem.role_list')
@@ -174,22 +234,34 @@
                                     </a>
                                 @endcan
                                 @can('acl')
-                                    <a href="{{ route('permissions.index') }}" class="nav-link">
+                                    @if (Request::segment(2) == 'permissions')
+                                        @php
+                                            $permissions = "active2";
+                                        @endphp
+                                    @endif
+                                    <a href="{{ route('permissions.index') }}" class="nav-link {{ isset($permissions) ? $permissions : '' }}">
                                         <i class="fas fa-lock-open"></i>
                                         <span class="nav-titulo">
                                             @lang('linguagem.permission_list')
                                         </span>
                                     </a>
                                 @endcan
-                                <a href="{{ route('situations.index') }}" class="nav-link">
-                                    <i class="fab fa-font-awesome-flag"></i>
-                                    <span class="nav-titulo">@lang('linguagem.situations')</span>
-                                </a>
+                                @can('acl')
+                                    @if (Request::segment(2) == 'situations')
+                                        @php
+                                            $situations = "active2";
+                                        @endphp
+                                    @endif
+                                    <a href="{{ route('situations.index') }}" class="nav-link {{ isset($situations) ? $situations : '' }}">
+                                        <i class="fab fa-font-awesome-flag"></i>
+                                        <span class="nav-titulo">@lang('linguagem.situations')</span>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     @endif
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();" class="nav-link">
-                        <i class="fas fa-sign-out-alt navIcone"></i>
+                        <i class="fas fa-sign-out-alt navIcone fa-2x"></i>
                         <span class="nav-titulo">
                             @lang('linguagem.logout')
                         </span>
@@ -201,7 +273,7 @@
             </div>
         </section>
 
-        <section id="conteudoMain" class="container-fluid">
+        <section id="conteudoMain" class="col container-fluid">
 
             <main class="">
                 @yield('content')

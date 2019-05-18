@@ -66,6 +66,7 @@ return [
     'zip_code'=>'CEP',
     'welcome'=>'Bem vindo(a)',
     'scheduling'=>'Agendamento',
+    'scheduling_list'=>'Agendamentos',
     'automobiles'=>'Automóvies',
     'order_of_service'=>'Ordem de Serviço',
     'employees'=>'Funcionários',
@@ -95,4 +96,6 @@ return [
     'situation_list'=>'Situações',
     'employee'=>'Funcionário',
     'employee_list'=>'Funcionários',
+    'hour'=>'Hora',
+    'date'=>'Data',
 ];

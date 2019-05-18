@@ -142,7 +142,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <img src="{{asset('images/PowerCar-carro.png')}}" alt="PowerCar" class="img-fluid">
+                    <img src="{{asset('images/powercar-cor.png')}}" alt="PowerCar" class="img-fluid">
                 </div>
                 <div class="col-12">
                     <div class="row">

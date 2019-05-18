@@ -13,6 +13,22 @@ class Scheduling extends Model
         'situation_id'
     ];
 
+    /**
+     * formatar data
+     */
+    public function getDateAttribute($value)
+    {
+        return date('d/m/Y', strtotime($value));
+    }
+
+    /**
+     * formatar hora
+     */
+    public function getHourAttribute($value)
+    {
+        return date('H\hi', strtotime($value));
+    }
+
     // Um agendamento pode ser apenas de um usuário
     public function users()
     {

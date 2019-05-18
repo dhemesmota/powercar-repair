@@ -66,6 +66,7 @@ return [
     'zip_code'=>'Zip Code',
     'welcome'=>'Welcome',
     'scheduling'=>'Scheduling',
+    'scheduling_list'=>'Schedulings',
     'automobiles'=>'Automobiles',
     'order_of_service'=>'Order of Service',
     'employees'=>'Employees',
@@ -95,4 +96,6 @@ return [
     'situation_list'=>'Situations',
     'employee'=>'Employee',
     'employee_list'=>'Employees',
+    'hour'=>'Hour',
+    'date'=>'Date',
 ];

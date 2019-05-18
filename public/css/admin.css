@@ -1,23 +1,30 @@
   /*Menu Cabecalho*/
 .nav-cabecalho {
-    background: url('../../../images/fundo-site.png');
-    background-position: top left;
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 46px;
+    height: 66px;
+}
+.logo-admin {
+    background-image: linear-gradient(to right, #0053ff, #6fffff);
+    max-width: 250px;
+    width: 250px;
+    height: 66px;
+    max-height: 66px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 .logo-admin img {
-    max-height: 34px;
+    max-height: 60px;
+    object-fit: contain;
+    object-position: center;
+    width: 100%;
 }
 .nav-menu {
     display: flex;
     flex-direction: row;
     align-items: center;
     position: relative;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.125);
 }
 .notificacao-menu {
     position: relative;
@@ -124,29 +131,71 @@
 }
 
 /*CONTEUDO*/
-#main {
-    display: flex;
-    flex-direction: row;
 
-}
 /*MENU LATERAL*/
 #menuLateral {
     max-width: 250px;
     width: 250px;
-    background: #454d5b;
+    background: #2f405b;
     color: #FFF;
     padding-top: 20px;
-    max-height: calc(100vh - 46px);
     min-height: calc(100vh - 46px);
 }
+
 #navBarLateral a {
     padding: 0.5rem 0;
     color: #FFF;
+    position: relative;
+    transition: all .3s;
+    font-weight: 300;
+    font-size: .9em;
+    padding: 5px 20px 5px 20px;
+    transition: all .4s ease-in-out;
+    display: flex;
+    align-items: center;
+}
+#navBarLateral a:hover {
+    background: #26364f;
+}
+#navBarLateral a .seta {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+.navIcone {
+    max-width: 25px;
+}
+#navBarLateral a.active {
+    background: #0053ff;
+}
+#navBarLateral a.active::after {
+    content: "";
+    height: 10px;
+    width: 10px;
+    background: #FFF;
+    position: absolute;
+    right: -5px;
+    transform: rotate(45deg);
+}
+.active2::after {
+    content: "";
+    height: 10px;
+    width: 10px;
+    background: #FFF;
+    position: absolute;
+    right: -5px;
+    transform: rotate(45deg);
+}
+.active2::before {
+    content: "";
+    height: 100%;
+    width: 2px;
+    position: absolute;
+    background: #0053ff;
+    left: 0;
 }
 /*Conteudo Main*/
 #conteudoMain {
-    max-height: calc(100vh - 46px);
-    overflow: auto;
     padding-top: 20px;
 }
 .titulo-conteudo {
