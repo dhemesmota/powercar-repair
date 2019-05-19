@@ -21,7 +21,7 @@ return [
     'search'=>'Buscar',
     'clean'=>'Limpar',
     'add'=>'Adicionar',
-    'home'=>'Principal',
+    'home'=>'Painel de Controle',
     'dashboard'=>'Painel de Controle',
     'list'=>'Lista de :page',
     'user_list'=>'Usuários',

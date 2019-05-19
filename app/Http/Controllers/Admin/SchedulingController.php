@@ -45,12 +45,23 @@ class SchedulingController extends Controller
         }
 
         // Definiando as colunas e traduzação das colunas
-        $columnList = [
-            'id'=>'#',
-            'date'=>trans('linguagem.date'),
-            'hour'=>trans('linguagem.hour'),
-            'name'=>trans('linguagem.situation'),
-        ];
+        $isCliente = auth()->user()->isClient();
+        if($isCliente){
+            $columnList = [
+                'id'=>'#',
+                'date'=>trans('linguagem.date'),
+                'hour'=>trans('linguagem.hour'),
+                'name'=>trans('linguagem.situation'),
+            ];
+        } else {
+            $columnList = [
+                'id'=>'#',
+                'date'=>trans('linguagem.date'),
+                'hour'=>trans('linguagem.hour'),
+                'name'=>trans('linguagem.situation'),
+                'client' => trans('linguagem.client'),
+            ];
+        }
 
         $search = "";
         if(isset($request->search) and !empty($request->search)){

@@ -21,7 +21,7 @@ return [
     'search'=>'Search',
     'clean'=>'Clean',
     'add'=>'Add',
-    'home'=>'Home',
+    'home'=>'Dashboard',
     'list'=>':page List',
     'dashboard'=>'Dashboard',
     'user_list'=>'User',

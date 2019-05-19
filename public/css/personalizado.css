@@ -20,9 +20,8 @@ body {
 }
 
 .linha {
-    opacity: .2;
-    color: #0053ff;
-    border-color: #0053ff;
+    color: rgba(0, 0, 0, 0.125);
+    border-color: rgba(0, 0, 0, 0.125);
 }
 
 /*Body login Pagina Site*/
@@ -125,6 +124,8 @@ label {
 }
 
 .breadcrumb {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0;
     background-color: transparent;
 }
 

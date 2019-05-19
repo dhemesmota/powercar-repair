@@ -35,12 +35,15 @@
     <!-- Navigation -->
     <header class="nav-cabecalho container-fluid px-0">
         <div class="row mx-0 px-0">
-            <div class="logo-admin">
+            <div id="navLogo" class="logo-admin">
                 <a href="{{ route('home') }}">
                     <img class="img-fluid" src="{{asset('images/POWERCAR.png')}}" alt="PowerCar">
                 </a>
             </div>
             <div class="col px-0 mx-0 nav-menu border-bottom">
+                <div class="ml-4" onclick="MostrarEsconderDiv()" style="cursor:pointer;">
+                    <i class="fas fa-bars"></i>
+                </div>
                 <div class="ml-auto mr-2 text-white">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();" class="text-dark">
                         <i class="fas fa-sign-out-alt"></i>
@@ -315,6 +318,13 @@
 
         // Mascaras de input
         $(document).ready(function(){
+
+            MostrarEsconderDiv = function(){
+                $("#menuLateral").toggle(200);
+                $("#navLogo").toggle(200);
+            }
+
+
             $('.date').mask('11/11/1111');
             $('.year').mask('0000/0000');
             $('.time').mask('00:00:00');

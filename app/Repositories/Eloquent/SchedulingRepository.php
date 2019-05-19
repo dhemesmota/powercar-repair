@@ -21,7 +21,7 @@ class SchedulingRepository extends AbstractRepository implements SchedulingRepos
         // Fazendo um join com situações e retornando todos os dados
 
         // verificar se é cliente, se for listar apenas os seus proprios agendamentos
-        $isCliente = auth()->user()->hasRole('Cliente');
+        $isCliente = auth()->user()->isClient();
         if($isCliente) {
             $clienteId = auth()->user()->id; // buscando id do cliente logado
             return $this->model
@@ -33,7 +33,8 @@ class SchedulingRepository extends AbstractRepository implements SchedulingRepos
         } else {
             return $this->model
                     ->join('situations','schedulings.situation_id', '=', 'situations.id')
-                    ->select('schedulings.*','situations.name', 'situations.description', 'situations.color')
+                    ->join('users','schedulings.user_id', '=', 'users.id')
+                    ->select('schedulings.*','situations.name', 'situations.description', 'situations.color', 'users.name as client')
                     ->orderBy($column, $order)
                     ->paginate($paginate);
         }
@@ -43,20 +44,26 @@ class SchedulingRepository extends AbstractRepository implements SchedulingRepos
     {
         // Fazendo um join com situações e retornando todos os dados referente a busca
         // verificar se é cliente, se for listar apenas os seus proprios agendamentos
+        $this->search = $search;
         $isCliente = auth()->user()->hasRole('Cliente');
         if ($isCliente) {
             $clienteId = auth()->user()->id; // buscando id do cliente logado
             $query = $this->model
                     ->where('user_id', '=', $clienteId)
+                    ->Where(function($query){
+                        // usando filtro de busca
+                        $query->where('date', 'like', '%' . $this->search . '%')
+                              ->orWhere('hour', 'like', '%' . $this->search . '%');
+                    })
                     ->join('situations', 'schedulings.situation_id', '=', 'situations.id')
                     ->select('schedulings.*', 'situations.name', 'situations.description', 'situations.color');
+            
         } else {
             $query = $this->model
+                ->orWhere('date', 'like', '%' . $search . '%')
+                ->orWhere('hour', 'like', '%' . $search . '%')
                 ->join('situations', 'schedulings.situation_id', '=', 'situations.id')
                 ->select('schedulings.*', 'situations.name', 'situations.description', 'situations.color');
-        }
-        foreach ($columns as $key => $value) {
-            $query = $query->orWhere($value, 'like', '%' . $search . '%'); /// falta corrigir listagem quando usa o buscar, por enquanto ta listando tudo, listar apenas os dados do usuario cliente logado
         }
         
 
