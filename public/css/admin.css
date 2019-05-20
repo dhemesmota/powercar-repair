@@ -1,3 +1,6 @@
+.cor-powercar {
+    background-image: linear-gradient(to right, #0053ff, #6fffff);
+}
   /*Menu Cabecalho*/
 .nav-cabecalho {
     height: 66px;

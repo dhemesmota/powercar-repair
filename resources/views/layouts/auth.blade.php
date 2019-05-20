@@ -30,7 +30,7 @@
     <link href="{{ asset('css/all.css') }}" rel="stylesheet">
     
 </head>
-<body id="page-top">
+<body id="page-top" class="body-conteudo">
 
     <header class="login-cabecalho">
         <div class="container">

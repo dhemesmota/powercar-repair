@@ -9,6 +9,7 @@ class Scheduling extends Model
     protected $fillable = [
         'date',
         'hour',
+        'description',
         'user_id',
         'situation_id'
     ];

@@ -51,6 +51,7 @@ class SchedulingController extends Controller
                 'id'=>'#',
                 'date'=>trans('linguagem.date'),
                 'hour'=>trans('linguagem.hour'),
+                'description'=>trans('linguagem.description'),
                 'name'=>trans('linguagem.situation'),
             ];
         } else {
@@ -58,6 +59,7 @@ class SchedulingController extends Controller
                 'id'=>'#',
                 'date'=>trans('linguagem.date'),
                 'hour'=>trans('linguagem.hour'),
+                'description'=>trans('linguagem.description'),
                 'name'=>trans('linguagem.situation'),
                 'client' => trans('linguagem.client'),
             ];
@@ -103,22 +105,31 @@ class SchedulingController extends Controller
         $page_create = trans('linguagem.scheduling');
         $routeName = $this->route; // passando a rota - caminho
 
-        $isCliente = auth()->user()->hasRole('Cliente');
-        // Se não for usuário cliente, então terá opção de selecionar situação
-        if(!$isCliente){
+        $isCliente = auth()->user()->isClient();
+        if($isCliente){
+            $situation = [];
+            $client = [];
+        } else {
+            // Se não for usuário cliente, então terá opção de selecionar situação
             // buscar situações
             $situation = $this->modelSituation->all('name','ASC');
-        } else {
-            $situation = [];
+            // buscar clientes
+            $client = DB::table('users')
+                            ->join('role_user', function ($join) {
+                                $join->on('users.id', '=', 'role_user.user_id')
+                                    ->where('role_user.role_id', '=', 5);
+                            })
+                            ->select('users.id','users.name')
+                            ->orderBy('users.name', 'ASC')
+                            ->get();
         }
-        
         $breadcrumb = [
             (object)['url'=>route('home'),'title'=>trans('linguagem.home')],
             (object)['url'=>route($routeName.'.index'),'title'=>trans('linguagem.list',['page'=>$page])],
             (object)['url'=>'','title'=>trans('linguagem.create_crud',['page'=>$page_create])]
         ];
 
-        return view('admin.'.$routeName.'.create',compact('page','page_create','routeName','breadcrumb', 'situation'));
+        return view('admin.'.$routeName.'.create',compact('page','page_create','routeName','breadcrumb', 'situation','client'));
     }
 
     /**
@@ -142,7 +153,8 @@ class SchedulingController extends Controller
 
         Validator::make($data, [
             'date' => ['required'],
-            'hour' => ['required']
+            'hour' => ['required'],
+            'description' => ['required', 'string', 'min:5', 'max:254']
         ])->validate();
 
         $isCliente = auth()->user()->hasRole('Cliente');
@@ -155,7 +167,16 @@ class SchedulingController extends Controller
             // Pegando o id do cliente logado responsável pelo agendamento
             $userId = auth()->user()->id;
             $data['user_id'] = $userId;
+        } else {
+            Validator::make($data, [
+                'date' => ['required'],
+                'hour' => ['required'],
+                'description' => ['required', 'string', 'min:5', 'max:254'],
+                'situation_id' => ['required'],
+                'user_id' => ['required']
+            ])->validate();
         }
+
         
         if($this->model->create($data)){
             session()->flash('msg',trans('linguagem.record_added_successfully'));
@@ -184,13 +205,11 @@ class SchedulingController extends Controller
             return redirect()->back();
         }
 
-        $routeName = $this->route; // passando a rota - caminho
+        $routeName = $this->route;
 
         $register = $this->model->find($id);
-        $profile = \App\Profile::where('user_id',$id)->get();
-
         if($register){
-            
+
             $page = trans('linguagem.scheduling_list'); // traduzindo o titulo da lista
             $page2 = trans('linguagem.scheduling');
 
@@ -206,52 +225,81 @@ class SchedulingController extends Controller
                 session()->flash('msg',trans('linguagem.delete_this_record'));
                 session()->flash('status','notification'); // tipos: success error notification
                 $delete = true;
+            } else {
+                return redirect()->route($routeName.'.index');
             }
 
-            return view('admin.'.$routeName.'.show',compact('register','page','page2','routeName','breadcrumb','delete','profile'));
+            return view('admin.'.$routeName.'.show',compact('register','page','page2','routeName','breadcrumb','delete'));
         }
 
-        // Caso não encontre o usuário retornar para lista de usuários
         return redirect()->route($routeName.'.index');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Aprovar agendamento
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function approve($id)
     {
-        if (Gate::denies('edit-scheduling')) {
+        if (Gate::denies('approve-scheduling')) {
             // Caso não tenha acesso a pagina, será redirecionado a pagina home
             session()->flash('msg', trans('linguagem.access_denied'));
             session()->flash('status', 'error');
             return redirect()->back();
         }
 
-        $routeName = $this->route; // passando a rota - caminho
-
-        $register = $this->model->find($id);
-        if($register){
-            
-            $page = trans('linguagem.scheduling_list'); // traduzindo o titulo da lista
-            $page2 = trans('linguagem.scheduling');
-
-            // Pegar funções do usuário
-            $roles = $this->modelRole->all('name','ASC');
-
-            $breadcrumb = [
-                (object)['url'=>route('home'),'title'=>trans('linguagem.home')],
-                (object)['url'=>route($routeName.'.index'),'title'=>trans('linguagem.list',['page'=>$page])],
-                (object)['url'=>'','title'=>trans('linguagem.edit_crud',['page'=>$page2])]
-            ];
-
-            return view('admin.'.$routeName.'.edit',compact('register','page','page2','routeName','breadcrumb','roles'));
+        if(empty($id) or !isset($id)) {
+            $routeName = $this->route;
+            return redirect()->route($routeName.'.index');
         }
 
-        // Caso não encontre o usuário retornar para lista de usuários
-        return redirect()->route($routeName.'.index');
+        $data['situation_id'] = 7;
+
+        if($this->model->update($data,$id)) {
+            session()->flash('msg',trans('linguagem.successfully_edited_record'));
+            session()->flash('status','success'); // tipos: success error notification
+            return redirect()->back();
+        } else {
+            session()->flash('msg',trans('linguagem.error_editing_record'));
+            session()->flash('status','error'); // tipos: success error notification
+            return redirect()->back();
+        }
+
+    }
+
+    /**
+     * Cancelar agendamento
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function cancel($id)
+    {
+        if (Gate::denies('approve-scheduling')) {
+            // Caso não tenha acesso a pagina, será redirecionado a pagina home
+            session()->flash('msg', trans('linguagem.access_denied'));
+            session()->flash('status', 'error');
+            return redirect()->back();
+        }
+
+        if (empty($id) or !isset($id)) {
+            $routeName = $this->route;
+            return redirect()->route($routeName.'.index');
+        }
+
+        $data['situation_id'] = 6;
+
+        if($this->model->update($data,$id)) {
+            session()->flash('msg',trans('linguagem.successfully_edited_record'));
+            session()->flash('status','success'); // tipos: success error notification
+            return redirect()->back();
+        } else {
+            session()->flash('msg',trans('linguagem.error_editing_record'));
+            session()->flash('status','error'); // tipos: success error notification
+            return redirect()->back();
+        }
     }
 
     /**
@@ -270,27 +318,9 @@ class SchedulingController extends Controller
             return redirect()->back();
         }
 
-        $data = $request->all();
+        $routeName = $this->route;
 
-        if(!$data['password']){
-            unset($data['password']);
-        }
-
-        Validator::make($data, [
-            'name' => ['required', 'string', 'min:4', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
-            'password' => ['sometimes', 'required', 'string', 'min:6', 'confirmed'],
-        ])->validate();
-
-        if($this->model->update($data,$id)){
-            session()->flash('msg',trans('linguagem.successfully_edited_record'));
-            session()->flash('status','success'); // tipos: success error notification
-            return redirect()->back();
-        } else {
-            session()->flash('msg',trans('linguagem.error_editing_record'));
-            session()->flash('status','error'); // tipos: success error notification
-            return redirect()->back();
-        }
+        return redirect()->route($routeName.'.index');
     }
 
     /**
@@ -308,25 +338,12 @@ class SchedulingController extends Controller
             return redirect()->back();
         }
 
-        $perfil = \App\Profile::where('user_id',$id)->get(); // Buscando dados do perfil do usuário
-        if(!empty($perfil[0])){
-            // Se o usuário tiver perfil cadastrado, será então deletado
-            $profile = DB::table('profiles')->where('user_id', '=', $id)->delete();
+        if($this->model->delete($id)){
+            session()->flash('msg',trans('linguagem.registration_deleted_successfully'));
+            session()->flash('status','success'); // tipos: success error notification
         } else {
-            // se não tiver, então apenas deletar o acesso do usuário
-            $profile = 1;
-        }
-        if($profile){
-            if($this->model->delete($id)){
-                session()->flash('msg',trans('linguagem.registration_deleted_successfully'));
-                session()->flash('status','success'); // tipos: success error notification
-            } else {
-                session()->flash('msg',trans('linguagem.error_deleting_record'));
-                session()->flash('status','error'); // tipos: success error notification
-            }
-        } else {
-            session()->flash('msg', trans('linguagem.error_deleting_record'));
-            session()->flash('status', 'error'); // tipos: success error notification
+            session()->flash('msg',trans('linguagem.error_deleting_record'));
+            session()->flash('status','error'); // tipos: success error notification
         }
         $routeName = $this->route; // passando a rota - caminho
         // Redirecionar para listagem de usuários 

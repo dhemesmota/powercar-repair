@@ -99,14 +99,14 @@
                     <ul id="navbarHome" class="nav justify-content-center align-items-center my-4 p-1">
                         @guest
                             <li class="nav-item">
-                                <a href="#" class="nav-link"><i class="fas fa-calendar-day"></i> Agendamento</a>
+                                <a href="{{ route('schedulings.index') }}" class="nav-link"><i class="fas fa-calendar-day"></i> Agendamento</a>
                             </li>
                         @else
                             <li class="nav-item">
                                 <a href="{{ route('home') }}" class="nav-link"><i class="fas fa-tachometer-alt"></i> {{ __('linguagem.dashboard') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link"><i class="fas fa-calendar-day"></i> Agendamento</a>
+                                <a href="{{ route('schedulings.index') }}" class="nav-link"><i class="fas fa-calendar-day"></i> Agendamento</a>
                             </li>
                         @endguest
                         <li class="nav-item">
@@ -120,7 +120,7 @@
                     <h5 class="mb-3">Todos os serviços em um só lugar</h5>
                     <p class="text-justify">Aqui você conta com a conveniência de encontrar todos os serviços que o seu carro necessita em um só lugar. Oferecemos o melhor em mecânica automotiva, sistemas elétricos e eletrônicos, injeção eletrônica, regulagem de motores, pneus, alinhamento e balanceamento, troca de óleo e filtros, câmbios automáticos, serviços de suspensão e freios.</p>
                     <div class="text-center">
-                        <button class="btn btn-success green btn-lg my-4">Agendamento</button>
+                        <button onclick="window.location.href='{{ route('schedulings.index') }}'" class="btn btn-success green btn-lg my-4">Agendamento</button>
                     </div>
                 </div>
                 <div id="imagemHome" class="col-md-6">

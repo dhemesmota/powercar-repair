@@ -25,6 +25,12 @@ body {
 }
 
 /*Body login Pagina Site*/
+.body-conteudo {
+    background: url(../images/icons-fundo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 #loginSite .form-group {
     position: relative;
     margin: 0;
@@ -49,6 +55,7 @@ body {
     background-position: top left;
     background-size: cover;
     background-repeat: no-repeat;
+    min-height: 250px;
     height: 40vh;
     display: flex;
     flex-direction: row;

@@ -32,6 +32,7 @@ class SituationController extends Controller
         // Definiando as colunas e traduzação das colunas
         $columnList = [
             'id'=>'#',
+            'color'=>trans('linguagem.color'),
             'name'=>trans('linguagem.name'),
             'description'=>trans('linguagem.description')
         ];

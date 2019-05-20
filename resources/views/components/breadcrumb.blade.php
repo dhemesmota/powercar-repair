@@ -1,7 +1,7 @@
 
 @if($items)
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb justify-content-end mb-5">
+        <ol class="breadcrumb justify-content-end mb-5 mt-3">
             @foreach ($items as $key => $value)
                 @if ($value->url)
                     <li class="breadcrumb-item"><a class="link" href="{{ $value->url }}">{{ $value->title }}</a></li>

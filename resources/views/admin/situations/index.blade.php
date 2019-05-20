@@ -31,6 +31,8 @@
                     <tr>
                         @foreach ($columnList as $key2 => $value2)
                             @if ($key2 == 'id')
+                                <th scope="row">{{ $value->$key2 }}</th>
+                            @elseif($key2 == 'color')
                                 <th scope="row"><i class="fab fa-font-awesome-flag text-@php echo $value->color @endphp"></i></th>
                             @elseif($key2 == 'image')
                                 <td>

@@ -27,14 +27,14 @@ class SchedulingRepository extends AbstractRepository implements SchedulingRepos
             return $this->model
                     ->where('user_id', '=', $clienteId)
                     ->join('situations','schedulings.situation_id', '=', 'situations.id')
-                    ->select('schedulings.*','situations.name', 'situations.description', 'situations.color')
+                    ->select('schedulings.*','situations.name', 'situations.description as status_description', 'situations.color')
                     ->orderBy($column, $order)
                     ->paginate($paginate);
         } else {
             return $this->model
                     ->join('situations','schedulings.situation_id', '=', 'situations.id')
                     ->join('users','schedulings.user_id', '=', 'users.id')
-                    ->select('schedulings.*','situations.name', 'situations.description', 'situations.color', 'users.name as client')
+                    ->select('schedulings.*','situations.name', 'situations.description as status_description', 'situations.color', 'users.name as client')
                     ->orderBy($column, $order)
                     ->paginate($paginate);
         }

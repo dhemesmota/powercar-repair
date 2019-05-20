@@ -98,4 +98,7 @@ return [
     'employee_list'=>'Funcionários',
     'hour'=>'Hora',
     'date'=>'Data',
+    'approve'=>'Aprovar',
+    'cancel'=>'Cancelar',
+    'describe_need'=>'Descreva sua necessidade aqui para que possamos ajudá-lo.',
 ];

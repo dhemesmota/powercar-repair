@@ -126,7 +126,7 @@ class ProfileController extends Controller
      */
     public function show($id, Request $request)
     {
-        dd('show');
+        $routeName = $this->route;
         // Caso não encontre o usuário retornar para lista de usuários
         return redirect()->route($routeName.'.index');
     }

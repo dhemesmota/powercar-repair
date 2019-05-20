@@ -98,4 +98,7 @@ return [
     'employee_list'=>'Employees',
     'hour'=>'Hour',
     'date'=>'Date',
+    'approve'=>'Approve',
+    'cancel'=>'Cancel',
+    'describe_need'=>'Describe your need here so we can help you.',
 ];
