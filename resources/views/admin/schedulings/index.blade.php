@@ -48,7 +48,7 @@
                         @endforeach
                         <td class="text-right">
                             
-                            @if ($value->name == "Pendente" || $value->name == "Cancelado")
+                            @if ($value->name == "Pendente")
                                 @can('approve-scheduling')
                                     <a href="{{ route($routeName.'.approve',$value->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="@lang('linguagem.approve')">
                                         <i class="fas fa-check"></i>
