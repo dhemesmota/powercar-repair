@@ -40,7 +40,11 @@
                                 </td>
                             @elseif($key2 == 'name')
                                 <td>
-                                    <i class="fab fa-font-awesome-flag text-@php echo $value->color @endphp"></i> @php echo $value->{$key2} @endphp
+                                    @if($value->{$key2} == "Aprovado")
+                                        <i class="fab fa-font-awesome-flag text-@php echo $value->color @endphp" style="cursor: pointer;" data-toggle="modal" data-target="#modalApproveScheduling"></i> @php echo $value->{$key2} @endphp
+                                    @else
+                                        <i class="fab fa-font-awesome-flag text-@php echo $value->color @endphp"></i> @php echo $value->{$key2} @endphp
+                                    @endif
                                 </td>
                             @else
                                 <td>@php echo $value->{$key2} @endphp</td>
@@ -58,14 +62,14 @@
 
                             @if ($value->name == "Pendente" || $value->name == "Aprovado")
                                 @can('cancel-scheduling')
-                                    <a href="{{ route($routeName.'.cancel',$value->id) }}" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="bottom" title="@lang('linguagem.cancel')">
+                                    <a href="{{ route($routeName.'.cancel',$value->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="@lang('linguagem.cancel')">
                                         <i class="fas fa-ban"></i>
                                     </a>
                                 @endcan
                             @endif
                             
                             @can('delete-scheduling')
-                                <a href="{{ route($routeName.'.show',[$value->id,'delete=1']) }}" class="btn btn-danger btn-sm">
+                                <a href="{{ route($routeName.'.show',[$value->id,'delete=1']) }}" class="btn btn-secondary btn-sm">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             @endcan
@@ -94,6 +98,23 @@
                     </div>
                     <div class="modal-body text-justify">
                         <span id="descriptionScheduling"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalApproveScheduling" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content cor-powercar text-light">
+                    <div class="modal-header border-0 py-0 pr-2">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <i class="far fa-check-circle fa-7x"></i>
+                        <p>O seu agendamento foi aprovado, não se esqueça de levar o seu veículo na data e hora agendada.</p>
                     </div>
                 </div>
             </div>

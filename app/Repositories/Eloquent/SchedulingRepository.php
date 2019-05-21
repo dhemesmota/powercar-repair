@@ -56,14 +56,18 @@ class SchedulingRepository extends AbstractRepository implements SchedulingRepos
                               ->orWhere('hour', 'like', '%' . $this->search . '%');
                     })
                     ->join('situations', 'schedulings.situation_id', '=', 'situations.id')
-                    ->select('schedulings.*', 'situations.name', 'situations.description', 'situations.color');
+                    ->select('schedulings.*', 'situations.name', 'situations.description as status_description', 'situations.color');
             
         } else {
             $query = $this->model
                 ->orWhere('date', 'like', '%' . $search . '%')
                 ->orWhere('hour', 'like', '%' . $search . '%')
+                ->orWhere('users.name', 'like', '%' . $search . '%')
+                ->orWhere('schedulings.description', 'like', '%' . $search . '%')
+                ->orWhere('situations.name', 'like', '%' . $search . '%')
                 ->join('situations', 'schedulings.situation_id', '=', 'situations.id')
-                ->select('schedulings.*', 'situations.name', 'situations.description', 'situations.color');
+                ->join('users','schedulings.user_id', '=', 'users.id')
+                ->select('schedulings.*', 'situations.name', 'situations.description as status_description', 'situations.color', 'users.name as client');
         }
         
 
