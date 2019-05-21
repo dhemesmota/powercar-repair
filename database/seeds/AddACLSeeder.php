@@ -72,7 +72,7 @@ class AddACLSeeder extends Seeder
         );
         // funcionários
         $listFuncionarios = \App\Permission::firstOrCreate(
-            ['name' => 'list-employees'],
+            ['name' => 'list-employee'],
             ['description' => 'Listar funcionários']
         );
         // cliente
