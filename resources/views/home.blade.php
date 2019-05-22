@@ -14,7 +14,7 @@
 
             @foreach ($roleUsuario as $key => $item)
                 @if (($item->id == 5) or ($item->name == "Cliente"))
-                    @cliente_component
+                    @cliente_component(['columnList'=>$columnList,'agendamentos'=>$list,'routeName'=>$routeName])
                     @endcliente_component
                 @elseif(($item->id == 4) or ($item->name == "Funcionario"))
                     @funcionario_component

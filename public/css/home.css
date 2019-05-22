@@ -4,10 +4,7 @@
 }
 /*HEADER DA PAGINA DE APRESENTAÇÃO*/
 #headerHome {
-    background: url('../../../images/fundo-site.png');
-    background-position: top left;
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-image: linear-gradient(to right, #0053ff, #6fffff);
 }
 #logoHome img {
     height: 80px;

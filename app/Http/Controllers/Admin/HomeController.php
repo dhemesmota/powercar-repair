@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\Contracts\SchedulingRepositoryInterface;
 
 class HomeController extends Controller
 {
@@ -13,8 +14,9 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(SchedulingRepositoryInterface $model)
     {
+        $this->model = $model;
         $this->middleware('auth');
     }
 
@@ -42,7 +44,24 @@ class HomeController extends Controller
                 session()->flash('status','notification'); // tipos: success error notification
                 return redirect()->route('profile.index');
             }
+
+            $columnList = [
+                'id'=>'#',
+                'date'=>trans('linguagem.date'),
+                'hour'=>trans('linguagem.hour'),
+                'description'=>trans('linguagem.description'),
+                'name'=>trans('linguagem.situation'),
+            ];
+
+            $list = $this->model->paginate(10, 'id', 'DESC');
+
+            $routeName = 'schedulings';
+
+            //dd($list);
+
+            return view('home',compact('roleUsuario','columnList','list','routeName'));
         }
+
 
         return view('home',compact('roleUsuario'));
     }
