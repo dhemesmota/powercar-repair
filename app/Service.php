@@ -11,4 +11,9 @@ class Service extends Model
         'description',
         'value',
     ];
+
+    public function getValueAttribute($value)
+    {
+        return $value = str_replace('.', ',', $value);
+    }
 }

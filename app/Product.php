@@ -17,4 +17,9 @@ class Product extends Model
     {
         return $value == 's' ? 'Sim' : 'Não';
     }
+
+    public function getValueAttribute($value)
+    {
+        return $value = str_replace('.', ',', $value);
+    }
 }

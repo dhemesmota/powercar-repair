@@ -42,9 +42,9 @@ class VehicleController extends Controller
         $search = "";
         if(isset($request->search) and !empty($request->search)){
             $search = $request->search;
-            $list = $this->model->findWhereLike($this->search,$search,'name','ASC');
+            $list = $this->model->findWhereLike($this->search,$search,'model','ASC');
         } else {
-            $list = $this->model->paginate($this->paginate, 'name', 'ASC'); // para criar paginaçao com 5 itens por pagina
+            $list = $this->model->paginate($this->paginate, 'model', 'ASC'); // para criar paginaçao com 5 itens por pagina
             //$list = $this->model->all(); // trás todos os usuários
         }
 

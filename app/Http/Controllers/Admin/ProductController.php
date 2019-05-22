@@ -93,6 +93,8 @@ class ProductController extends Controller
             'value' => ['required'],
         ])->validate();
 
+        $data['value'] = str_replace(',', '.', $data['value']);
+
         if($this->model->create($data)){
             session()->flash('msg',trans('linguagem.record_added_successfully'));
             session()->flash('status','success'); // tipos: success error notification
@@ -185,6 +187,8 @@ class ProductController extends Controller
             'description' => ['required', 'string', 'max:255'],
             'value' => ['required'],
         ])->validate();
+
+        $data['value'] = str_replace(',', '.', $data['value']);
 
         if($this->model->update($data,$id)){
             session()->flash('msg',trans('linguagem.successfully_edited_record'));
