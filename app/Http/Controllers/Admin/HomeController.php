@@ -53,7 +53,7 @@ class HomeController extends Controller
                 'name'=>trans('linguagem.situation'),
             ];
 
-            $list = $this->model->paginate(10, 'id', 'DESC');
+            $list = $this->model->listLimit(2, 'date', 'DESC');
 
             $routeName = 'schedulings';
 

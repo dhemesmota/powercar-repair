@@ -54,6 +54,8 @@ class SchedulingController extends Controller
                 'description'=>trans('linguagem.description'),
                 'name'=>trans('linguagem.situation'),
             ];
+
+            $isClient = true;
         } else {
             $columnList = [
                 'id'=>'#',
@@ -63,6 +65,8 @@ class SchedulingController extends Controller
                 'name'=>trans('linguagem.situation'),
                 'client' => trans('linguagem.client'),
             ];
+
+            $isClient = false;
         }
 
         $search = "";
@@ -83,7 +87,7 @@ class SchedulingController extends Controller
             (object)['url'=>'','title'=>trans('linguagem.list',['page'=>$page])]
         ];
 
-        return view('admin.'.$routeName.'.index',compact('list','search','page','routeName','columnList','breadcrumb'));
+        return view('admin.'.$routeName.'.index',compact('list','search','page','routeName','columnList','breadcrumb','isClient'));
     }
 
     /**

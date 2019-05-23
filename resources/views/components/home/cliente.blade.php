@@ -50,7 +50,7 @@
                                         @endcan
                                     @endif
         
-                                    @if ($value->name == "Pendente" || $value->name == "Aprovado")
+                                    @if ($value->name == "Pendente")
                                         @can('cancel-scheduling')
                                             <a href="{{ route($routeName.'.cancel',$value->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="@lang('linguagem.cancel')">
                                                 <i class="fas fa-ban"></i>
@@ -68,7 +68,53 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="text-right">
+                        <span onclick="window.location.href='{{ route($routeName.'.index') }}'" class="badge badge-info" style="cursor:pointer;">Listar todos</span>
+                    </div>
                 </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalDescriptionScheduling" tabindex="-1" role="dialog" aria-labelledby="modalDescriptionSchedulingTitle" aria-hidden="true">
+                    <div class="modal-dialog " role="document">
+                        <div class="modal-content">
+                            <div class="modal-header py-2 cor-powercar text-light">
+                                <h5 class="modal-title" id="modalDescriptionSchedulingTitle">
+                                    @lang('linguagem.description')
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body text-justify">
+                                <span id="descriptionScheduling"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalApproveScheduling" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content cor-powercar text-light">
+                            <div class="modal-header border-0 py-0 pr-2">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <i class="far fa-check-circle fa-7x"></i>
+                                <p>O seu agendamento foi aprovado, não se esqueça de levar o seu veículo na data e hora agendada.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    function scheduling(description) {
+                        var desScheduling = document.getElementById('descriptionScheduling');
+                        desScheduling.innerHTML = description;
+                    }
+                </script>
             @else
             
                 <div class="bg-light rounded w-100 py-4 d-flex justify-content-center align-items-center">

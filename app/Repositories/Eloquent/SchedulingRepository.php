@@ -40,6 +40,27 @@ class SchedulingRepository extends AbstractRepository implements SchedulingRepos
         }
     }
 
+    /*
+    * Listar registro com limite definido
+    */
+    public function listLimit(int $limit = 10, string $column = 'id', string $order = 'DESC')
+    {
+        // Fazendo um join com situações e retornando todos os dados
+
+        // verificar se é cliente, se for listar apenas os seus proprios agendamentos
+        $isCliente = auth()->user()->isClient();
+        if ($isCliente) {
+            $clienteId = auth()->user()->id; // buscando id do cliente logado
+            return $this->model
+                ->where('user_id', '=', $clienteId)
+                ->join('situations', 'schedulings.situation_id', '=', 'situations.id')
+                ->select('schedulings.*', 'situations.name', 'situations.description as status_description', 'situations.color')
+                ->orderBy($column, $order)
+                ->limit($limit)
+                ->get();
+        } 
+    }
+
     public function findWhereLike(array $columns, string $search, string $column = 'id', string $order = 'ASC')
     {
         // Fazendo um join com situações e retornando todos os dados referente a busca

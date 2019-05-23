@@ -60,7 +60,7 @@
                                 @endcan
                             @endif
 
-                            @if ($value->name == "Pendente" || $value->name == "Aprovado")
+                            @if ($value->name == "Pendente" || $isClient == false)
                                 @can('cancel-scheduling')
                                     <a href="{{ route($routeName.'.cancel',$value->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="@lang('linguagem.cancel')">
                                         <i class="fas fa-ban"></i>

@@ -101,4 +101,6 @@ return [
     'approve'=>'Approve',
     'cancel'=>'Cancel',
     'describe_need'=>'Describe your need here so we can help you.',
+    'budget'=>'Budget',
+    'budget_list'=>'Budgets',
 ];

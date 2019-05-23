@@ -101,4 +101,6 @@ return [
     'approve'=>'Aprovar',
     'cancel'=>'Cancelar',
     'describe_need'=>'Descreva sua necessidade aqui para que possamos ajudá-lo.',
+    'budget'=>'Orçamento',
+    'budget_list'=>'Orçamentos',
 ];
