@@ -19,7 +19,7 @@ class CreateBudgetsTable extends Migration
             $table->decimal('total_price', 8, 2)->nullable();
             $table->integer('client_id')->unsigned(); // chave estrangeira
             $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('vehicle_id')->unsigned(); // chave estrangeira
+            $table->integer('vehicle_id')->unsigned()->nullable(); // chave estrangeira
             $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade');
             $table->integer('employee_id')->unsigned(); // chave estrangeira
             $table->foreign('employee_id')->references('id')->on('users')->onDelete('cascade');

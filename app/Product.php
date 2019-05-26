@@ -22,4 +22,9 @@ class Product extends Model
     {
         return $value = str_replace('.', ',', $value);
     }
+
+    public function budgets()
+    {
+        return $this->belongsToMany('App\Budget');
+    }
 }

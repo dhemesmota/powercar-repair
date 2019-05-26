@@ -112,7 +112,7 @@
                                 $budgets = "active";
                             @endphp
                         @endif
-                        <a href="#" class="nav-link {{ isset($budgets) ? $budgets : '' }}">
+                        <a href="{{ route('budgets.index') }}" class="nav-link {{ isset($budgets) ? $budgets : '' }}">
                             <i class="fas fa-wrench navIcone fa-2x"></i>
                             <span class="nav-titulo">@lang('linguagem.budget')</span>
                         </a>

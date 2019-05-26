@@ -59,10 +59,17 @@ class User extends Authenticatable
     {
         return $this->hasRole('Administrador'); // se for administrador vai ter acesso a tudo
     }
+
     // Verificar se é cliente
     public function isClient()
     {
         return $this->hasRole('Cliente'); 
+    }
+
+    // Verificar se é funcionário
+    public function isEmployee()
+    {
+        return $this->hasRole('Funcionario');
     }
 
     // Verificar papel

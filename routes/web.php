@@ -63,6 +63,7 @@ Route::prefix('admin')->middleware('auth')->namespace('Admin')->group(function (
     Route::resource('/schedulings', 'SchedulingController');
     Route::get('/schedulings/{id}/approve', 'SchedulingController@approve')->name('schedulings.approve'); // Aprovar agendamento
     Route::get('/schedulings/{id}/cancel', 'SchedulingController@cancel')->name('schedulings.cancel'); // Cancelar agendamento
+    Route::resource('/budgets', 'BudgetController');
 });
 
 Route::prefix('admin')->middleware(['auth','can:acl'])->namespace('Admin')->group(function () {

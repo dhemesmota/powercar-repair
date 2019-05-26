@@ -35,6 +35,21 @@ class EmployeeRepository extends AbstractRepository implements EmployeeRepositor
     }
 
     /*
+    * Listagem
+    */
+    public function all(string $column = 'id', string $order = 'ASC')
+    {
+        return DB::table('users')
+            ->join('role_user', function ($join) {
+                $join->on('users.id', '=', 'role_user.user_id')
+                    ->where('role_user.role_id', '=', 4);
+            })
+            ->select('users.id', 'users.name')
+            ->orderBy('users.' . $column, $order)
+            ->get();
+    }
+
+    /*
     * Buscar dados pelo id
     */
     public function find(int $id)
