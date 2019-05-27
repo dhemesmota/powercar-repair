@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 26-Maio-2019 às 14:58
+-- Generation Time: 27-Maio-2019 às 09:31
 -- Versão do servidor: 5.7.21
 -- PHP Version: 7.2.4
 
@@ -44,7 +44,14 @@ CREATE TABLE IF NOT EXISTS `budgets` (
   KEY `budgets_client_id_foreign` (`client_id`),
   KEY `budgets_vehicle_id_foreign` (`vehicle_id`),
   KEY `budgets_employee_id_foreign` (`employee_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `budgets`
+--
+
+INSERT INTO `budgets` (`id`, `description`, `total_price`, `situation_id`, `client_id`, `vehicle_id`, `employee_id`, `created_at`, `updated_at`) VALUES
+(1, 'Teste', NULL, 9, 5, 2, 4, '2019-05-27 01:19:03', '2019-05-27 02:36:20');
 
 -- --------------------------------------------------------
 
@@ -416,7 +423,6 @@ CREATE TABLE IF NOT EXISTS `roles` (
 
 INSERT INTO `roles` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
 (1, 'Administrador', 'Função de administrador', '2019-05-20 14:53:42', '2019-05-20 14:53:42'),
-(2, 'Gerente Master', 'Função de super gerente', '2019-05-20 14:53:42', '2019-05-20 14:53:42'),
 (3, 'Gerente', 'Função de gerente', '2019-05-20 14:53:42', '2019-05-20 14:53:42'),
 (4, 'Funcionario', 'Função de funcionario', '2019-05-20 14:53:42', '2019-05-20 14:53:42'),
 (5, 'Cliente', 'Função de cliente', '2019-05-20 14:53:42', '2019-05-20 14:53:42');
@@ -560,11 +566,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `image`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Dhemes Mota', 'dhemes.mota@gmail.com', NULL, '$2y$10$b0XmxJzbcFvkN4Q.cmZG4.OZTzwDrmSCchuL3T/CIFXO7iOURgZTy', '/perfils/padrao.png', 'm72udCcxaTExhXamfZk8u0lzwV8PUYNcwjaJ43yJ6tr58sX33XXYS6coTe9c', '2019-05-20 14:53:42', '2019-05-20 14:53:42'),
-(2, 'Carol Gerente Master', 'carol@gmail.com', NULL, '$2y$10$4kELD.7CWlgQgVPHZEeuDeLh276XYW6vuYdo3xKNIzWlPvGcXomiC', '/perfils/padrao.png', NULL, '2019-05-20 14:53:42', '2019-05-20 14:53:42'),
+(1, 'Dhemes Mota', 'dhemes.mota@gmail.com', NULL, '$2y$10$b0XmxJzbcFvkN4Q.cmZG4.OZTzwDrmSCchuL3T/CIFXO7iOURgZTy', '/perfils/padrao.png', 'Ij5sR75vvioEm26SY4jO6zbB9q1A76TRes1C4OyohCDOQUE6yzDILYxwdSqa', '2019-05-20 14:53:42', '2019-05-20 14:53:42'),
 (3, 'Usuário Gerente', 'gerente@gmail.com', NULL, '$2y$10$/hoe2GYzS.UjPycE./2EJeWU33X3/Wg5AOeWHAOPVLfrBS1dWQEN.', '/perfils/padrao.png', NULL, '2019-05-20 14:53:42', '2019-05-20 14:53:42'),
 (4, 'Usuário Funcionário', 'funcionario@gmail.com', NULL, '$2y$10$gpSoY0DyFkjX1MQRRUPBTuy4GI1ibOlkwMqNB6T8aLoz7a/6rnZvO', '/perfils/padrao.png', NULL, '2019-05-20 14:53:42', '2019-05-20 14:53:42'),
-(5, 'Usuario Cliente', 'cliente@gmail.com', NULL, '$2y$10$XeGB1.UazuZMEIvE6Hwqmu7IaNLbrpYBRWdG5Kf3/REpuK1R68aVG', '/perfils/padrao.png', 'PLJ3P5j4Iiy2aSTSb10T2bhyjV2eXWi1SX6fyQ6nOruQdEvdj3hrBTBitAbZ', '2019-05-20 14:53:42', '2019-05-20 14:53:42');
+(5, 'Usuario Cliente', 'cliente@gmail.com', NULL, '$2y$10$XeGB1.UazuZMEIvE6Hwqmu7IaNLbrpYBRWdG5Kf3/REpuK1R68aVG', '/perfils/padrao.png', 'MAONHb4fK3SeVvL7hqA1FLGWBBNnBEmoWycmqG8ItAlkBmzQXT9iwJ0AykiB', '2019-05-20 14:53:42', '2019-05-20 14:53:42');
 
 -- --------------------------------------------------------
 
@@ -584,14 +589,15 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `vehicles_user_id_foreign` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `vehicles`
 --
 
 INSERT INTO `vehicles` (`id`, `model`, `color`, `year`, `board`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'Honda Civic', 'Branco', '2018/2019', 'ASB4587', 5, '2019-05-22 16:14:12', '2019-05-22 16:14:12');
+(1, 'Honda Civic', 'Branco', '2018/2019', 'ASB4587', 5, '2019-05-22 16:14:12', '2019-05-22 16:14:12'),
+(2, 'GOL G6', 'Preto', '2019/2019', 'BGC3423', 5, '2019-05-27 01:48:36', '2019-05-27 01:48:36');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
