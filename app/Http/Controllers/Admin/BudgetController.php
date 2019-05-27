@@ -8,6 +8,7 @@ use App\Repositories\Contracts\BudgetRepositoryInterface;
 use App\Repositories\Contracts\ClientRepositoryInterface;
 use App\Repositories\Contracts\EmployeeRepositoryInterface;
 use Validator;
+use Illuminate\Support\Facades\DB;
 
 class BudgetController extends Controller
 {
@@ -42,7 +43,8 @@ class BudgetController extends Controller
             'total_price'=>trans('linguagem.total_price'),
             'client_id'=>trans('linguagem.client'),
             'vehicle_id'=>trans('linguagem.vehicle'),
-            'employee_id'=>trans('linguagem.employee')
+            'employee_id'=>trans('linguagem.employee'),
+            'situation_id'=>trans('linguagem.situation')
         ];
         //'description', 'total_price', 'client_id', 'vehicle_id', 'employee_id'
 
@@ -58,9 +60,6 @@ class BudgetController extends Controller
         $page = trans('linguagem.budget_list'); // traduzindo o titulo da lista
 
         $routeName = $this->route; // passando a rota - caminho
-
-        //session()->flash('msg','Olá');
-        //session()->flash('status','success'); // tipos: success error notification
 
         $breadcrumb = [
             (object)['url'=>route('home'),'title'=>trans('linguagem.home')],
@@ -127,6 +126,7 @@ class BudgetController extends Controller
         }
 
         //dd($data);
+        $data['situation_id'] = 9;
 
         if($this->model->create($data)){
             session()->flash('msg',trans('linguagem.record_added_successfully'));
@@ -250,5 +250,99 @@ class BudgetController extends Controller
         $routeName = $this->route; // passando a rota - caminho
         // Redirecionar para listagem de usuários 
         return redirect()->route($routeName.'.index');
+    }
+
+
+    /**
+     * Adicionar veiculo
+     */
+    public function vehicle($id, $client_id)
+    {
+        
+        $vehicles = DB::table('vehicles')->where('user_id', $client_id)->get();
+        $ordemId = $id;
+
+        if(empty($vehicles[0])){
+            session()->flash('msg',"Cliente sem nenhum veículo cadastrado, para gerar um orçamento é necessário cadastrar um veículo.");
+            session()->flash('status','error'); // tipos: success error notification
+            return redirect()->back();
+        }
+
+        $page = trans('linguagem.budget_list'); // traduzindo o titulo da lista
+        $page_create = trans('linguagem.budget');
+        $routeName = $this->route; // passando a rota - caminho
+
+        $breadcrumb = [
+            (object)['url'=>route('home'),'title'=>trans('linguagem.home')],
+            (object)['url'=>route($routeName.'.index'),'title'=>trans('linguagem.list',['page'=>$page])],
+            (object)['url'=>'','title'=>'Adicinar veículo']
+        ];
+
+        return view('admin.'.$routeName.'.addVehicle',compact('page','page_create','routeName','breadcrumb','vehicles','ordemId'));
+
+        dd($vehicles);
+    }
+    public function storeVehicle(Request $request, $id)
+    {
+        $data = $request->all();
+
+        Validator::make($data, [
+            'vehicle_id' => ['required']
+        ])->validate();
+
+        //dd($data);
+        if ($this->model->update($data,$id)) {
+            session()->flash('msg', trans('linguagem.record_added_successfully'));
+            session()->flash('status', 'success'); // tipos: success error notification
+            return redirect()->route('budgets.index');
+        } else {
+            session()->flash('msg', trans('linguagem.error_adding_record'));
+            session()->flash('status', 'error'); // tipos: success error notification
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Adicionar veiculo
+     */
+    public function product($id)
+    {
+
+        $vehicles = DB::table('budget_products')->where('budget_id', $id)->get();
+        $ordemId = $id;
+
+
+        $page = trans('linguagem.budget_list'); // traduzindo o titulo da lista
+        $page_create = trans('linguagem.budget');
+        $routeName = $this->route; // passando a rota - caminho
+
+        $breadcrumb = [
+            (object)['url' => route('home'), 'title' => trans('linguagem.home')],
+            (object)['url' => route($routeName . '.index'), 'title' => trans('linguagem.list', ['page' => $page])],
+            (object)['url' => '', 'title' => 'Adicinar veículo']
+        ];
+
+        return view('admin.' . $routeName . '.addVehicle', compact('page', 'page_create', 'routeName', 'breadcrumb', 'vehicles', 'ordemId'));
+
+        dd($vehicles);
+    }
+    public function storeProduct(Request $request, $id)
+    {
+        $data = $request->all();
+
+        Validator::make($data, [
+            'vehicle_id' => ['required']
+        ])->validate();
+
+        //dd($data);
+        if ($this->model->update($data, $id)) {
+            session()->flash('msg', trans('linguagem.record_added_successfully'));
+            session()->flash('status', 'success'); // tipos: success error notification
+            return redirect()->route('budgets.index');
+        } else {
+            session()->flash('msg', trans('linguagem.error_adding_record'));
+            session()->flash('status', 'error'); // tipos: success error notification
+            return redirect()->back();
+        }
     }
 }

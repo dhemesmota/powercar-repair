@@ -32,8 +32,16 @@
                         @foreach ($columnList as $key2 => $value2)
                             @if ($key2 == 'id')
                                 <th scope="row">{{ $value->$key2 }}</th>
-                            @elseif($key2 == 'color')
-                                <th scope="row"><i class="fab fa-font-awesome-flag text-@php echo $value->color @endphp"></i></th>
+                            @elseif($key2 == 'vehicle_id')
+                                <td>
+                                    @if (empty($value->{$key2}))    
+                                        <a href="{{ route($routeName.'.vehicle',[$value->id,$value->client_id]) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-html="true" title="Adicionar Veículo">
+                                            <i class="fas fa-car"></i>
+                                        </a>
+                                    @else
+                                        {{ $value->{$key2} }}
+                                    @endif
+                                </td>
                             @elseif($key2 == 'image')
                                 <td>
                                     <img style="max-width: 40px;" class="img-fluid rounded" src="{{$value->$key2}}" alt="perfil">
@@ -45,6 +53,12 @@
                             @endif
                         @endforeach
                         <td class="text-right">
+                            <a href="{{ route($routeName.'.product',$value->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-html="true" title="Adicionar Produtos">
+                                <i class="fas fa-cart-plus"></i>
+                            </a>
+                            <a href="{{ route($routeName.'.service',$value->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-html="true" title="Adicionar Serviços">
+                                <i class="fas fa-tools"></i>
+                            </a>
                             @can('show-situation')
                                 <a href="{{ route($routeName.'.show',$value->id) }}" class="btn btn-info btn-sm">
                                     <i class="fas fa-eye"></i>

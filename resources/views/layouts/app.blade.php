@@ -114,7 +114,7 @@
                         @endif
                         <a href="{{ route('budgets.index') }}" class="nav-link {{ isset($budgets) ? $budgets : '' }}">
                             <i class="fas fa-wrench navIcone fa-2x"></i>
-                            <span class="nav-titulo">@lang('linguagem.budget')</span>
+                            <span class="nav-titulo">@lang('linguagem.order_of_service')</span>
                         </a>
                     @endcan
 
@@ -129,13 +129,14 @@
                             <span class="nav-titulo">@lang('linguagem.vehicle')</span>
                         </a>
                     @endcan
-                    
+                    <!--
                     @can('list-order-service')
                         <a href="#" class="nav-link">
                             <i class="fas fa-tools navIcone fa-2x"></i>
                             <span class="nav-titulo">@lang('linguagem.order_of_service')</span>
                         </a>
                     @endcan
+                    -->
 
                     @can('list-employees')
                         @if (Request::segment(2) == 'employees')
