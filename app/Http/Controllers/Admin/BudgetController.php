@@ -311,6 +311,20 @@ class BudgetController extends Controller
         $products = DB::table('products')->where('stock','=','s')->get();
         $ordemId = $id;
 
+        // buscar todos os produtos já adicionado a ordem de serviço
+        $list = DB::table('budget_products')
+                    ->join('products','budget_products.product_id', '=', 'products.id')
+                    ->where('budget_id','=',$id)
+                    ->select('budget_products.*','products.name as product')
+                    ->get();
+
+        $columnList = [
+            'budget_id' => trans('linguagem.budget'),
+            'product' => trans('linguagem.product'),
+            'value' => trans('linguagem.value'),
+            'amount' => trans('linguagem.amount'),
+            'total_value' => trans('linguagem.total_price')
+        ];
 
         $page = trans('linguagem.budget_list'); // traduzindo o titulo da lista
         $page_create = trans('linguagem.budget');
@@ -322,7 +336,7 @@ class BudgetController extends Controller
             (object)['url' => '', 'title' => 'Adicinar produtos']
         ];
 
-        return view('admin.' . $routeName . '.product', compact('page', 'page_create', 'routeName', 'breadcrumb', 'products', 'ordemId'));
+        return view('admin.' . $routeName . '.product', compact('page', 'page_create', 'routeName', 'breadcrumb', 'products', 'ordemId', 'list', 'columnList'));
 
         dd($products);
     }

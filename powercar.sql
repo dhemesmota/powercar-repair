@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 27-Maio-2019 às 09:31
+-- Generation Time: 28-Maio-2019 às 10:37
 -- Versão do servidor: 5.7.21
 -- PHP Version: 7.2.4
 
@@ -65,9 +65,18 @@ CREATE TABLE IF NOT EXISTS `budget_products` (
   `product_id` int(10) UNSIGNED NOT NULL,
   `amount` int(11) NOT NULL,
   `value` decimal(8,2) NOT NULL,
+  `total_value` decimal(8,2) DEFAULT NULL,
   KEY `budget_products_budget_id_foreign` (`budget_id`),
   KEY `budget_products_product_id_foreign` (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `budget_products`
+--
+
+INSERT INTO `budget_products` (`budget_id`, `product_id`, `amount`, `value`, `total_value`) VALUES
+(1, 1, 4, '271.32', '1085.28'),
+(1, 1, 4, '271.32', '1085.28');
 
 -- --------------------------------------------------------
 
@@ -95,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `migrations`
@@ -118,7 +127,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (14, '2019_05_19_231128_add_description_table_schedulings', 1),
 (15, '2019_05_23_030645_create_budgets_table', 2),
 (16, '2019_05_23_032752_create_budget_services', 2),
-(17, '2019_05_24_131303_create_budget_products', 2);
+(17, '2019_05_24_131303_create_budget_products', 2),
+(19, '2019_05_27_235740_add_total_value_table_budget_products', 3);
 
 -- --------------------------------------------------------
 
@@ -363,14 +373,15 @@ CREATE TABLE IF NOT EXISTS `products` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `products`
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `value`, `stock`, `created_at`, `updated_at`) VALUES
-(1, 'Amortecedor Traseiro', 'Amortecedor traseiro.', '271.32', 's', '2019-05-22 16:07:31', '2019-05-22 16:08:50');
+(1, 'Amortecedor Traseiro', 'Amortecedor traseiro.', '271.32', 's', '2019-05-22 16:07:31', '2019-05-22 16:08:50'),
+(2, 'Biela', 'Peça do motor', '1500.00', 's', '2019-05-28 15:36:14', '2019-05-28 15:36:14');
 
 -- --------------------------------------------------------
 
