@@ -104,4 +104,5 @@ return [
     'budget'=>'Budget',
     'budget_list'=>'Budgets',
     'total_price'=>'Total price',
+    'amount'=>'Amount',
 ];

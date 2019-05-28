@@ -9,4 +9,14 @@ class BudgetRepository extends AbstractRepository implements BudgetRepositoryInt
 {
     protected $model = Budget::class;
     
+    /*
+    * Create
+    */
+    public function createProduct(array $data)
+    {
+
+        $result = DB::insert('insert into budget_products (id, name) values (?, ?)', [1, 'Dayle']);
+        dd("aqui");
+        return (bool) $this->model->create($data);
+    }
 }

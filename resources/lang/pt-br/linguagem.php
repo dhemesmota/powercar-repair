@@ -104,4 +104,5 @@ return [
     'budget'=>'Orçamento',
     'budget_list'=>'Orçamentos',
     'total_price'=>'Valor total',
+    'amount'=>'Quantidade',
 ];

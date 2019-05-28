@@ -303,12 +303,12 @@ class BudgetController extends Controller
     }
 
     /**
-     * Adicionar veiculo
+     * Adicionar produtos
      */
     public function product($id)
     {
 
-        $vehicles = DB::table('budget_products')->where('budget_id', $id)->get();
+        $products = DB::table('products')->where('stock','=','s')->get();
         $ordemId = $id;
 
 
@@ -319,29 +319,42 @@ class BudgetController extends Controller
         $breadcrumb = [
             (object)['url' => route('home'), 'title' => trans('linguagem.home')],
             (object)['url' => route($routeName . '.index'), 'title' => trans('linguagem.list', ['page' => $page])],
-            (object)['url' => '', 'title' => 'Adicinar veículo']
+            (object)['url' => '', 'title' => 'Adicinar produtos']
         ];
 
-        return view('admin.' . $routeName . '.addVehicle', compact('page', 'page_create', 'routeName', 'breadcrumb', 'vehicles', 'ordemId'));
+        return view('admin.' . $routeName . '.product', compact('page', 'page_create', 'routeName', 'breadcrumb', 'products', 'ordemId'));
 
-        dd($vehicles);
+        dd($products);
     }
     public function storeProduct(Request $request, $id)
     {
         $data = $request->all();
 
         Validator::make($data, [
-            'vehicle_id' => ['required']
+            'product_id' => ['required'],
+            'amount' => ['required']
         ])->validate();
 
-        //dd($data);
-        if ($this->model->update($data, $id)) {
-            session()->flash('msg', trans('linguagem.record_added_successfully'));
-            session()->flash('status', 'success'); // tipos: success error notification
-            return redirect()->route('budgets.index');
+        
+
+        $product_id = (int) $data['product_id'];
+        $amount = (int) $data['amount'];
+
+        $value = DB::table('products')->where('id','=',$product_id)->select('value')->get();
+
+        $price = (float) $value[0]->value;
+
+        $data['budget_id'] = $id;
+        $data['value'] = $price;
+        $data['total_value'] = $price * $amount;
+
+        if($this->model->createProduct($data)){
+            session()->flash('msg',trans('linguagem.record_added_successfully'));
+            session()->flash('status','success'); // tipos: success error notification
+            return redirect()->back();
         } else {
-            session()->flash('msg', trans('linguagem.error_adding_record'));
-            session()->flash('status', 'error'); // tipos: success error notification
+            session()->flash('msg',trans('linguagem.error_adding_record'));
+            session()->flash('status','error'); // tipos: success error notification
             return redirect()->back();
         }
     }

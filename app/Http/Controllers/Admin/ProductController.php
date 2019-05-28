@@ -95,6 +95,7 @@ class ProductController extends Controller
 
         $data['value'] = str_replace(',', '.', $data['value']);
 
+        //dd($data);
         if($this->model->create($data)){
             session()->flash('msg',trans('linguagem.record_added_successfully'));
             session()->flash('status','success'); // tipos: success error notification
