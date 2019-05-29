@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 28-Maio-2019 às 10:37
+-- Generation Time: 29-Maio-2019 às 02:34
 -- Versão do servidor: 5.7.21
 -- PHP Version: 7.2.4
 
@@ -44,14 +44,16 @@ CREATE TABLE IF NOT EXISTS `budgets` (
   KEY `budgets_client_id_foreign` (`client_id`),
   KEY `budgets_vehicle_id_foreign` (`vehicle_id`),
   KEY `budgets_employee_id_foreign` (`employee_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `budgets`
 --
 
 INSERT INTO `budgets` (`id`, `description`, `total_price`, `situation_id`, `client_id`, `vehicle_id`, `employee_id`, `created_at`, `updated_at`) VALUES
-(1, 'Teste', NULL, 9, 5, 2, 4, '2019-05-27 01:19:03', '2019-05-27 02:36:20');
+(1, 'Teste', '2042.64', 9, 5, 2, 4, '2019-05-27 01:19:03', '2019-05-27 02:36:20'),
+(2, 'Uma breve descrição.', '1120.00', 9, 5, NULL, 4, '2019-05-29 07:01:56', '2019-05-29 07:01:56'),
+(3, 'Nova OS para o Ricardo', NULL, 9, 6, NULL, 4, '2019-05-29 08:05:38', '2019-05-29 08:05:38');
 
 -- --------------------------------------------------------
 
@@ -66,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `budget_products` (
   `amount` int(11) NOT NULL,
   `value` decimal(8,2) NOT NULL,
   `total_value` decimal(8,2) DEFAULT NULL,
+  PRIMARY KEY (`budget_id`,`product_id`),
   KEY `budget_products_budget_id_foreign` (`budget_id`),
   KEY `budget_products_product_id_foreign` (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -75,8 +78,9 @@ CREATE TABLE IF NOT EXISTS `budget_products` (
 --
 
 INSERT INTO `budget_products` (`budget_id`, `product_id`, `amount`, `value`, `total_value`) VALUES
-(1, 1, 4, '271.32', '1085.28'),
-(1, 1, 4, '271.32', '1085.28');
+(1, 2, 1, '1500.00', '1500.00'),
+(1, 1, 2, '271.32', '542.64'),
+(2, 3, 2, '560.00', '1120.00');
 
 -- --------------------------------------------------------
 
@@ -158,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `permissions`
@@ -216,7 +220,10 @@ INSERT INTO `permissions` (`id`, `name`, `description`, `created_at`, `updated_a
 (49, 'edit-budget', 'Editar orçamento', '2019-05-23 05:56:56', '2019-05-23 05:56:56'),
 (50, 'show-budget', 'Ver orçamento', '2019-05-23 05:57:05', '2019-05-23 05:57:05'),
 (51, 'create-budget', 'Criar orçamentos', '2019-05-23 05:57:21', '2019-05-23 05:57:21'),
-(52, 'delete-budget', 'Deletar orçamento', '2019-05-23 05:57:31', '2019-05-23 05:57:31');
+(52, 'delete-budget', 'Deletar orçamento', '2019-05-23 05:57:31', '2019-05-23 05:57:31'),
+(53, 'add-product-service', 'Adicionar produtos e serviços', '2019-05-29 08:12:15', '2019-05-29 08:12:15'),
+(54, 'ap-os', 'Aprovar OS', '2019-05-29 08:12:56', '2019-05-29 08:12:56'),
+(55, 'cancel-os', 'Cancelar OS', '2019-05-29 08:13:12', '2019-05-29 08:13:12');
 
 -- --------------------------------------------------------
 
@@ -240,18 +247,18 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (41, 2),
 (50, 3),
 (25, 3),
-(50, 5),
 (25, 5),
 (30, 5),
 (48, 5),
 (29, 5),
+(34, 5),
 (20, 3),
 (12, 2),
 (20, 4),
-(34, 5),
 (28, 5),
 (26, 5),
 (35, 5),
+(32, 5),
 (30, 4),
 (14, 4),
 (15, 4),
@@ -339,13 +346,13 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (32, 2),
 (31, 2),
 (6, 2),
-(32, 5),
+(55, 5),
 (25, 4),
 (50, 4),
 (12, 4),
 (19, 4),
 (24, 4),
-(27, 5),
+(54, 5),
 (12, 3),
 (41, 3),
 (19, 3),
@@ -355,7 +362,9 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (36, 2),
 (24, 2),
 (42, 2),
-(4, 2);
+(4, 2),
+(50, 5),
+(27, 5);
 
 -- --------------------------------------------------------
 
@@ -373,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `products`
@@ -381,7 +390,8 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 INSERT INTO `products` (`id`, `name`, `description`, `value`, `stock`, `created_at`, `updated_at`) VALUES
 (1, 'Amortecedor Traseiro', 'Amortecedor traseiro.', '271.32', 's', '2019-05-22 16:07:31', '2019-05-22 16:08:50'),
-(2, 'Biela', 'Peça do motor', '1500.00', 's', '2019-05-28 15:36:14', '2019-05-28 15:36:14');
+(2, 'Biela', 'Peça do motor', '1500.00', 's', '2019-05-28 15:36:14', '2019-05-28 15:36:14'),
+(3, 'Bateria', 'Modelo RG43', '560.00', 's', '2019-05-29 06:43:22', '2019-05-29 06:43:22');
 
 -- --------------------------------------------------------
 
@@ -461,7 +471,8 @@ INSERT INTO `role_user` (`user_id`, `role_id`) VALUES
 (2, 2),
 (3, 3),
 (4, 4),
-(5, 5);
+(5, 5),
+(6, 5);
 
 -- --------------------------------------------------------
 
@@ -570,16 +581,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `image`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Dhemes Mota', 'dhemes.mota@gmail.com', NULL, '$2y$10$b0XmxJzbcFvkN4Q.cmZG4.OZTzwDrmSCchuL3T/CIFXO7iOURgZTy', '/perfils/padrao.png', 'Ij5sR75vvioEm26SY4jO6zbB9q1A76TRes1C4OyohCDOQUE6yzDILYxwdSqa', '2019-05-20 14:53:42', '2019-05-20 14:53:42'),
+(1, 'Dhemes Mota', 'dhemes.mota@gmail.com', NULL, '$2y$10$b0XmxJzbcFvkN4Q.cmZG4.OZTzwDrmSCchuL3T/CIFXO7iOURgZTy', '/perfils/padrao.png', '5wXV6XYpzRHai3k7KfSUtkolSQhdZuA7wV8OlJLAbbct3xSmoVwY2rZVb6BF', '2019-05-20 14:53:42', '2019-05-20 14:53:42'),
+(6, 'Ricardo', 'ricardo@gmail.com', NULL, '$2y$10$QbNrP8qhxUQzOUpIImI1ceYbx6XDe/BIlXWeEqAg/YLF6ZHWf/zEK', '/perfils/padrao.png', NULL, '2019-05-29 08:05:14', '2019-05-29 08:05:14'),
 (3, 'Usuário Gerente', 'gerente@gmail.com', NULL, '$2y$10$/hoe2GYzS.UjPycE./2EJeWU33X3/Wg5AOeWHAOPVLfrBS1dWQEN.', '/perfils/padrao.png', NULL, '2019-05-20 14:53:42', '2019-05-20 14:53:42'),
-(4, 'Usuário Funcionário', 'funcionario@gmail.com', NULL, '$2y$10$gpSoY0DyFkjX1MQRRUPBTuy4GI1ibOlkwMqNB6T8aLoz7a/6rnZvO', '/perfils/padrao.png', NULL, '2019-05-20 14:53:42', '2019-05-20 14:53:42'),
+(4, 'Usuário Funcionário', 'funcionario@gmail.com', NULL, '$2y$10$gpSoY0DyFkjX1MQRRUPBTuy4GI1ibOlkwMqNB6T8aLoz7a/6rnZvO', '/perfils/padrao.png', 'tsKk6yaT2D10RcB3Ao8yzTCpXQQyu3glsF7DiSnlHjSQyK9w3ANE3oE9NSbW', '2019-05-20 14:53:42', '2019-05-20 14:53:42'),
 (5, 'Usuario Cliente', 'cliente@gmail.com', NULL, '$2y$10$XeGB1.UazuZMEIvE6Hwqmu7IaNLbrpYBRWdG5Kf3/REpuK1R68aVG', '/perfils/padrao.png', 'MAONHb4fK3SeVvL7hqA1FLGWBBNnBEmoWycmqG8ItAlkBmzQXT9iwJ0AykiB', '2019-05-20 14:53:42', '2019-05-20 14:53:42');
 
 -- --------------------------------------------------------
