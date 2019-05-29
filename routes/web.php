@@ -64,10 +64,15 @@ Route::prefix('admin')->middleware('auth')->namespace('Admin')->group(function (
     Route::get('/schedulings/{id}/approve', 'SchedulingController@approve')->name('schedulings.approve'); // Aprovar agendamento
     Route::get('/schedulings/{id}/cancel', 'SchedulingController@cancel')->name('schedulings.cancel'); // Cancelar agendamento
     Route::resource('/budgets', 'BudgetController');
+
     Route::get('/budgets/{id}/product/add','BudgetController@product')->name('budgets.product');
     Route::post('/budgets/{id}/product/store','BudgetController@storeProduct')->name('budgets.storeProduct');
     Route::get('/budgets/{id}/{product_id}/product/delete', 'BudgetController@deleteProduct')->name('budgets.deleteProduct');
+
     Route::get('/budgets/{id}/service/add','BudgetController@service')->name('budgets.service');
+    Route::post('/budgets/{id}/service/store', 'BudgetController@storeService')->name('budgets.storeService');
+    Route::get('/budgets/{id}/{service_id}/Service/delete', 'BudgetController@deleteService')->name('budgets.deleteService');
+
     Route::get('/budgets/{id}/{client_id}/vehicle/add','BudgetController@vehicle')->name('budgets.vehicle');
     Route::put('/budgets/{id}/vehicle','BudgetController@storeVehicle')->name('budgets.storeVehicle');
 });

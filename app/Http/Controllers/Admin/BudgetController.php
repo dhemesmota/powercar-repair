@@ -303,7 +303,7 @@ class BudgetController extends Controller
         ])->validate();
 
         //dd($data);
-        if ($this->model->update($data,$id)) {
+        if ($this->model->updateVehicle($data,$id)) {
             session()->flash('msg', trans('linguagem.record_added_successfully'));
             session()->flash('status', 'success'); // tipos: success error notification
             return redirect()->route('budgets.index');
@@ -419,6 +419,119 @@ class BudgetController extends Controller
         }
 
         if ($this->model->deleteProduct($id, $product_id)) {
+
+            DB::table('budgets')->where('id','=',$id)->update(['total_price' => $valorTotal]);
+
+            session()->flash('msg', trans('linguagem.registration_deleted_successfully'));
+            session()->flash('status', 'success'); // tipos: success error notification
+            return redirect()->back();
+        } else {
+            session()->flash('msg', trans('linguagem.error_deleting_record'));
+            session()->flash('status', 'error'); // tipos: success error notification
+            return redirect()->back();
+        }
+    }
+
+
+
+
+    /**
+     * Adicionar serviços
+     */
+    public function service($id)
+    {
+
+        $services = DB::table('services')->get();
+        $ordemId = $id;
+
+        // buscar todos os serviços já adicionado a ordem de serviço
+        $list = DB::table('budget_services')
+            ->join('services', 'budget_services.service_id', '=', 'services.id')
+            ->where('budget_id', '=', $id)
+            ->select('budget_services.*', 'services.*')
+            ->get();
+
+        $columnList = [
+            'name' => trans('linguagem.service'),
+            'description' => trans('linguagem.description'),
+            'value' => trans('linguagem.value')
+        ];
+
+        $page = trans('linguagem.budget_list'); // traduzindo o titulo da lista
+        $page_create = trans('linguagem.budget');
+        $routeName = $this->route; // passando a rota - caminho
+
+        $breadcrumb = [
+            (object)['url' => route('home'), 'title' => trans('linguagem.home')],
+            (object)['url' => route($routeName . '.index'), 'title' => trans('linguagem.list', ['page' => $page])],
+            (object)['url' => '', 'title' => 'Adicinar serviços']
+        ];
+
+        return view('admin.' . $routeName . '.service', compact('page', 'page_create', 'routeName', 'breadcrumb', 'services', 'ordemId', 'list', 'columnList'));
+
+        dd($services);
+    }
+    public function storeService(Request $request, $id)
+    {
+        $data = $request->all();
+
+        Validator::make($data, [
+            'service_id' => ['required']
+        ])->validate();
+
+        // verificar se registro já existe
+        $register = DB::table('budget_services')
+                        ->select('service_id')
+                        ->where('budget_id','=',$id)
+                        ->where('service_id','=',$data['service_id'])
+                        ->get();
+        
+        if(!empty($register[0])){
+            session()->flash('msg',"Serviço já adicionado");
+            session()->flash('status','notification'); // tipos: success error notification
+            return redirect()->back();
+        }
+
+        $service_id = (int) $data['service_id'];
+        $value = DB::table('services')->where('id','=',$service_id)->select('value')->get();
+        $price = (float) $value[0]->value;
+
+
+        // buscando valor já adicionando na OS
+        $result = DB::table('budgets')->select('total_price')->where('id', '=', $id)->get();
+        $valorTotal = (float) $result[0]->total_price;
+        $valorTotal += $price;
+
+        $data['budget_id'] = $id;
+
+        if($this->model->createService($data)){
+
+            DB::table('budgets')->where('id','=',$id)->update(['total_price' => $valorTotal]);
+
+            session()->flash('msg',trans('linguagem.record_added_successfully'));
+            session()->flash('status','success'); // tipos: success error notification
+            return redirect()->back();
+        } else {
+            session()->flash('msg',trans('linguagem.error_adding_record'));
+            session()->flash('status','error'); // tipos: success error notification
+            return redirect()->back();
+        }
+    }
+    public function deleteService($id, $service_id)
+    {
+        $valueService = DB::table('services')
+                        ->where('id','=',$service_id)
+                        ->select('value')->get();
+
+        $result = DB::table('budgets')->select('total_price')->where('id', '=', $id)->get();
+        $valorTotal = (float) $result[0]->total_price;
+        if($valorTotal >= $valueService[0]->value){
+            $valorTotal -= (float) $valueService[0]->value;
+        } else {
+            $valorTotal = "0.00";
+        }
+
+        if ($this->model->deleteService($id, $service_id)) {
 
             DB::table('budgets')->where('id','=',$id)->update(['total_price' => $valorTotal]);
 

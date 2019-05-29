@@ -10,6 +10,19 @@ class BudgetRepository extends AbstractRepository implements BudgetRepositoryInt
 {
     protected $model = Budget::class;
 
+    /*
+    * Atualizar dados pelo id
+    */
+    public function updateVehicle(array $data, int $id)
+    {
+        $register = $this->find($id);
+        if($register){
+            return (bool) DB::table('budgets')->where('id','=',$id)->update(['vehicle_id' => $data['vehicle_id']]);
+        } else {
+            return false;
+        }
+    }
+
      /*
     * Paginação
     */
@@ -77,6 +90,28 @@ class BudgetRepository extends AbstractRepository implements BudgetRepositoryInt
         return DB::table('budget_products')
                     ->where('budget_id','=',$id)
                     ->where('product_id','=',$product_id)
+                    ->delete();
+    }
+
+    /*
+    * Create
+    */
+    public function createService(array $data)
+    {
+
+        $result = DB::insert('insert into budget_services (budget_id, service_id) values (?, ?)', [$data['budget_id'], $data['service_id']]);
+
+        return (bool) $result;
+    }
+
+    /*
+    * Deletar produto da os
+    */
+    public function deleteService($id, $service_id)
+    {
+        return DB::table('budget_services')
+                    ->where('budget_id','=',$id)
+                    ->where('service_id','=',$service_id)
                     ->delete();
     }
 }

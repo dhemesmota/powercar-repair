@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 29-Maio-2019 às 02:34
+-- Generation Time: 29-Maio-2019 às 10:14
 -- Versão do servidor: 5.7.21
 -- PHP Version: 7.2.4
 
@@ -52,8 +52,8 @@ CREATE TABLE IF NOT EXISTS `budgets` (
 
 INSERT INTO `budgets` (`id`, `description`, `total_price`, `situation_id`, `client_id`, `vehicle_id`, `employee_id`, `created_at`, `updated_at`) VALUES
 (1, 'Teste', '2042.64', 9, 5, 2, 4, '2019-05-27 01:19:03', '2019-05-27 02:36:20'),
-(2, 'Uma breve descrição.', '1120.00', 9, 5, NULL, 4, '2019-05-29 07:01:56', '2019-05-29 07:01:56'),
-(3, 'Nova OS para o Ricardo', NULL, 9, 6, NULL, 4, '2019-05-29 08:05:38', '2019-05-29 08:05:38');
+(2, 'Uma breve descrição.', '1620.00', 9, 5, 1, 4, '2019-05-29 07:01:56', '2019-05-29 07:01:56'),
+(3, 'Nova OS para o Ricardo', '245.00', 9, 6, 3, 4, '2019-05-29 08:05:38', '2019-05-29 08:05:38');
 
 -- --------------------------------------------------------
 
@@ -95,6 +95,15 @@ CREATE TABLE IF NOT EXISTS `budget_services` (
   KEY `budget_services_budget_id_foreign` (`budget_id`),
   KEY `budget_services_service_id_foreign` (`service_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `budget_services`
+--
+
+INSERT INTO `budget_services` (`budget_id`, `service_id`) VALUES
+(2, 1),
+(2, 2),
+(3, 3);
 
 -- --------------------------------------------------------
 
@@ -612,7 +621,7 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `vehicles_user_id_foreign` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `vehicles`
@@ -620,7 +629,8 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
 
 INSERT INTO `vehicles` (`id`, `model`, `color`, `year`, `board`, `user_id`, `created_at`, `updated_at`) VALUES
 (1, 'Honda Civic', 'Branco', '2018/2019', 'ASB4587', 5, '2019-05-22 16:14:12', '2019-05-22 16:14:12'),
-(2, 'GOL G6', 'Preto', '2019/2019', 'BGC3423', 5, '2019-05-27 01:48:36', '2019-05-27 01:48:36');
+(2, 'GOL G6', 'Preto', '2019/2019', 'BGC3423', 5, '2019-05-27 01:48:36', '2019-05-27 01:48:36'),
+(3, 'HB20', 'Branco', '2019/2019', 'DHD4878', 6, '2019-05-29 16:14:04', '2019-05-29 16:14:04');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
