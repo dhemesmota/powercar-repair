@@ -41,7 +41,7 @@
                             @elseif($key2 == 'name')
                                 <td>
                                     @if($value->{$key2} == "Aprovado")
-                                        <i class="fab fa-font-awesome-flag text-@php echo $value->color @endphp" style="cursor: pointer;" data-toggle="modal" data-target="#modalApproveScheduling"></i> @php echo $value->{$key2} @endphp
+                                        <i class="fab fa-font-awesome-flag text-@php echo $value->color; @endphp" style="cursor: pointer;" data-toggle="modal" data-target="#modalApproveScheduling"></i> @php echo $value->{$key2}; @endphp
                                     @else
                                         <i class="fab fa-font-awesome-flag text-@php echo $value->color @endphp"></i> @php echo $value->{$key2} @endphp
                                     @endif

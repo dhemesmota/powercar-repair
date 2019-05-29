@@ -36,16 +36,28 @@ class BudgetController extends Controller
     public function index(Request $request)
     {
 
-        // Definiando as colunas e traduzação das colunas
-        $columnList = [
-            'id'=>'#',
-            'description'=>trans('linguagem.description'),
-            'total_price'=>trans('linguagem.total_price'),
-            'client_id'=>trans('linguagem.client'),
-            'vehicle_id'=>trans('linguagem.vehicle'),
-            'employee_id'=>trans('linguagem.employee'),
-            'situation_id'=>trans('linguagem.situation')
-        ];
+        $isClient = auth()->user()->isClient();
+        if(!$isClient){
+            // Definiando as colunas e traduzação das colunas
+            $columnList = [
+                'id'=>'#',
+                'description'=>trans('linguagem.description'),
+                'total_price'=>trans('linguagem.total_price'),
+                'client'=>trans('linguagem.client'),
+                'model'=>trans('linguagem.vehicle'),
+                'employee'=>trans('linguagem.employee'),
+                'name'=>trans('linguagem.situation')
+            ];
+        } else {
+            $columnList = [
+                'id'=>'#',
+                'description'=>trans('linguagem.description'),
+                'total_price'=>trans('linguagem.total_price'),
+                'model'=>trans('linguagem.vehicle'),
+                'employee'=>trans('linguagem.employee'),
+                'name'=>trans('linguagem.situation')
+            ];
+        }
         //'description', 'total_price', 'client_id', 'vehicle_id', 'employee_id'
 
         $search = "";
@@ -66,7 +78,7 @@ class BudgetController extends Controller
             (object)['url'=>'','title'=>trans('linguagem.list',['page'=>$page])]
         ];
 
-        return view('admin.'.$routeName.'.index',compact('list','search','page','routeName','columnList','breadcrumb'));
+        return view('admin.'.$routeName.'.index',compact('list','search','page','routeName','columnList','breadcrumb','isClient'));
     }
 
     /**
@@ -151,7 +163,7 @@ class BudgetController extends Controller
 
         $register = $this->model->find($id);
         if($register){
-            
+            $register = $register[0];
             $page = trans('linguagem.budget_list'); // traduzindo o titulo da lista
             $page2 = trans('linguagem.budget');
 
@@ -349,7 +361,18 @@ class BudgetController extends Controller
             'amount' => ['required']
         ])->validate();
 
+        // verificar se registro já existe
+        $register = DB::table('budget_products')
+                        ->select('product_id')
+                        ->where('budget_id','=',$id)
+                        ->where('product_id','=',$data['product_id'])
+                        ->get();
         
+        if(!empty($register[0])){
+            session()->flash('msg',trans('linguagem.product_already_added'));
+            session()->flash('status','notification'); // tipos: success error notification
+            return redirect()->back();
+        }
 
         $product_id = (int) $data['product_id'];
         $amount = (int) $data['amount'];
@@ -362,13 +385,49 @@ class BudgetController extends Controller
         $data['value'] = $price;
         $data['total_value'] = $price * $amount;
 
+        // buscando valor já adicionando na OS
+        $result = DB::table('budgets')->select('total_price')->where('id', '=', $id)->get();
+        $valorTotal = (float) $result[0]->total_price;
+        $valorTotal += $data['total_value'];
+
         if($this->model->createProduct($data)){
+
+            DB::table('budgets')->where('id','=',$id)->update(['total_price' => $valorTotal]);
+
             session()->flash('msg',trans('linguagem.record_added_successfully'));
             session()->flash('status','success'); // tipos: success error notification
             return redirect()->back();
         } else {
             session()->flash('msg',trans('linguagem.error_adding_record'));
             session()->flash('status','error'); // tipos: success error notification
+            return redirect()->back();
+        }
+    }
+    public function deleteProduct($id, $product_id)
+    {
+        $valueProduct = DB::table('budget_products')
+                        ->where('product_id','=',$product_id)
+                        ->where('budget_id','=',$id)
+                        ->select('total_value')->get();
+
+        $result = DB::table('budgets')->select('total_price')->where('id', '=', $id)->get();
+        $valorTotal = (float) $result[0]->total_price;
+        if($valorTotal >= $valueProduct[0]->total_value){
+            $valorTotal -= (float) $valueProduct[0]->total_value;
+        } else {
+            $valorTotal = "0.00";
+        }
+
+        if ($this->model->deleteProduct($id, $product_id)) {
+
+            DB::table('budgets')->where('id','=',$id)->update(['total_price' => $valorTotal]);
+
+            session()->flash('msg', trans('linguagem.registration_deleted_successfully'));
+            session()->flash('status', 'success'); // tipos: success error notification
+            return redirect()->back();
+        } else {
+            session()->flash('msg', trans('linguagem.error_deleting_record'));
+            session()->flash('status', 'error'); // tipos: success error notification
             return redirect()->back();
         }
     }

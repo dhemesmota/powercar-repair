@@ -105,4 +105,5 @@ return [
     'budget_list'=>'Budgets',
     'total_price'=>'Total price',
     'amount'=>'Amount',
+    'product_already_added'=>'Product already added',
 ];

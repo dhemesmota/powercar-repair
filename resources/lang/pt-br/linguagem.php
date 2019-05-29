@@ -105,4 +105,5 @@ return [
     'budget_list'=>'Orçamentos',
     'total_price'=>'Valor total',
     'amount'=>'Quantidade',
+    'product_already_added'=>'Produto já adicionando',
 ];

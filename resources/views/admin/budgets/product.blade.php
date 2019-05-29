@@ -62,7 +62,7 @@
                             @endif
                         @endforeach
                         <td class="text-right">
-                            <a href="" class="btn btn-danger btn-sm" data-toggle="tooltip" data-html="true" title="Deletar produto">
+                            <a href="{{ route('budgets.deleteProduct',[$value->budget_id, $value->product_id]) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-html="true" title="Deletar produto">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>

@@ -11,8 +11,14 @@
         @breadcrumb_component(['page'=>$page,'items'=>$breadcrumb ?? []])
         @endbreadcrumb_component
 
-        <p>{{ __('linguagem.name') }}: {{ $register->name }}</p>
-        <p>{{ __('linguagem.description') }}: {{ $register->description }}</p>
+        <p><strong>{{ __('linguagem.budget') }}</strong>: {{ $register->id }}</p>
+        <p><strong>{{ __('linguagem.total_price') }}</strong>: R$ {{ $register->total_price }}</p>
+        @if (!auth()->user()->isClient())
+            <p><strong>{{ __('linguagem.client') }}</strong>: {{ $register->client }}</p>
+        @endif
+        <p><strong>{{ __('linguagem.vehicle') }}</strong>: {{ $register->model }}</p>
+        <p><strong>{{ __('linguagem.employee') }}</strong>: {{ $register->employee }}</p>
+        <p><strong>{{ __('linguagem.description') }}</strong>: {{ $register->description }}</p>
 
         @if ($delete)
             <!-- Componente form -->
