@@ -75,13 +75,13 @@
                             @endcan
                             @can('ap-os')
                                 @if($isClient == true)
-                                    <a href="" class="btn btn-powercar btn-sm" data-toggle="tooltip" data-html="true" title="Aprovar Ordem de Serviço">
+                                    <a href="{{ route('budgets.appcancel',[$value->id, 1]) }}" class="btn btn-powercar btn-sm" data-toggle="tooltip" data-html="true" title="Aprovar Ordem de Serviço">
                                         <i class="fas fa-check"></i>
                                     </a>
                                 @endif
                             @endcan
                             @can('cancel-os')
-                                <a href="" class="btn btn-danger btn-sm" data-toggle="tooltip" data-html="true" title="Cancelar Ordem de Serviço">
+                                <a href="{{ route('budgets.appcancel',[$value->id, 2]) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-html="true" title="Cancelar Ordem de Serviço">
                                     <i class="fas fa-ban"></i>
                                 </a>
                             @endcan
@@ -91,9 +91,11 @@
                                 </a>
                             @endcan
                             @can('edit-budget')
+                                <!--
                                 <a href="{{ route($routeName.'.edit',$value->id) }}" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
+                                -->
                             @endcan
                             @can('delete-budget')
                                 <a href="{{ route($routeName.'.show',[$value->id,'delete=1']) }}" class="btn btn-danger btn-sm">

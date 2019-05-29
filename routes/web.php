@@ -65,6 +65,8 @@ Route::prefix('admin')->middleware('auth')->namespace('Admin')->group(function (
     Route::get('/schedulings/{id}/cancel', 'SchedulingController@cancel')->name('schedulings.cancel'); // Cancelar agendamento
     Route::resource('/budgets', 'BudgetController');
 
+    Route::get('/budgets/{id}/approve-cancel/{condicao}','BudgetController@approveCancel')->name('budgets.appcancel');
+
     Route::get('/budgets/{id}/product/add','BudgetController@product')->name('budgets.product');
     Route::post('/budgets/{id}/product/store','BudgetController@storeProduct')->name('budgets.storeProduct');
     Route::get('/budgets/{id}/{product_id}/product/delete', 'BudgetController@deleteProduct')->name('budgets.deleteProduct');

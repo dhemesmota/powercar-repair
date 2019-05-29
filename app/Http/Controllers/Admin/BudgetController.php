@@ -544,4 +544,21 @@ class BudgetController extends Controller
             return redirect()->back();
         }
     }
+
+    public function approveCancel($id, $condicao)
+    {
+        if($condicao == 1){
+            // aprovar
+            DB::table('budgets')->where('id','=',$id)->update(['situation_id' => 7]);
+            session()->flash('msg', "O.S. aprovada com sucesso");
+            session()->flash('status', 'success'); // tipos: success error notification
+            return redirect()->back();
+        } else {
+            // cancelar
+            DB::table('budgets')->where('id','=',$id)->update(['situation_id' => 6]);
+            session()->flash('msg', "O.S. cancelada com sucesso");
+            session()->flash('status', 'success'); // tipos: success error notification
+            return redirect()->back();
+        }
+    }
 }
