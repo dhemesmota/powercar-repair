@@ -281,7 +281,7 @@ class SchedulingController extends Controller
      */
     public function cancel($id)
     {
-        if (Gate::denies('approve-scheduling')) {
+        if (Gate::denies('cancel-scheduling')) {
             // Caso não tenha acesso a pagina, será redirecionado a pagina home
             session()->flash('msg', trans('linguagem.access_denied'));
             session()->flash('status', 'error');

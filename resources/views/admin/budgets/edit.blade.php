@@ -13,7 +13,7 @@
 
         <!-- Componente form -->
         @form_component(['action'=>route($routeName.'.update',$register->id),'method'=>'PUT'])
-            @include('admin.'.$routeName.'.form')
+            @include('admin.'.$routeName.'.formEdit')
             <button class="btn btn-primary btn-lg float-right">{{ __('linguagem.edit') }}</button>
         @endform_component
         

@@ -134,8 +134,72 @@
             <h4 class="titulo-conteudo mb-4">Atendimentos</h4>
         </div>
         <div class="col-md-12">
-            @if (isset($agendamentos))
-                <h1>Tem atendiemnto</h1>
+            @if (isset($budgetsClient))
+            <div class="table-responsive-lg">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                @foreach ($listBudgetsClient as $key => $value)
+                                    <th scope="col">{{ $value }}</th>      
+                                @endforeach
+                                <th scope="col" class="text-right">{{ __('linguagem.action') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($budgetsClient as $key => $value)
+                            <tr>
+                                @foreach ($listBudgetsClient as $key2 => $value2)
+                                    @if ($key2 == 'id')
+                                        <th scope="row">{{ $value->$key2 }}</th>
+                                    @elseif($key2 == 'model')
+                                        <td class="text-center">
+                                            @if (empty($value->{$key2}) and !auth()->user()->isClient())    
+                                                <a href="{{ route('budgets.vehicle',[$value->id,$value->client_id]) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-html="true" title="Adicionar Veículo">
+                                                    <i class="fas fa-car"></i>
+                                                </a>
+                                            @else
+                                                {{ $value->{$key2} }}
+                                            @endif
+                                        </td>
+                                    @elseif($key2 == 'name')
+                                        <td>
+                                            @if($value->{$key2} == "Aprovado")
+                                                <i class="fab fa-font-awesome-flag text-@php echo $value->color @endphp" style="cursor: pointer;" data-toggle="modal" data-target="#modalApproveBudget"></i> @php echo $value->{$key2} @endphp
+                                            @else
+                                                <i class="fab fa-font-awesome-flag text-@php echo $value->color @endphp"></i> @php echo $value->{$key2} @endphp
+                                            @endif
+                                        </td>
+                                    @elseif($key2 == 'total_price')
+                                        <td>@php echo !empty($value->{$key2}) ? "R$ ".$value->{$key2} : ""; @endphp</td>
+                                    @elseif($key2 == 'value')
+                                        <td>@php echo "R$ ".$value->{$key2} @endphp</td>
+                                    @elseif($key2 == 'created_at')
+                                        <td>@php echo date('d/m/Y \a\s H\hi', strtotime($value->{$key2})) @endphp</td>
+                                    @elseif($key2 == 'description')
+                                        <td>
+                                            <button class="btn text-secondary" onclick="budget('{{ $value->{$key2} }}')" data-toggle="modal" data-target="#modalDescriptionBudget">
+                                                <i class="fas fa-file-alt fa-2x"></i>
+                                            </button>
+                                        </td>
+                                    @else
+                                        <td>@php echo $value->{$key2} @endphp</td>
+                                    @endif
+                                @endforeach
+                                <td class="text-right">
+                                    @can('show-budget')
+                                        <a href="{{ route('budgets.show',$value->id) }}" class="btn btn-info btn-sm">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    @endcan
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="text-right">
+                        <span onclick="window.location.href='{{ route('budgets.index') }}'" class="badge badge-info" style="cursor:pointer;">Listar todos</span>
+                    </div>
+                </div>
             @else
             
                 <div class="bg-light rounded w-100 py-4 d-flex justify-content-center align-items-center">

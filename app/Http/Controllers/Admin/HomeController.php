@@ -57,12 +57,57 @@ class HomeController extends Controller
 
             $routeName = 'schedulings';
 
+            $listBudgetsClient = [
+                'id'=>'#',
+                'description'=>trans('linguagem.description'),
+                'total_price'=>trans('linguagem.total_price'),
+                'model'=>trans('linguagem.vehicle'),
+                'employee'=>trans('linguagem.employee'),
+                'name'=>trans('linguagem.situation'),
+                'created_at'=>"Data de registro",
+            ];
+    
+            $budgetsClient = DB::table('budgets')
+            ->join('users AS us', 'budgets.client_id', '=', 'us.id')
+            ->leftJoin('vehicles', 'budgets.vehicle_id', '=', 'vehicles.id')
+            ->join('users AS ep', 'budgets.employee_id', '=', 'ep.id')
+            ->join('situations', 'budgets.situation_id', '=', 'situations.id')
+            ->select('budgets.*', 'us.name as client', 'vehicles.model','ep.name as employee','situations.name', 'situations.description as status_description', 'situations.color')
+            ->where('budgets.client_id','=',$userId)
+            ->orderBy('budgets.created_at', 'DESC')
+            ->limit(3)
+            ->get();
+
             //dd($list);
 
-            return view('home',compact('roleUsuario','columnList','list','routeName'));
+            return view('home',compact('roleUsuario','columnList','list','routeName','listBudgetsClient','budgetsClient'));
         }
 
 
-        return view('home',compact('roleUsuario'));
+        $columnListBudgets = [
+            'id'=>'#',
+            'description'=>trans('linguagem.description'),
+            'total_price'=>trans('linguagem.total_price'),
+            'client'=>trans('linguagem.client'),
+            'model'=>trans('linguagem.vehicle'),
+            'employee'=>trans('linguagem.employee'),
+            'name'=>trans('linguagem.situation')
+        ];
+
+        $budgets = DB::table('budgets')
+        ->join('users AS us', 'budgets.client_id', '=', 'us.id')
+        ->leftJoin('vehicles', 'budgets.vehicle_id', '=', 'vehicles.id')
+        ->join('users AS ep', 'budgets.employee_id', '=', 'ep.id')
+        ->join('situations', 'budgets.situation_id', '=', 'situations.id')
+        ->select('budgets.*', 'us.name as client', 'vehicles.model','ep.name as employee','situations.name', 'situations.description as status_description', 'situations.color')
+        ->orderBy('budgets.id', 'DESC')
+        ->limit(3)
+        ->get();
+
+        $osPendente = DB::table('budgets')->where('situation_id','=','9')->count();
+        $osNova = DB::table('budgets')->where('situation_id','=','7')->count();
+        $osConcluida = DB::table('budgets')->count();
+
+        return view('home',compact('roleUsuario','columnListBudgets','budgets','osPendente','osNova','osConcluida'));
     }
 }

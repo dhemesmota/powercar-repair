@@ -23,10 +23,20 @@ class BudgetRepository extends AbstractRepository implements BudgetRepositoryInt
         }
     }
 
+    public function update(array $data, int $id)
+    {
+        $register = $this->find($id);
+        if($register){
+            return (bool) DB::table('budgets')->where('id','=',$id)->update(['situation_id' => $data['situation_id']]);
+        } else {
+            return false;
+        }
+    }
+
      /*
     * Paginação
     */
-    public function paginate(int $paginate = 10, string $column = 'id', string $order = 'ASC')
+    public function paginate(int $paginate = 10, string $column = 'created_at', string $order = 'DESC')
     {
         /**
          * Retornando todos os usuários funcionários
@@ -56,6 +66,29 @@ class BudgetRepository extends AbstractRepository implements BudgetRepositoryInt
 
     }
 
+    public function findWhereLike(array $columns, string $search, string $column = 'id', string $order = 'ASC')
+    {
+        // Fazendo um join com situações e retornando todos os dados referente a busca
+        // verificar se é cliente, se for listar apenas os seus proprios agendamentos
+        $this->search = $search;
+        
+        $query = DB::table('budgets')
+        ->join('users AS us', 'budgets.client_id', '=', 'us.id')
+        ->leftJoin('vehicles', 'budgets.vehicle_id', '=', 'vehicles.id')
+        ->join('users AS ep', 'budgets.employee_id', '=', 'ep.id')
+        ->join('situations', 'budgets.situation_id', '=', 'situations.id')
+            ->orWhere('budgets.description', 'like', '%' . $search . '%')
+            ->orWhere('budgets.id', 'like', '%' . $search . '%')
+            ->orWhere('vehicles.model', 'like', '%' . $search . '%')
+            ->orWhere('budgets.total_price', 'like', '%' . $search . '%')
+            ->orWhere('ep.name', 'like', '%' . $search . '%')
+            ->orWhere('situations.name', 'like', '%' . $search . '%')
+            ->select('budgets.*', 'us.name as client', 'vehicles.model','ep.name as employee','situations.name', 'situations.description as status_description', 'situations.color');
+        
+
+        return $query->orderBy($column, $order)->get();
+    }
+
     /*
     * Buscar dados pelo id
     */
@@ -80,6 +113,27 @@ class BudgetRepository extends AbstractRepository implements BudgetRepositoryInt
         $result = DB::insert('insert into budget_products (budget_id, product_id, amount, value, total_value) values (?, ?, ?, ?, ?)', [$data['budget_id'], $data['product_id'], $data['amount'], $data['value'], $data['total_value'],]);
 
         return (bool) $result;
+    }
+
+    /*
+    * Deletar dados pelo id
+    */
+    public function delete(int $id)
+    {
+        $register = $this->find($id);
+        if($register){
+            DB::table('budget_products')
+                    ->where('budget_id','=',$id)
+                    ->delete();
+            DB::table('budget_services')
+                    ->where('budget_id','=',$id)
+                    ->delete();
+            return (bool) DB::table('budgets')
+                            ->where('id','=',$id)
+                            ->delete();
+        } else {
+            return false;
+        }
     }
 
     /*

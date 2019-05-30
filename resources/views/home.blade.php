@@ -14,19 +14,40 @@
 
             @foreach ($roleUsuario as $key => $item)
                 @if (($item->id == 5) or ($item->name == "Cliente"))
-                    @cliente_component(['columnList'=>$columnList,'agendamentos'=>$list,'routeName'=>$routeName])
+                    @cliente_component([
+                        'columnList'=>$columnList,
+                        'agendamentos'=>$list,
+                        'routeName'=>$routeName,
+                        'listBudgetsClient'=>$listBudgetsClient, 
+                        'budgetsClient'=>$budgetsClient
+                        ])
                     @endcliente_component
                 @elseif(($item->id == 4) or ($item->name == "Funcionario"))
-                    @funcionario_component
-                    @endfuncionario_component
+                    @admin_component([
+                        'columnListBudgets'=>$columnListBudgets, 
+                        'budgets'=>$budgets, 
+                        'osPendente'=>$osPendente,
+                        'osNova'=>$osNova,
+                        'osConcluida'=>$osConcluida
+                        ])
+                    @endadmin_component
                 @elseif(($item->id == 3) or ($item->name == "Gerente"))
-                    @gerente_component
-                    @endgerente_component
-                @elseif(($item->id == 2) or ($item->name == "Gerente Master"))
-                    @gerente_master_component
-                    @endgerente_master_component
+                    @admin_component([
+                        'columnListBudgets'=>$columnListBudgets, 
+                        'budgets'=>$budgets, 
+                        'osPendente'=>$osPendente,
+                        'osNova'=>$osNova,
+                        'osConcluida'=>$osConcluida
+                        ])
+                    @endadmin_component
                 @elseif(($item->id == 1) or ($item->name == "Administrador"))
-                    @admin_component
+                    @admin_component([
+                        'columnListBudgets'=>$columnListBudgets, 
+                        'budgets'=>$budgets, 
+                        'osPendente'=>$osPendente,
+                        'osNova'=>$osNova,
+                        'osConcluida'=>$osConcluida
+                        ])
                     @endadmin_component
                 @else
                     <h1>Bem vindo!</h1>

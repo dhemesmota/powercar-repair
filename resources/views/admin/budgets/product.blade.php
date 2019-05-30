@@ -56,7 +56,7 @@
                                     <img style="max-width: 40px;" class="img-fluid rounded" src="{{$value->$key2}}" alt="perfil">
                                 </td>
                             @elseif(($key2 == 'value') || ($key2 == 'total_value'))
-                                <td>@php echo "R$ ".$value->{$key2} @endphp</td>
+                                <td>@php echo "R$ ". number_format($value->{$key2}, 2, ',',' ') @endphp</td>
                             @else
                                 <td>@php echo $value->{$key2} @endphp</td>
                             @endif
@@ -72,8 +72,8 @@
                         @endphp
                     @endforeach
                     <tr style="background: #dee2e6;" class="text-powercar">
-                        <th colspan="4">Total Produtos:</th>
-                        <th>R$ {{ $somaTotal }}</th>
+                        <th colspan="3">Total Produtos:</th>
+                        <th>R$ @php echo number_format($somaTotal, 2, ',',' ') @endphp</th>
                         <td></td>
                     </tr>
                 </tbody>

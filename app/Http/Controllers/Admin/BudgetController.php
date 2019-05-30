@@ -15,7 +15,7 @@ class BudgetController extends Controller
 
     private $route = 'budgets';
     private $paginate = 10;
-    private $search = ['description'];
+    private $search = ['id','description','name','total_price','model'];
     private $model;
     private $modelClient;
     private $modelEmployee;
@@ -46,7 +46,8 @@ class BudgetController extends Controller
                 'client'=>trans('linguagem.client'),
                 'model'=>trans('linguagem.vehicle'),
                 'employee'=>trans('linguagem.employee'),
-                'name'=>trans('linguagem.situation')
+                'name'=>trans('linguagem.situation'),
+                'created_at'=>"Data de registro"
             ];
         } else {
             $columnList = [
@@ -63,9 +64,9 @@ class BudgetController extends Controller
         $search = "";
         if(isset($request->search) and !empty($request->search)){
             $search = $request->search;
-            $list = $this->model->findWhereLike($this->search,$search,'id','DESC');
+            $list = $this->model->findWhereLike($this->search,$search);
         } else {
-            $list = $this->model->paginate($this->paginate, 'id', 'DESC'); // para criar paginaçao com 5 itens por pagina
+            $list = $this->model->paginate($this->paginate); // para criar paginaçao com 5 itens por pagina
             //$list = $this->model->all(); // trás todos os usuários
         }
 
@@ -181,7 +182,32 @@ class BudgetController extends Controller
                 $delete = true;
             }
 
-            return view('admin.'.$routeName.'.show',compact('register','page','page2','routeName','breadcrumb','delete'));
+            // buscar todos os produtos já adicionado a ordem de serviço
+            $products = DB::table('budget_products')
+                    ->join('products','budget_products.product_id', '=', 'products.id')
+                    ->where('budget_id','=',$id)
+                    ->select('budget_products.*','products.name as product')
+                    ->get();
+            $columnListProducts = [
+                'product' => trans('linguagem.product'),
+                'value' => trans('linguagem.value'),
+                'amount' => trans('linguagem.amount'),
+                'total_value' => trans('linguagem.total_price')
+            ];
+
+            // buscar todos os serviços já adicionado a ordem de serviço
+            $services = DB::table('budget_services')
+                ->join('services', 'budget_services.service_id', '=', 'services.id')
+                ->where('budget_id', '=', $id)
+                ->select('budget_services.*', 'services.*')
+                ->get();
+            $columnListServices = [
+                'name' => trans('linguagem.service'),
+                'description' => trans('linguagem.description'),
+                'value' => trans('linguagem.value')
+            ];
+
+            return view('admin.'.$routeName.'.show',compact('register','page','page2','routeName','breadcrumb','delete','products','columnListProducts','services','columnListServices'));
         }
 
         return redirect()->route($routeName.'.index');
@@ -209,7 +235,9 @@ class BudgetController extends Controller
                 (object)['url'=>'','title'=>trans('linguagem.edit_crud',['page'=>$page2])]
             ];
 
-            return view('admin.'.$routeName.'.edit',compact('register','page','page2','routeName','breadcrumb'));
+            $situations = DB::table('situations')->whereNotIn('id',[6,7,9])->get();
+            $register = $register[0];
+            return view('admin.'.$routeName.'.edit',compact('register','page','page2','routeName','breadcrumb','situations'));
         }
 
         // Caso não encontre o usuário retornar para lista de usuários
@@ -228,15 +256,13 @@ class BudgetController extends Controller
         $data = $request->all();
 
         Validator::make($data, [
-            'name' => ['required', 'string', 'min:4', 'max:255'],
-            'description' => ['required', 'string', 'max:255'],
-            'color' => ['required', 'string', 'max:40']
+            'situation_id' => ['required']
         ])->validate();
 
         if($this->model->update($data,$id)){
             session()->flash('msg',trans('linguagem.successfully_edited_record'));
             session()->flash('status','success'); // tipos: success error notification
-            return redirect()->back();
+            return redirect()->route('budgets.index');
         } else {
             session()->flash('msg',trans('linguagem.error_editing_record'));
             session()->flash('status','error'); // tipos: success error notification
@@ -331,7 +357,6 @@ class BudgetController extends Controller
                     ->get();
 
         $columnList = [
-            'budget_id' => trans('linguagem.budget'),
             'product' => trans('linguagem.product'),
             'value' => trans('linguagem.value'),
             'amount' => trans('linguagem.amount'),
@@ -392,7 +417,7 @@ class BudgetController extends Controller
 
         if($this->model->createProduct($data)){
 
-            DB::table('budgets')->where('id','=',$id)->update(['total_price' => $valorTotal]);
+            DB::table('budgets')->where('id','=',$id)->update(['total_price' => $valorTotal,'situation_id' => 9]);
 
             session()->flash('msg',trans('linguagem.record_added_successfully'));
             session()->flash('status','success'); // tipos: success error notification
@@ -420,7 +445,7 @@ class BudgetController extends Controller
 
         if ($this->model->deleteProduct($id, $product_id)) {
 
-            DB::table('budgets')->where('id','=',$id)->update(['total_price' => $valorTotal]);
+            DB::table('budgets')->where('id','=',$id)->update(['total_price' => $valorTotal,'situation_id' => 9]);
 
             session()->flash('msg', trans('linguagem.registration_deleted_successfully'));
             session()->flash('status', 'success'); // tipos: success error notification

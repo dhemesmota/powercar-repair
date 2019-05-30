@@ -54,6 +54,8 @@
                                 <td>@php echo !empty($value->{$key2}) ? "R$ ".$value->{$key2} : ""; @endphp</td>
                             @elseif($key2 == 'value')
                                 <td>@php echo "R$ ".$value->{$key2} @endphp</td>
+                            @elseif($key2 == 'created_at')
+                                    <td>@php echo date('d/m/Y \a\s H\hi', strtotime($value->{$key2})) @endphp</td>
                             @elseif($key2 == 'description')
                                 <td>
                                     <button class="btn text-secondary" onclick="budget('{{ $value->{$key2} }}')" data-toggle="modal" data-target="#modalDescriptionBudget">
@@ -66,24 +68,28 @@
                         @endforeach
                         <td class="text-right">
                             @can('add-product-service')
-                                <a href="{{ route($routeName.'.product',$value->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-html="true" title="Adicionar Produtos">
-                                    <i class="fas fa-cart-plus"></i>
-                                </a>
-                                <a href="{{ route($routeName.'.service',$value->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-html="true" title="Adicionar Serviços">
-                                    <i class="fas fa-tools"></i>
-                                </a>
+                                @if($value->name != "Cancelado")
+                                    <a href="{{ route($routeName.'.product',$value->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-html="true" title="Adicionar Produtos">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </a>
+                                    <a href="{{ route($routeName.'.service',$value->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-html="true" title="Adicionar Serviços">
+                                        <i class="fas fa-tools"></i>
+                                    </a>
+                                @endif
                             @endcan
                             @can('ap-os')
-                                @if($isClient == true)
+                                @if(($isClient == true) and $value->name != "Aprovado")
                                     <a href="{{ route('budgets.appcancel',[$value->id, 1]) }}" class="btn btn-powercar btn-sm" data-toggle="tooltip" data-html="true" title="Aprovar Ordem de Serviço">
                                         <i class="fas fa-check"></i>
                                     </a>
                                 @endif
                             @endcan
                             @can('cancel-os')
+                                @if($value->name == "Pendente")
                                 <a href="{{ route('budgets.appcancel',[$value->id, 2]) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-html="true" title="Cancelar Ordem de Serviço">
                                     <i class="fas fa-ban"></i>
                                 </a>
+                                @endif  
                             @endcan
                             @can('show-budget')
                                 <a href="{{ route($routeName.'.show',$value->id) }}" class="btn btn-info btn-sm">
@@ -91,11 +97,11 @@
                                 </a>
                             @endcan
                             @can('edit-budget')
-                                <!--
+                                @if($value->name != "Cancelado" and $value->name != "Pendente")
                                 <a href="{{ route($routeName.'.edit',$value->id) }}" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                -->
+                                @endif
                             @endcan
                             @can('delete-budget')
                                 <a href="{{ route($routeName.'.show',[$value->id,'delete=1']) }}" class="btn btn-danger btn-sm">

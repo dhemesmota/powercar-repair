@@ -39,6 +39,7 @@
             <option value="Azul">Azul</option>
             <option value="Vermelho">Vermelho</option>
             <option value="Verde">Verde</option>
+            <option value="Outra">Outra</option>
         </select>
 
         @if ($errors->has('color'))

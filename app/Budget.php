@@ -19,4 +19,6 @@ class Budget extends Model
     {
         return $this->hasMany('App\Product');
     }
+
+
 }
