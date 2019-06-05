@@ -6,7 +6,7 @@
 <div class="row mb-5">
     <div class="container-fluid">
         <div class="row mb-5">
-            <div class="col-md-4">
+            <div class="col-md-4 mb-3">
                 <div class="card">
                     <div class="card-body d-flex">
                         <div class="card-left gradiente-azul">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 mb-3">
                 <div class="card">
                     <div class="card-body d-flex">
                         <div class="card-left gradiente-verde">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 mb-3">
                 <div class="card">
                     <div class="card-body d-flex">
                         <div class="card-left gradiente-vermelho">
