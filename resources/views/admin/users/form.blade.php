@@ -58,7 +58,7 @@
             <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" aria-describedby="basic-password_confirmation">
         </div>
     </div>
-
+<!--
     @if (isset($register))
         <div class="col-md-12">
             <div class="input-group mb-3">
@@ -75,7 +75,7 @@
             </div>       
         </div> 
     @endif
-
+-->
     <div class="form-group col-6">
         <label for="roles">{{ __('linguagem.role_list') }}</label>
         <div class="form-group">
