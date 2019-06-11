@@ -38,8 +38,14 @@
                                         <a href="{{ route($routeName.'.vehicle',[$value->id,$value->client_id]) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-html="true" title="Adicionar Veículo">
                                             <i class="fas fa-car"></i>
                                         </a>
+                                        @php
+                                            $hasCar = false;
+                                        @endphp
                                     @else
                                         {{ $value->{$key2} }}
+                                        @php
+                                            $hasCar = true;
+                                        @endphp
                                     @endif
                                 </td>
                             @elseif($key2 == 'name')
@@ -67,47 +73,51 @@
                             @endif
                         @endforeach
                         <td class="text-right">
-                            @can('add-product-service')
-                                @if($value->name != "Cancelado")
-                                    <a href="{{ route($routeName.'.product',$value->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-html="true" title="Adicionar Produtos">
-                                        <i class="fas fa-cart-plus"></i>
+                            <span class="d-flex flex-row justify-content-end">
+                                @can('add-product-service')
+                                    @if($value->name != "Cancelado")
+                                        @if ($hasCar == true)
+                                            <a href="{{ route($routeName.'.product',$value->id) }}" class="btn btn-success ml-1 btn-sm" data-toggle="tooltip" data-html="true" title="Adicionar Produtos">
+                                                <i class="fas fa-cart-plus"></i>
+                                            </a>
+                                            <a href="{{ route($routeName.'.service',$value->id) }}" class="btn btn-success btn-sm ml-1" data-toggle="tooltip" data-html="true" title="Adicionar Serviços">
+                                                <i class="fas fa-tools"></i>
+                                            </a>
+                                        @endif
+                                    @endif
+                                @endcan
+                                @can('ap-os')
+                                    @if(($isClient == true) and $value->name != "Aprovado")
+                                        <a href="{{ route('budgets.appcancel',[$value->id, 1]) }}" class="btn btn-powercar btn-sm ml-1" data-toggle="tooltip" data-html="true" title="Aprovar Ordem de Serviço">
+                                            <i class="fas fa-check"></i>
+                                        </a>
+                                    @endif
+                                @endcan
+                                @can('cancel-os')
+                                    @if($value->name == "Pendente")
+                                    <a href="{{ route('budgets.appcancel',[$value->id, 2]) }}" class="btn btn-danger btn-sm ml-1" data-toggle="tooltip" data-html="true" title="Cancelar Ordem de Serviço">
+                                        <i class="fas fa-ban"></i>
                                     </a>
-                                    <a href="{{ route($routeName.'.service',$value->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-html="true" title="Adicionar Serviços">
-                                        <i class="fas fa-tools"></i>
+                                    @endif  
+                                @endcan
+                                @can('show-budget')
+                                    <a href="{{ route($routeName.'.show',$value->id) }}" class="btn btn-info btn-sm ml-1">
+                                        <i class="fas fa-eye"></i>
                                     </a>
-                                @endif
-                            @endcan
-                            @can('ap-os')
-                                @if(($isClient == true) and $value->name != "Aprovado")
-                                    <a href="{{ route('budgets.appcancel',[$value->id, 1]) }}" class="btn btn-powercar btn-sm" data-toggle="tooltip" data-html="true" title="Aprovar Ordem de Serviço">
-                                        <i class="fas fa-check"></i>
+                                @endcan
+                                @can('edit-budget')
+                                    @if($value->name != "Cancelado" and $value->name != "Pendente")
+                                    <a href="{{ route($routeName.'.edit',$value->id) }}" class="btn btn-warning btn-sm ml-1">
+                                        <i class="fas fa-edit"></i>
                                     </a>
-                                @endif
-                            @endcan
-                            @can('cancel-os')
-                                @if($value->name == "Pendente")
-                                <a href="{{ route('budgets.appcancel',[$value->id, 2]) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-html="true" title="Cancelar Ordem de Serviço">
-                                    <i class="fas fa-ban"></i>
-                                </a>
-                                @endif  
-                            @endcan
-                            @can('show-budget')
-                                <a href="{{ route($routeName.'.show',$value->id) }}" class="btn btn-info btn-sm">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            @endcan
-                            @can('edit-budget')
-                                @if($value->name != "Cancelado" and $value->name != "Pendente")
-                                <a href="{{ route($routeName.'.edit',$value->id) }}" class="btn btn-warning btn-sm">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                @endif
-                            @endcan
-                            @can('delete-budget')
-                                <a href="{{ route($routeName.'.show',[$value->id,'delete=1']) }}" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            @endcan
+                                    @endif
+                                @endcan
+                                @can('delete-budget')
+                                    <a href="{{ route($routeName.'.show',[$value->id,'delete=1']) }}" class="btn btn-danger btn-sm ml-1">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                @endcan
+                            </span>
                         </td>
                     </tr>
                     @endforeach

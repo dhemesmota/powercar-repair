@@ -44,8 +44,12 @@ class ClientRepository extends AbstractRepository implements ClientRepositoryInt
                 $join->on('users.id', '=', 'role_user.user_id')
                     ->where('role_user.role_id', '=', 5);
             })
+            ->join('vehicles', function ($join2) {
+                $join2->on('users.id', '=', 'vehicles.user_id');
+            })
             ->select('users.id','users.name')
             ->orderBy('users.' . $column, $order)
+            ->groupBy('users.id')
             ->get();
     }
 
