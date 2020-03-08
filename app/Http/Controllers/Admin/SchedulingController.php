@@ -181,7 +181,7 @@ class SchedulingController extends Controller
             ])->validate();
         }
 
-        
+
         if($this->model->create($data)){
             session()->flash('msg',trans('linguagem.record_added_successfully'));
             session()->flash('status','success'); // tipos: success error notification
@@ -222,7 +222,7 @@ class SchedulingController extends Controller
                 (object)['url'=>route($routeName.'.index'),'title'=>trans('linguagem.list',['page'=>$page])],
                 (object)['url'=>'','title'=>trans('linguagem.show_crud',['page'=>$page2])]
             ];
-            
+
             // Verificar se o usuário deseja deletar o registro, vendo se o delete foi recebido por parametro
             $delete = false;
             if ($request->delete ?? false) {
@@ -259,7 +259,13 @@ class SchedulingController extends Controller
             return redirect()->route($routeName.'.index');
         }
 
-        $data['situation_id'] = 7;
+        $situation = DB::table('situations')->where('name','=','Aprovado')->first();
+        if (!isset($situation->id)) {
+            session()->flash('msg',trans('linguagem.error_editing_record'));
+            session()->flash('status','error'); // tipos: success error notification
+            return redirect()->back();
+        }
+        $data['situation_id'] = $situation->id;
 
         if($this->model->update($data,$id)) {
             session()->flash('msg',trans('linguagem.successfully_edited_record'));
@@ -293,7 +299,13 @@ class SchedulingController extends Controller
             return redirect()->route($routeName.'.index');
         }
 
-        $data['situation_id'] = 6;
+        $situation = DB::table('situations')->where('name','=','Cancelado')->first();
+        if (!isset($situation->id)) {
+            session()->flash('msg',trans('linguagem.error_editing_record'));
+            session()->flash('status','error'); // tipos: success error notification
+            return redirect()->back();
+        }
+        $data['situation_id'] = $situation->id;
 
         if($this->model->update($data,$id)) {
             session()->flash('msg',trans('linguagem.successfully_edited_record'));
@@ -350,7 +362,7 @@ class SchedulingController extends Controller
             session()->flash('status','error'); // tipos: success error notification
         }
         $routeName = $this->route; // passando a rota - caminho
-        // Redirecionar para listagem de usuários 
+        // Redirecionar para listagem de usuários
         return redirect()->route($routeName.'.index');
     }
 }
